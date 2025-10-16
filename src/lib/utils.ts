@@ -37,11 +37,25 @@ export const searchCocktails = (cocktails: Cocktail[], query: string): Cocktail[
   });
 };
 
-export const getUniqueGroups = (cocktails: Cocktail[]): string[] => {
-  const groups = new Set<string>();
+const collectUniqueValues = (
+  cocktails: Cocktail[],
+  accessor: (cocktail: Cocktail) => string | null | undefined
+): string[] => {
+  const values = new Set<string>();
   cocktails.forEach((cocktail) => {
-    const group = cocktail.Gruppe?.trim();
-    if (group) groups.add(group);
+    const value = accessor(cocktail)?.trim();
+    if (value) {
+      values.add(value);
+    }
   });
-  return Array.from(groups).sort((a, b) => a.localeCompare(b));
+  return Array.from(values).sort((a, b) => a.localeCompare(b));
 };
+
+export const getUniqueGroups = (cocktails: Cocktail[]): string[] =>
+  collectUniqueValues(cocktails, (cocktail) => cocktail.Gruppe);
+
+export const getUniqueDecorations = (cocktails: Cocktail[]): string[] =>
+  collectUniqueValues(cocktails, (cocktail) => cocktail.Deko);
+
+export const getUniqueGlasses = (cocktails: Cocktail[]): string[] =>
+  collectUniqueValues(cocktails, (cocktail) => cocktail.Glas);

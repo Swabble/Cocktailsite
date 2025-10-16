@@ -10,7 +10,13 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Cocktail, CsvVersion, CsvVersionSource } from "@/types";
 import { parseCocktailCsv } from "@/lib/csv";
-import { getUniqueGroups, searchCocktails, slugify } from "@/lib/utils";
+import {
+  getUniqueDecorations,
+  getUniqueGlasses,
+  getUniqueGroups,
+  searchCocktails,
+  slugify
+} from "@/lib/utils";
 
 const COCKTAIL_QUERY_KEY = ["cocktails"] as const;
 const HISTORY_STORAGE_KEY = "cocktail-manager:csv-history";
@@ -80,6 +86,8 @@ type CocktailContextValue = {
   cocktails: Cocktail[];
   filteredCocktails: Cocktail[];
   groups: string[];
+  decorations: string[];
+  glasses: string[];
   activeGroup: string | null;
   search: string;
   isLoading: boolean;
@@ -157,6 +165,8 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   }, [cocktails, search, activeGroup]);
 
   const groups = useMemo(() => getUniqueGroups(cocktails), [cocktails]);
+  const decorations = useMemo(() => getUniqueDecorations(cocktails), [cocktails]);
+  const glasses = useMemo(() => getUniqueGlasses(cocktails), [cocktails]);
 
   const recordVersion = useCallback(
     (cocktailList: Cocktail[], label: string, source: CsvVersionSource) => {
@@ -244,6 +254,8 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     cocktails,
     filteredCocktails,
     groups,
+    decorations,
+    glasses,
     activeGroup,
     search,
     isLoading,

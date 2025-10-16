@@ -67,7 +67,7 @@ const App = () => {
           <h1 className="text-3xl font-semibold text-slate-900">Cocktail Manager</h1>
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
             <div className="flex w-full flex-col gap-3 md:flex-1 md:flex-row md:items-center">
-              <div className="relative w-full md:flex-1">
+              <div className="relative w-full flex-1">
                 <Input
                   placeholder="Suche nach Name, Zutaten oder Gruppe"
                   aria-label="Cocktailsuche"
@@ -86,8 +86,13 @@ const App = () => {
         </div>
 
         <Tabs value={activeGroup ?? "__all__"} onValueChange={(value) => setActiveGroup(value === "__all__" ? null : value)}>
-          <TabsList className="gap-2">
-            <TabsTrigger value="__all__">Alle</TabsTrigger>
+          <TabsList>
+            <TabsTrigger
+              value="__all__"
+              className="text-base font-semibold sm:row-span-2 sm:px-6 sm:py-4 sm:text-lg"
+            >
+              Alle
+            </TabsTrigger>
             {groups.map((group) => (
               <TabsTrigger key={group} value={group} className={cn("capitalize")}>
                 {group}

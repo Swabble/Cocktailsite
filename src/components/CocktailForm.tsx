@@ -21,11 +21,15 @@ type Props = {
 };
 
 const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
-  const { groups } = useCocktailContext();
+  const { groups, decorations, glasses } = useCocktailContext();
   const [formValue, setFormValue] = useState<Cocktail>(initialValue ? { ...initialValue } : createEmptyCocktail());
   const [errors, setErrors] = useState<{ Cocktail?: string; Rezeptur?: string }>({});
   const [groupSelection, setGroupSelection] = useState<string>("");
   const [customGroup, setCustomGroup] = useState<string>("");
+  const [decorationSelection, setDecorationSelection] = useState<string>("");
+  const [customDecoration, setCustomDecoration] = useState<string>("");
+  const [glassSelection, setGlassSelection] = useState<string>("");
+  const [customGlass, setCustomGlass] = useState<string>("");
 
   useEffect(() => {
     if (initialValue) {
@@ -36,19 +40,34 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
   }, [initialValue]);
 
   useEffect(() => {
+    const syncSelection = (
+      value: string,
+      options: string[],
+      setSelection: (next: string) => void,
+      setCustom: (next: string) => void
+    ) => {
+      if (value && !options.includes(value)) {
+        setSelection("__custom__");
+        setCustom(value);
+      } else {
+        setSelection(value);
+        setCustom("");
+      }
+      if (!value) {
+        setSelection("");
+        setCustom("");
+      }
+    };
+
     const currentGroup = (initialValue?.Gruppe ?? "").trim();
-    if (currentGroup && !groups.includes(currentGroup)) {
-      setGroupSelection("__custom__");
-      setCustomGroup(currentGroup);
-    } else {
-      setGroupSelection(currentGroup);
-      setCustomGroup("");
-    }
-    if (!currentGroup) {
-      setGroupSelection("");
-      setCustomGroup("");
-    }
-  }, [groups, initialValue]);
+    syncSelection(currentGroup, groups, setGroupSelection, setCustomGroup);
+
+    const currentDecoration = (initialValue?.Deko ?? "").trim();
+    syncSelection(currentDecoration, decorations, setDecorationSelection, setCustomDecoration);
+
+    const currentGlass = (initialValue?.Glas ?? "").trim();
+    syncSelection(currentGlass, glasses, setGlassSelection, setCustomGlass);
+  }, [decorations, glasses, groups, initialValue]);
 
   const validate = () => {
     const nextErrors: typeof errors = {};
@@ -82,6 +101,40 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
     const value = event.target.value;
     setCustomGroup(value);
     setFormValue((prev) => ({ ...prev, Gruppe: value }));
+  };
+
+  const handleDecorationSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setDecorationSelection(value);
+    if (value === "__custom__") {
+      setFormValue((prev) => ({ ...prev, Deko: customDecoration }));
+      return;
+    }
+    setCustomDecoration("");
+    setFormValue((prev) => ({ ...prev, Deko: value || "" }));
+  };
+
+  const handleCustomDecorationChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setCustomDecoration(value);
+    setFormValue((prev) => ({ ...prev, Deko: value }));
+  };
+
+  const handleGlassSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setGlassSelection(value);
+    if (value === "__custom__") {
+      setFormValue((prev) => ({ ...prev, Glas: customGlass }));
+      return;
+    }
+    setCustomGlass("");
+    setFormValue((prev) => ({ ...prev, Glas: value || "" }));
+  };
+
+  const handleCustomGlassChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setCustomGlass(value);
+    setFormValue((prev) => ({ ...prev, Glas: value }));
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -167,23 +220,57 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
           <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-deko">
             Deko
           </label>
-          <Input
+          <select
             id="cocktail-deko"
-            value={formValue.Deko ?? ""}
-            onChange={handleChange("Deko")}
-            placeholder="z. B. Orangenzeste"
-          />
+            value={decorationSelection}
+            onChange={handleDecorationSelect}
+            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+          >
+            <option value="">Keine Deko</option>
+            {decorations.map((decoration) => (
+              <option key={decoration} value={decoration}>
+                {decoration}
+              </option>
+            ))}
+            <option value="__custom__">Neue Deko hinzufügen…</option>
+          </select>
+          {decorationSelection === "__custom__" && (
+            <Input
+              id="cocktail-custom-deko"
+              value={customDecoration}
+              onChange={handleCustomDecorationChange}
+              placeholder="Neue Deko eingeben"
+              className="mt-2"
+            />
+          )}
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-glas">
             Glas
           </label>
-          <Input
+          <select
             id="cocktail-glas"
-            value={formValue.Glas ?? ""}
-            onChange={handleChange("Glas")}
-            placeholder="z. B. Coupette"
-          />
+            value={glassSelection}
+            onChange={handleGlassSelect}
+            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+          >
+            <option value="">Kein Glas angegeben</option>
+            {glasses.map((glass) => (
+              <option key={glass} value={glass}>
+                {glass}
+              </option>
+            ))}
+            <option value="__custom__">Neues Glas hinzufügen…</option>
+          </select>
+          {glassSelection === "__custom__" && (
+            <Input
+              id="cocktail-custom-glas"
+              value={customGlass}
+              onChange={handleCustomGlassChange}
+              placeholder="Neues Glas eingeben"
+              className="mt-2"
+            />
+          )}
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-zubereitung">
