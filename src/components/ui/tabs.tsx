@@ -7,7 +7,7 @@ const TabsList = ({ className, ...props }: TabsPrimitive.TabsListProps) => (
   <TabsPrimitive.List
     className={cn(
       "grid grid-cols-1 items-stretch gap-2 rounded-2xl bg-white p-2 shadow-soft auto-rows-[minmax(44px,auto)]",
-      "sm:grid-cols-[minmax(0,160px)_repeat(auto-fit,minmax(140px,1fr))]",
+      "sm:auto-cols-fr sm:grid-flow-col sm:grid-rows-2 sm:gap-3 sm:auto-rows-[minmax(52px,auto)]",
       className
     )}
     {...props}

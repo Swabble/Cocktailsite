@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CocktailTable from "@/components/CocktailTable";
-import CocktailForm from "@/components/CocktailForm";
+import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { Cocktail } from "@/types";
 import { cn } from "@/lib/cn";
@@ -24,10 +24,12 @@ const App = () => {
     setSearch,
     isLoading,
     error,
-    upsertCocktail
+    upsertCocktail,
+    setCocktailImage,
+    removeCocktailImage,
+    recentlyChangedSlugs
   } = useCocktailContext();
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingCocktail, setEditingCocktail] = useState<Cocktail | null>(null);
   const [searchInput, setSearchInput] = useState(search);
 
   useEffect(() => {
@@ -46,47 +48,52 @@ const App = () => {
   };
 
   const handleCreateNew = () => {
-    setEditingCocktail(null);
     setIsFormOpen(true);
   };
 
-  const handleEditCocktail = (cocktail: Cocktail) => {
-    setEditingCocktail(cocktail);
-    setIsFormOpen(true);
-  };
-
-  const handleSubmitForm = (cocktail: Cocktail) => {
+  const handleSubmitForm = ({ cocktail, imageData, imageChanged }: CocktailFormResult) => {
     upsertCocktail(cocktail);
+    if (imageChanged) {
+      const slug = slugify(cocktail.Cocktail);
+      if (imageData) {
+        setCocktailImage(slug, imageData);
+      } else {
+        removeCocktailImage(slug);
+      }
+    }
     setIsFormOpen(false);
   };
 
   return (
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-4 pb-16 pt-10">
       <header className="flex flex-col gap-6">
-        <div className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-soft">
-          <h1 className="text-3xl font-semibold text-slate-900">Cocktail Manager</h1>
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
-            <div className="flex w-full flex-col gap-3 md:flex-1 md:flex-row md:items-center">
-              <div className="relative w-full flex-1">
-                <Input
-                  placeholder="Suche nach Name, Zutaten oder Gruppe"
-                  aria-label="Cocktailsuche"
-                  className="pr-10"
-                  value={searchInput}
-                  onChange={(event) => setSearchInput(event.target.value)}
-                />
-                <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-300" />
-              </div>
-              <Button onClick={handleCreateNew} className="gap-2">
-                <Plus className="h-4 w-4" /> Neuer Cocktail
-              </Button>
+        <div className="flex flex-col gap-5 rounded-2xl bg-white p-6 shadow-soft">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <CsvMenu />
+              <h1 className="text-3xl font-semibold text-slate-900">Cocktail Manager</h1>
             </div>
-            <CsvMenu />
+            <Button onClick={handleCreateNew} className="gap-2 self-start sm:self-auto">
+              <Plus className="h-4 w-4" /> Neuer Cocktail
+            </Button>
+          </div>
+          <div className="relative w-full">
+            <Input
+              placeholder="Suche nach Name, Zutaten oder Gruppe"
+              aria-label="Cocktailsuche"
+              className="w-full pr-10"
+              value={searchInput}
+              onChange={(event) => setSearchInput(event.target.value)}
+            />
+            <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-300" />
           </div>
         </div>
 
-        <Tabs value={activeGroup ?? "__all__"} onValueChange={(value) => setActiveGroup(value === "__all__" ? null : value)}>
-          <TabsList>
+        <Tabs
+          value={activeGroup ?? "__all__"}
+          onValueChange={(value) => setActiveGroup(value === "__all__" ? null : value)}
+        >
+          <TabsList className="sm:auto-cols-fr sm:grid-flow-col sm:grid-rows-2">
             <TabsTrigger
               value="__all__"
               className="text-base font-semibold sm:row-span-2 sm:px-6 sm:py-4 sm:text-lg"
@@ -94,7 +101,11 @@ const App = () => {
               Alle
             </TabsTrigger>
             {groups.map((group) => (
-              <TabsTrigger key={group} value={group} className={cn("capitalize")}>
+              <TabsTrigger
+                key={group}
+                value={group}
+                className={cn("capitalize sm:text-sm sm:px-4 sm:py-2")}
+              >
                 {group}
               </TabsTrigger>
             ))}
@@ -111,21 +122,17 @@ const App = () => {
           isLoading={isLoading}
           error={error}
           onSelect={handleRowSelect}
-          onEdit={handleEditCocktail}
+          highlightedSlugs={recentlyChangedSlugs}
         />
       </main>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent>
-          <DialogTitle>{editingCocktail ? "Cocktail bearbeiten" : "Neuer Cocktail"}</DialogTitle>
+          <DialogTitle>Neuer Cocktail</DialogTitle>
           <DialogDescription>
             Pflichtfelder sind mit * markiert. Zutaten bitte kommagetrennt eingeben.
           </DialogDescription>
-          <CocktailForm
-            initialValue={editingCocktail ?? undefined}
-            onCancel={() => setIsFormOpen(false)}
-            onSubmit={handleSubmitForm}
-          />
+          <CocktailForm onCancel={() => setIsFormOpen(false)} onSubmit={handleSubmitForm} />
         </DialogContent>
       </Dialog>
     </div>

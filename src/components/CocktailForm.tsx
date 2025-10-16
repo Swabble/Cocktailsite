@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import type { Cocktail } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,22 @@ const createEmptyCocktail = (): Cocktail => ({
   Zubereitung: ""
 });
 
+export type CocktailFormResult = {
+  cocktail: Cocktail;
+  imageData: string | null;
+  imageChanged: boolean;
+  previousSlug?: string;
+};
+
 type Props = {
   initialValue?: Cocktail;
-  onSubmit: (cocktail: Cocktail) => void;
+  initialImage?: string | null;
+  initialSlug?: string;
+  onSubmit: (result: CocktailFormResult) => void;
   onCancel: () => void;
 };
 
-const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
+const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCancel }: Props) => {
   const { groups, decorations, glasses } = useCocktailContext();
   const [formValue, setFormValue] = useState<Cocktail>(initialValue ? { ...initialValue } : createEmptyCocktail());
   const [errors, setErrors] = useState<{ Cocktail?: string; Rezeptur?: string }>({});
@@ -30,6 +39,9 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
   const [customDecoration, setCustomDecoration] = useState<string>("");
   const [glassSelection, setGlassSelection] = useState<string>("");
   const [customGlass, setCustomGlass] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string | null>(initialImage ?? null);
+  const [imageChanged, setImageChanged] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (initialValue) {
@@ -38,6 +50,11 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
       setFormValue(createEmptyCocktail());
     }
   }, [initialValue]);
+
+  useEffect(() => {
+    setImagePreview(initialImage ?? null);
+    setImageChanged(false);
+  }, [initialImage, initialValue]);
 
   useEffect(() => {
     const syncSelection = (
@@ -140,7 +157,42 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validate()) return;
-    onSubmit(formValue);
+    onSubmit({
+      cocktail: formValue,
+      imageData: imagePreview,
+      imageChanged,
+      previousSlug: initialSlug
+    });
+  };
+
+  const handleImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImagePreview(reader.result);
+        setImageChanged(true);
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.onerror = () => {
+      console.error("Bild konnte nicht gelesen werden");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setImageChanged(true);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -284,6 +336,50 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
             rows={3}
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-image">
+          Bild
+        </label>
+        <input
+          ref={fileInputRef}
+          id="cocktail-image"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={handleImageSelect}
+        />
+        {imagePreview ? (
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <figure className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+              <img
+                src={imagePreview}
+                alt={`Bild von ${formValue.Cocktail || "Cocktail"}`}
+                className="h-36 w-36 object-cover"
+              />
+            </figure>
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+                Neues Bild wählen
+              </Button>
+              <Button type="button" variant="ghost" size="sm" onClick={handleRemoveImage}>
+                Bild entfernen
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              Optionales Foto hinzufügen oder mit der Gerätekamera aufnehmen, damit Gäste den Cocktail sofort
+              erkennen.
+            </p>
+            <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+              Bild aufnehmen/hochladen
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-end gap-2 pt-4">

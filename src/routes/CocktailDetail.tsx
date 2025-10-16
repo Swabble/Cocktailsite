@@ -4,7 +4,7 @@ import { ArrowLeft, PencilLine, Trash2 } from "lucide-react";
 import { useCocktailContext } from "@/context/CocktailContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import CocktailForm from "@/components/CocktailForm";
+import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
 import type { Cocktail } from "@/types";
@@ -12,7 +12,15 @@ import type { Cocktail } from "@/types";
 const CocktailDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
-  const { cocktails, deleteCocktail, upsertCocktail } = useCocktailContext();
+  const {
+    cocktails,
+    deleteCocktail,
+    upsertCocktail,
+    cocktailImages,
+    setCocktailImage,
+    removeCocktailImage,
+    renameCocktailImage
+  } = useCocktailContext();
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const cocktail = useMemo(() => {
@@ -43,12 +51,32 @@ const CocktailDetail = () => {
     navigate("/");
   };
 
-  const handleSubmit = (entry: Cocktail) => {
+  const handleSubmit = ({ cocktail: entry, imageData, imageChanged }: CocktailFormResult) => {
+    const previousSlug = slugify(cocktail.Cocktail);
     upsertCocktail(entry);
+    const nextSlug = slugify(entry.Cocktail);
+
+    if (imageChanged) {
+      if (imageData) {
+        setCocktailImage(nextSlug, imageData);
+      } else {
+        removeCocktailImage(nextSlug);
+      }
+      if (previousSlug !== nextSlug) {
+        removeCocktailImage(previousSlug);
+      }
+    } else if (previousSlug !== nextSlug) {
+      renameCocktailImage(previousSlug, nextSlug);
+    }
+
     setIsFormOpen(false);
+    if (previousSlug !== nextSlug) {
+      navigate(`/cocktail/${nextSlug}`, { replace: true });
+    }
   };
 
   const ingredients = ingredientsFromRezeptur(cocktail.Rezeptur);
+  const imageSrc = cocktailImages[slugify(cocktail.Cocktail)] ?? null;
 
   return (
     <div className="mx-auto flex min-h-screen max-w-5xl flex-col gap-8 px-4 pb-16 pt-10">
@@ -88,10 +116,18 @@ const CocktailDetail = () => {
         </div>
 
         <div className="space-y-6">
-          <figure className="overflow-hidden rounded-2xl border border-dashed border-slate-200 bg-slate-50">
-            <div className="flex h-56 items-center justify-center p-4 text-center text-sm text-slate-400">
-              Bildbereich – hier kann künftig ein Cocktailfoto platziert werden.
-            </div>
+          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+            {imageSrc ? (
+              <img
+                src={imageSrc}
+                alt={`Cocktail ${cocktail.Cocktail}`}
+                className="h-56 w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-56 items-center justify-center p-4 text-center text-sm text-slate-400">
+                Noch kein Bild hinterlegt – beim Bearbeiten können Sie ein Foto hinzufügen.
+              </div>
+            )}
           </figure>
           <div>
             <h2 className="text-lg font-semibold text-slate-800">Zubereitung</h2>
@@ -114,7 +150,13 @@ const CocktailDetail = () => {
           <DialogDescription>
             Aktualisieren Sie die Daten und speichern Sie, um den Datensatz zu überschreiben.
           </DialogDescription>
-          <CocktailForm initialValue={cocktail} onSubmit={handleSubmit} onCancel={() => setIsFormOpen(false)} />
+          <CocktailForm
+            initialValue={cocktail}
+            initialImage={imageSrc}
+            initialSlug={slug}
+            onSubmit={handleSubmit}
+            onCancel={() => setIsFormOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </div>

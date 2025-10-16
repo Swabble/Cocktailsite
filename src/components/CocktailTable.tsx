@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { PencilLine } from "lucide-react";
 import type { Cocktail } from "@/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
+import { slugify } from "@/lib/utils";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -13,16 +14,26 @@ type Props = {
   isLoading: boolean;
   error?: Error;
   onSelect: (cocktail: Cocktail) => void;
-  onEdit: (cocktail: Cocktail) => void;
+  highlightedSlugs: string[];
 };
 
-const CocktailTable = ({ cocktails, isLoading, error, onSelect, onEdit }: Props) => {
+const CocktailTable = ({ cocktails, isLoading, error, onSelect, highlightedSlugs }: Props) => {
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey>("Cocktail");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
+  const highlightedSet = useMemo(() => new Set(highlightedSlugs.map((slug) => slug)), [highlightedSlugs]);
+
   const sortedCocktails = useMemo(() => {
     const sorted = [...cocktails].sort((a, b) => {
+      const slugA = slugify(a.Cocktail);
+      const slugB = slugify(b.Cocktail);
+      const aHighlighted = highlightedSet.has(slugA);
+      const bHighlighted = highlightedSet.has(slugB);
+      if (aHighlighted !== bHighlighted) {
+        return aHighlighted ? -1 : 1;
+      }
+
       const valueA = (a[sortKey] ?? "").toString().toLowerCase();
       const valueB = (b[sortKey] ?? "").toString().toLowerCase();
       if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
@@ -30,7 +41,7 @@ const CocktailTable = ({ cocktails, isLoading, error, onSelect, onEdit }: Props)
       return 0;
     });
     return sorted;
-  }, [cocktails, sortKey, sortDirection]);
+  }, [cocktails, highlightedSet, sortDirection, sortKey]);
 
   const pageCount = Math.max(1, Math.ceil(sortedCocktails.length / ITEMS_PER_PAGE));
   const currentPage = Math.min(page, pageCount);
@@ -75,65 +86,65 @@ const CocktailTable = ({ cocktails, isLoading, error, onSelect, onEdit }: Props)
 
   return (
     <div className="space-y-4">
-      <Table>
-        <TableHeader>
-          <TableRow className="cursor-default">
-            <TableHead>
-              <button
-                type="button"
-                className="flex items-center gap-1 text-left"
-                onClick={() => handleSort("Gruppe")}
-                aria-label="Nach Gruppe sortieren"
-              >
-                Gruppe
-                {sortKey === "Gruppe" && <SortBadge direction={sortDirection} />}
-              </button>
-            </TableHead>
-            <TableHead>
-              <button
-                type="button"
-                className="flex items-center gap-1 text-left"
-                onClick={() => handleSort("Cocktail")}
-                aria-label="Nach Cocktail sortieren"
-              >
-                Cocktail
-                {sortKey === "Cocktail" && <SortBadge direction={sortDirection} />}
-              </button>
-            </TableHead>
-            <TableHead>Rezeptur</TableHead>
-            <TableHead>Deko</TableHead>
-            <TableHead>Glas</TableHead>
-            <TableHead>Zubereitung</TableHead>
-            <TableHead className="text-right">Aktionen</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {paginatedCocktails.map((cocktail) => (
-            <TableRow key={cocktail.Cocktail} onClick={() => onSelect(cocktail)}>
-              <TableCell className="capitalize">{cocktail.Gruppe || "–"}</TableCell>
-              <TableCell className="font-medium text-slate-900">{cocktail.Cocktail}</TableCell>
-              <TableCell>{cocktail.Rezeptur}</TableCell>
-              <TableCell>{cocktail.Deko || "–"}</TableCell>
-              <TableCell>{cocktail.Glas || "–"}</TableCell>
-              <TableCell>{cocktail.Zubereitung || "–"}</TableCell>
-              <TableCell className="text-right">
-                <Button
+      <div className="overflow-x-auto rounded-2xl bg-white shadow-soft">
+        <Table>
+          <TableHeader>
+            <TableRow className="cursor-default">
+              <TableHead>
+                <button
                   type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="gap-1"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onEdit(cocktail);
-                  }}
+                  className="flex items-center gap-1 text-left"
+                  onClick={() => handleSort("Gruppe")}
+                  aria-label="Nach Gruppe sortieren"
                 >
-                  <PencilLine className="h-4 w-4" /> Bearbeiten
-                </Button>
-              </TableCell>
+                  Gruppe
+                  {sortKey === "Gruppe" && <SortBadge direction={sortDirection} />}
+                </button>
+              </TableHead>
+              <TableHead>
+                <button
+                  type="button"
+                  className="flex items-center gap-1 text-left"
+                  onClick={() => handleSort("Cocktail")}
+                  aria-label="Nach Cocktail sortieren"
+                >
+                  Cocktail
+                  {sortKey === "Cocktail" && <SortBadge direction={sortDirection} />}
+                </button>
+              </TableHead>
+              <TableHead>Rezeptur</TableHead>
+              <TableHead>Deko</TableHead>
+              <TableHead>Glas</TableHead>
+              <TableHead>Zubereitung</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {paginatedCocktails.map((cocktail) => {
+              const slug = slugify(cocktail.Cocktail);
+              const isHighlighted = highlightedSet.has(slug);
+              return (
+                <TableRow
+                  key={cocktail.Cocktail}
+                  onClick={() => onSelect(cocktail)}
+                  className={cn(
+                    "cursor-pointer border-l-4 border-transparent transition-colors",
+                    "even:bg-slate-200/60 odd:bg-white hover:bg-slate-50",
+                    isHighlighted &&
+                      "border-amber-400 bg-amber-50/80 hover:bg-amber-100 focus-visible:bg-amber-100"
+                  )}
+                >
+                  <TableCell className="capitalize">{cocktail.Gruppe || "–"}</TableCell>
+                  <TableCell className="font-medium text-slate-900">{cocktail.Cocktail}</TableCell>
+                  <TableCell>{cocktail.Rezeptur}</TableCell>
+                  <TableCell>{cocktail.Deko || "–"}</TableCell>
+                  <TableCell>{cocktail.Glas || "–"}</TableCell>
+                  <TableCell>{cocktail.Zubereitung || "–"}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
       <div className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-4 shadow-soft sm:flex-row">
         <span className="text-sm text-slate-500">
           Seite {currentPage} von {pageCount} · {sortedCocktails.length} Cocktails

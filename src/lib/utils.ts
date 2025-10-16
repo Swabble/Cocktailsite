@@ -59,3 +59,15 @@ export const getUniqueDecorations = (cocktails: Cocktail[]): string[] =>
 
 export const getUniqueGlasses = (cocktails: Cocktail[]): string[] =>
   collectUniqueValues(cocktails, (cocktail) => cocktail.Glas);
+
+export const cocktailsEqual = (a: Cocktail, b: Cocktail): boolean => {
+  const normalise = (value: string | null | undefined) => value?.trim() ?? "";
+  return (
+    normalise(a.Cocktail) === normalise(b.Cocktail) &&
+    normalise(a.Gruppe ?? "") === normalise(b.Gruppe ?? "") &&
+    normalise(a.Rezeptur) === normalise(b.Rezeptur) &&
+    normalise(a.Deko ?? "") === normalise(b.Deko ?? "") &&
+    normalise(a.Glas ?? "") === normalise(b.Glas ?? "") &&
+    normalise(a.Zubereitung ?? "") === normalise(b.Zubereitung ?? "")
+  );
+};

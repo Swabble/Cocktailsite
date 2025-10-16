@@ -16,3 +16,5 @@ export type CsvVersion = {
   source: CsvVersionSource;
   cocktails: Cocktail[];
 };
+
+export type CocktailImageMap = Record<string, string>;

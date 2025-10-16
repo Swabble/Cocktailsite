@@ -8,9 +8,10 @@ import {
   type ReactNode
 } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Cocktail, CsvVersion, CsvVersionSource } from "@/types";
+import type { Cocktail, CocktailImageMap, CsvVersion, CsvVersionSource } from "@/types";
 import { parseCocktailCsv } from "@/lib/csv";
 import {
+  cocktailsEqual,
   getUniqueDecorations,
   getUniqueGlasses,
   getUniqueGroups,
@@ -21,6 +22,7 @@ import {
 const COCKTAIL_QUERY_KEY = ["cocktails"] as const;
 const HISTORY_STORAGE_KEY = "cocktail-manager:csv-history";
 const HISTORY_ACTIVE_KEY = "cocktail-manager:csv-history-active";
+const IMAGE_STORAGE_KEY = "cocktail-manager:images";
 
 type ReplaceOptions = {
   recordHistory?: boolean;
@@ -53,6 +55,25 @@ const loadStoredActiveId = (): string | null => {
   if (typeof window === "undefined") return null;
   const active = window.localStorage.getItem(HISTORY_ACTIVE_KEY);
   return active && active.length > 0 ? active : null;
+};
+
+const loadStoredImages = (): CocktailImageMap => {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(IMAGE_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as CocktailImageMap;
+    if (!parsed || typeof parsed !== "object") {
+      return {};
+    }
+    const entries = Object.entries(parsed).filter(
+      ([, value]) => typeof value === "string" && value.length > 0
+    );
+    return Object.fromEntries(entries);
+  } catch (error) {
+    console.warn("Konnte gespeicherte Bilder nicht laden", error);
+    return {};
+  }
 };
 
 const createVersion = (
@@ -88,6 +109,8 @@ type CocktailContextValue = {
   groups: string[];
   decorations: string[];
   glasses: string[];
+  cocktailImages: CocktailImageMap;
+  recentlyChangedSlugs: string[];
   activeGroup: string | null;
   search: string;
   isLoading: boolean;
@@ -100,6 +123,9 @@ type CocktailContextValue = {
   deleteCocktail: (cocktail: Cocktail) => void;
   replaceAll: (cocktails: Cocktail[], options?: ReplaceOptions) => void;
   restoreVersion: (versionId: string) => void;
+  setCocktailImage: (slug: string, dataUrl: string) => void;
+  removeCocktailImage: (slug: string) => void;
+  renameCocktailImage: (oldSlug: string, newSlug: string) => void;
 };
 
 const CocktailContext = createContext<CocktailContextValue | undefined>(undefined);
@@ -118,6 +144,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string>("");
   const [csvVersions, setCsvVersions] = useState<CsvVersion[]>(() => loadStoredHistory());
   const [activeVersionId, setActiveVersionId] = useState<string | null>(() => loadStoredActiveId());
+  const [cocktailImages, setCocktailImages] = useState<CocktailImageMap>(() => loadStoredImages());
 
   const { data, isLoading, error } = useQuery({
     queryKey: COCKTAIL_QUERY_KEY,
@@ -125,6 +152,17 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const cocktails = data ?? [];
+
+  useEffect(() => {
+    setCocktailImages((previous) => {
+      const allowed = new Set(cocktails.map((item) => slugify(item.Cocktail)));
+      const filteredEntries = Object.entries(previous).filter(([slug]) => allowed.has(slug));
+      if (filteredEntries.length === Object.entries(previous).length) {
+        return previous;
+      }
+      return Object.fromEntries(filteredEntries);
+    });
+  }, [cocktails]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -139,6 +177,11 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       window.localStorage.removeItem(HISTORY_ACTIVE_KEY);
     }
   }, [activeVersionId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(cocktailImages));
+  }, [cocktailImages]);
 
   useEffect(() => {
     if (!cocktails.length) return;
@@ -167,6 +210,63 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const groups = useMemo(() => getUniqueGroups(cocktails), [cocktails]);
   const decorations = useMemo(() => getUniqueDecorations(cocktails), [cocktails]);
   const glasses = useMemo(() => getUniqueGlasses(cocktails), [cocktails]);
+
+  const baselineCocktails = useMemo(() => {
+    if (!cocktails.length) return null;
+    if (activeVersionId) {
+      const activeIndex = csvVersions.findIndex((entry) => entry.id === activeVersionId);
+      if (activeIndex >= 0 && activeIndex + 1 < csvVersions.length) {
+        return csvVersions[activeIndex + 1].cocktails;
+      }
+    }
+    if (csvVersions.length >= 2) {
+      return csvVersions[1].cocktails;
+    }
+    if (csvVersions.length === 1) {
+      return csvVersions[0].cocktails;
+    }
+    return null;
+  }, [activeVersionId, cocktails, csvVersions]);
+
+  const recentlyChangedSlugs = useMemo(() => {
+    if (!baselineCocktails) return [];
+    const baselineMap = new Map<string, Cocktail>();
+    baselineCocktails.forEach((entry) => {
+      baselineMap.set(slugify(entry.Cocktail), entry);
+    });
+    const changed = new Set<string>();
+    cocktails.forEach((entry) => {
+      const slug = slugify(entry.Cocktail);
+      const reference = baselineMap.get(slug);
+      if (!reference || !cocktailsEqual(entry, reference)) {
+        changed.add(slug);
+      }
+    });
+    return Array.from(changed);
+  }, [baselineCocktails, cocktails]);
+
+  const setCocktailImage = useCallback((slug: string, dataUrl: string) => {
+    if (!slug || !dataUrl) return;
+    setCocktailImages((previous) => ({ ...previous, [slug]: dataUrl }));
+  }, []);
+
+  const removeCocktailImage = useCallback((slug: string) => {
+    if (!slug) return;
+    setCocktailImages((previous) => {
+      if (!(slug in previous)) return previous;
+      const { [slug]: _removed, ...rest } = previous;
+      return rest;
+    });
+  }, []);
+
+  const renameCocktailImage = useCallback((oldSlug: string, newSlug: string) => {
+    if (!oldSlug || !newSlug || oldSlug === newSlug) return;
+    setCocktailImages((previous) => {
+      if (!(oldSlug in previous)) return previous;
+      const { [oldSlug]: image, ...rest } = previous;
+      return image ? { ...rest, [newSlug]: image } : rest;
+    });
+  }, []);
 
   const recordVersion = useCallback(
     (cocktailList: Cocktail[], label: string, source: CsvVersionSource) => {
@@ -215,8 +315,9 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
         previous.filter((item) => slugify(item.Cocktail) !== slugify(cocktail.Cocktail))
       );
       setActiveVersionId(null);
+      removeCocktailImage(slugify(cocktail.Cocktail));
     },
-    [updateCocktails]
+    [removeCocktailImage, updateCocktails]
   );
 
   const replaceAll = useCallback(
@@ -224,6 +325,11 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       updateCocktails(() => cocktailList);
       setActiveGroup(null);
       setSearch("");
+      setCocktailImages((previous) => {
+        const allowed = new Set(cocktailList.map((item) => slugify(item.Cocktail)));
+        const filteredEntries = Object.entries(previous).filter(([slug]) => allowed.has(slug));
+        return Object.fromEntries(filteredEntries);
+      });
       if (options?.recordHistory) {
         const formatter = new Intl.DateTimeFormat("de-DE", {
           dateStyle: "short",
@@ -256,6 +362,8 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     groups,
     decorations,
     glasses,
+    cocktailImages,
+    recentlyChangedSlugs,
     activeGroup,
     search,
     isLoading,
@@ -267,7 +375,10 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     upsertCocktail,
     deleteCocktail,
     replaceAll,
-    restoreVersion
+    restoreVersion,
+    setCocktailImage,
+    removeCocktailImage,
+    renameCocktailImage
   };
 
   return <CocktailContext.Provider value={value}>{children}</CocktailContext.Provider>;
