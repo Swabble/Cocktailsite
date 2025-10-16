@@ -20,8 +20,9 @@ Eine moderne Single-Page-Web-App zur Verwaltung der `Cocktail_Liste.csv`. Erstel
    npm install
    ```
 3. CSV-Daten prüfen:
-   - Die Datei `Cocktail_Liste.csv` liegt sowohl im Projektwurzelverzeichnis als auch unter `public/` für den direkten Browserzugriff.
-   - Passe die CSV bei Bedarf an (UTF-8 ohne BOM, Spaltennamen wie in der Spezifikation).
+   - Die Datei `Cocktail_Liste.csv` im Projektwurzelverzeichnis ist die maßgebliche Quelle.
+   - Beim Start von `npm run dev` bzw. `npm run build` wird die Datei automatisch nach `public/Cocktail_Liste.csv` synchronisiert.
+   - Passe die CSV bei Bedarf an (UTF-8 ohne BOM, Spaltennamen wie in der Spezifikation) und starte anschließend den gewünschten Befehl erneut oder führe `npm run sync:csv` manuell aus.
 
 ## Entwicklungsbetrieb
 
@@ -34,9 +35,9 @@ Eine moderne Single-Page-Web-App zur Verwaltung der `Cocktail_Liste.csv`. Erstel
 
 ### CSV-Aktualisierung im Entwicklungsmodus
 
-- Datei `public/Cocktail_Liste.csv` anpassen oder über die UI neue Cocktails anlegen.
-- Über die Buttons "Import CSV" oder "Export CSV" können Daten im Browser ausgetauscht werden.
-- Exportierte Dateien können zurück nach `public/Cocktail_Liste.csv` kopiert werden, um sie als neuen Ausgangsstand zu verwenden.
+- Passe `Cocktail_Liste.csv` im Projektwurzelverzeichnis an.
+- Starte `npm run dev` neu oder führe `npm run sync:csv` aus, damit die Datei automatisch nach `public/` kopiert und der Browser mit den neuesten Daten versorgt wird.
+- Änderungen an der CSV werden beim nächsten Laden der Seite ohne Browser-Caching berücksichtigt.
 
 ## Produktionsbuild & Vorschau
 
@@ -80,16 +81,17 @@ Eine moderne Single-Page-Web-App zur Verwaltung der `Cocktail_Liste.csv`. Erstel
 
 | Befehl            | Beschreibung                              |
 | ----------------- | ------------------------------------------ |
-| `npm run dev`     | Entwicklungsserver (Vite) starten          |
-| `npm run build`   | Produktionsbuild erzeugen                  |
-| `npm run preview` | Produktionsbuild lokal testen              |
-| `npm run lint`    | (Falls hinzugefügt) Linting ausführen      |
+| `npm run dev`     | Entwicklungsserver (Vite) starten (inkl. CSV-Sync) |
+| `npm run build`   | Produktionsbuild erzeugen (inkl. CSV-Sync)         |
+| `npm run preview` | Produktionsbuild lokal testen                       |
+| `npm run sync:csv`| CSV aus dem Projektwurzelverzeichnis nach `public/` kopieren |
+| `npm run lint`    | (Falls hinzugefügt) Linting ausführen                |
 
-## CSV-Import/Export-Workflow
+## CSV-Workflow
 
-- **Import**: Über den Button "Import CSV" eine kompatible CSV-Datei auswählen; der aktuelle In-Memory-Status wird ersetzt.
-- **Export**: Button "Export CSV" herunterladen; Datei enthält dieselben Spaltenüberschriften und kann als Backup dienen.
-- **Neu/Bearbeiten**: Über `+ Neuer Cocktail` oder "Bearbeiten" lassen sich Datensätze ändern. Änderungen wirken sich sofort auf den Export aus.
+- **Quelle aktualisieren**: Bearbeite `Cocktail_Liste.csv` im Projektwurzelverzeichnis und synchronisiere per `npm run sync:csv` (oder automatisch über `npm run dev`/`npm run build`).
+- **Neu/Bearbeiten**: Über `+ Neuer Cocktail` oder "Bearbeiten" lassen sich Datensätze ändern; sie werden im In-Memory-Status der App gehalten.
+- **Backup erstellen**: Verwende bei Bedarf `npm run sync:csv`, um die aktuelle Datei erneut zu kopieren, oder entnimm die Version aus dem `public/`-Ordner.
 
 ## Fehlerbehebung
 

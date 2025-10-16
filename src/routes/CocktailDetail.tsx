@@ -88,6 +88,11 @@ const CocktailDetail = () => {
         </div>
 
         <div className="space-y-6">
+          <figure className="overflow-hidden rounded-2xl border border-dashed border-slate-200 bg-slate-50">
+            <div className="flex h-56 items-center justify-center p-4 text-center text-sm text-slate-400">
+              Bildbereich – hier kann künftig ein Cocktailfoto platziert werden.
+            </div>
+          </figure>
           <div>
             <h2 className="text-lg font-semibold text-slate-800">Zubereitung</h2>
             <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-slate-600">

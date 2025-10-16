@@ -4,9 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/sync-csv.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/sync-csv.mjs",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync:csv": "node scripts/sync-csv.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

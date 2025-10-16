@@ -14,7 +14,10 @@ import { getUniqueGroups, searchCocktails, slugify } from "@/lib/utils";
 const COCKTAIL_QUERY_KEY = ["cocktails"] as const;
 
 const fetchCocktails = async (): Promise<Cocktail[]> => {
-  const response = await fetch("/Cocktail_Liste.csv");
+  const url = new URL(`${import.meta.env.BASE_URL}Cocktail_Liste.csv`, window.location.origin);
+  url.searchParams.set("t", Date.now().toString());
+
+  const response = await fetch(url.toString(), { cache: "no-store" });
   if (!response.ok) {
     throw new Error("CSV konnte nicht geladen werden");
   }

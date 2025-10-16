@@ -9,7 +9,8 @@ export const parseCocktailCsv = async (text: string): Promise<Cocktail[]> => {
   const parsed = Papa.parse<Record<string, string>>(trimmed, {
     header: true,
     skipEmptyLines: true,
-    transformHeader: normaliseKey
+    transformHeader: normaliseKey,
+    delimiter: ";"
   });
 
   if (parsed.errors.length) {
@@ -42,7 +43,8 @@ export const serialiseCocktailsToCsv = (cocktails: Cocktail[]): string => {
   }));
 
   return Papa.unparse(data, {
-    columns: [...CSV_COLUMNS]
+    columns: [...CSV_COLUMNS],
+    delimiter: ";"
   });
 };
 
