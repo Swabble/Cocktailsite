@@ -3,7 +3,6 @@ import type { Cocktail } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useCocktailContext } from "@/context/CocktailContext";
 
 const createEmptyCocktail = (): Cocktail => ({
   Cocktail: "",
@@ -21,34 +20,16 @@ type Props = {
 };
 
 const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
-  const { groups } = useCocktailContext();
-  const [formValue, setFormValue] = useState<Cocktail>(initialValue ? { ...initialValue } : createEmptyCocktail());
+  const [formValue, setFormValue] = useState<Cocktail>(initialValue ?? createEmptyCocktail());
   const [errors, setErrors] = useState<{ Cocktail?: string; Rezeptur?: string }>({});
-  const [groupSelection, setGroupSelection] = useState<string>("");
-  const [customGroup, setCustomGroup] = useState<string>("");
 
   useEffect(() => {
     if (initialValue) {
-      setFormValue({ ...initialValue });
+      setFormValue(initialValue);
     } else {
       setFormValue(createEmptyCocktail());
     }
   }, [initialValue]);
-
-  useEffect(() => {
-    const currentGroup = (initialValue?.Gruppe ?? "").trim();
-    if (currentGroup && !groups.includes(currentGroup)) {
-      setGroupSelection("__custom__");
-      setCustomGroup(currentGroup);
-    } else {
-      setGroupSelection(currentGroup);
-      setCustomGroup("");
-    }
-    if (!currentGroup) {
-      setGroupSelection("");
-      setCustomGroup("");
-    }
-  }, [groups, initialValue]);
 
   const validate = () => {
     const nextErrors: typeof errors = {};
@@ -66,23 +47,6 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormValue((prev) => ({ ...prev, [field]: event.target.value }));
     };
-
-  const handleGroupSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    setGroupSelection(value);
-    if (value === "__custom__") {
-      setFormValue((prev) => ({ ...prev, Gruppe: customGroup }));
-      return;
-    }
-    setCustomGroup("");
-    setFormValue((prev) => ({ ...prev, Gruppe: value || "" }));
-  };
-
-  const handleCustomGroupChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setCustomGroup(value);
-    setFormValue((prev) => ({ ...prev, Gruppe: value }));
-  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -116,29 +80,12 @@ const CocktailForm = ({ initialValue, onSubmit, onCancel }: Props) => {
           <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-group">
             Gruppe
           </label>
-          <select
+          <Input
             id="cocktail-group"
-            value={groupSelection}
-            onChange={handleGroupSelect}
-            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          >
-            <option value="">Keine Gruppe</option>
-            {groups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-            <option value="__custom__">Neue Gruppe hinzufügen…</option>
-          </select>
-          {groupSelection === "__custom__" && (
-            <Input
-              id="cocktail-custom-group"
-              value={customGroup}
-              onChange={handleCustomGroupChange}
-              placeholder="Neue Gruppe eingeben"
-              className="mt-2"
-            />
-          )}
+            value={formValue.Gruppe ?? ""}
+            onChange={handleChange("Gruppe")}
+            placeholder="z. B. Aperitif"
+          />
         </div>
       </div>
 
