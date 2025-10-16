@@ -6,3 +6,13 @@ export type Cocktail = {
   Glas?: string | null;
   Zubereitung?: string | null;
 };
+
+export type CsvVersionSource = "initial" | "upload" | "manual" | "restore";
+
+export type CsvVersion = {
+  id: string;
+  label: string;
+  createdAt: number;
+  source: CsvVersionSource;
+  cocktails: Cocktail[];
+};

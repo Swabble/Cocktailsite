@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import type { Cocktail } from "@/types";
 import { cn } from "@/lib/cn";
 import { slugify } from "@/lib/utils";
+import CsvMenu from "@/components/CsvMenu";
 
 const App = () => {
   const navigate = useNavigate();
@@ -62,30 +63,30 @@ const App = () => {
   return (
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-4 pb-16 pt-10">
       <header className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-soft md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold text-slate-900">Cocktail Manager</h1>
-          </div>
-          <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row">
-            <div className="relative w-full md:w-72">
-              <Input
-                placeholder="Suche nach Name, Zutaten oder Gruppe"
-                aria-label="Cocktailsuche"
-                value={searchInput}
-                onChange={(event) => setSearchInput(event.target.value)}
-              />
-              <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-300" />
-            </div>
-            <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-soft">
+          <h1 className="text-3xl font-semibold text-slate-900">Cocktail Manager</h1>
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+            <div className="flex w-full flex-col gap-3 md:flex-1 md:flex-row md:items-center">
+              <div className="relative w-full md:flex-1">
+                <Input
+                  placeholder="Suche nach Name, Zutaten oder Gruppe"
+                  aria-label="Cocktailsuche"
+                  className="pr-10"
+                  value={searchInput}
+                  onChange={(event) => setSearchInput(event.target.value)}
+                />
+                <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-300" />
+              </div>
               <Button onClick={handleCreateNew} className="gap-2">
                 <Plus className="h-4 w-4" /> Neuer Cocktail
               </Button>
             </div>
+            <CsvMenu />
           </div>
         </div>
 
         <Tabs value={activeGroup ?? "__all__"} onValueChange={(value) => setActiveGroup(value === "__all__" ? null : value)}>
-          <TabsList className="flex flex-wrap gap-2">
+          <TabsList className="gap-2">
             <TabsTrigger value="__all__">Alle</TabsTrigger>
             {groups.map((group) => (
               <TabsTrigger key={group} value={group} className={cn("capitalize")}>

@@ -2,8 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib/cn";
 
 const Table = ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-  <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
-    <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
+  <div className="overflow-x-auto">
+    <div className="min-w-full rounded-2xl border border-slate-200 bg-white shadow-soft">
+      <table className={cn("w-full min-w-[880px] caption-bottom text-sm", className)} {...props} />
+    </div>
   </div>
 );
 
@@ -18,7 +20,7 @@ const TableBody = ({ className, ...props }: React.HTMLAttributes<HTMLTableSectio
 const TableRow = ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <tr
     className={cn(
-      "group cursor-pointer transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
+      "group cursor-pointer transition even:bg-slate-50/60 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
       className
     )}
     {...props}
