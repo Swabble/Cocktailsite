@@ -1,12 +1,13 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, PencilLine, Trash2 } from "lucide-react";
+import { ArrowLeft, Camera, ImageOff, PencilLine, Star, Trash2 } from "lucide-react";
 import { useCocktailContext } from "@/context/CocktailContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 import type { Cocktail } from "@/types";
 
 const CocktailDetail = () => {
@@ -19,9 +20,13 @@ const CocktailDetail = () => {
     cocktailImages,
     setCocktailImage,
     removeCocktailImage,
-    renameCocktailImage
+    renameCocktailImage,
+    toggleFavorite,
+    isFavorite,
+    renameFavorite
   } = useCocktailContext();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const cocktail = useMemo(() => {
     if (!slug) return undefined;
@@ -69,6 +74,10 @@ const CocktailDetail = () => {
       renameCocktailImage(previousSlug, nextSlug);
     }
 
+    if (previousSlug !== nextSlug) {
+      renameFavorite(previousSlug, nextSlug);
+    }
+
     setIsFormOpen(false);
     if (previousSlug !== nextSlug) {
       navigate(`/cocktail/${nextSlug}`, { replace: true });
@@ -76,15 +85,67 @@ const CocktailDetail = () => {
   };
 
   const ingredients = ingredientsFromRezeptur(cocktail.Rezeptur);
-  const imageSrc = cocktailImages[slugify(cocktail.Cocktail)] ?? null;
+  const slugified = slugify(cocktail.Cocktail);
+  const imageSrc = cocktailImages[slugified] ?? null;
+  const isCurrentFavorite = isFavorite(slugified);
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(slugified);
+  };
+
+  const handleDirectImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setCocktailImage(slugified, reader.result);
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.onerror = () => {
+      console.error("Bild konnte nicht gelesen werden");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveDirectImage = () => {
+    removeCocktailImage(slugified);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   return (
     <div className="mx-auto flex min-h-screen max-w-5xl flex-col gap-8 px-4 pb-16 pt-10">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <Button variant="ghost" onClick={() => navigate("/")} className="gap-2">
           <ArrowLeft className="h-4 w-4" /> Zurück
         </Button>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant={isCurrentFavorite ? "default" : "outline"}
+            className={cn(
+              "gap-2",
+              isCurrentFavorite
+                ? "bg-amber-500 text-white hover:bg-amber-500/90"
+                : "border-amber-200 text-amber-600"
+            )}
+            onClick={handleToggleFavorite}
+          >
+            <Star
+              className={cn(
+                "h-4 w-4",
+                isCurrentFavorite ? "fill-current" : "text-amber-500"
+              )}
+            />
+            {isCurrentFavorite ? "Favorit" : "Favorisieren"}
+          </Button>
           <Button variant="outline" className="gap-2" onClick={() => setIsFormOpen(true)}>
             <PencilLine className="h-4 w-4" /> Bearbeiten
           </Button>
@@ -116,6 +177,14 @@ const CocktailDetail = () => {
         </div>
 
         <div className="space-y-6">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={handleDirectImageSelect}
+          />
           <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             {imageSrc ? (
               <img
@@ -125,10 +194,26 @@ const CocktailDetail = () => {
               />
             ) : (
               <div className="flex h-56 items-center justify-center p-4 text-center text-sm text-slate-400">
-                Noch kein Bild hinterlegt – beim Bearbeiten können Sie ein Foto hinzufügen.
+                Noch kein Bild hinterlegt – fügen Sie direkt hier ein Foto hinzu.
               </div>
             )}
           </figure>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="gap-2"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Camera className="h-4 w-4" />
+              {imageSrc ? "Bild aktualisieren" : "Bild hinzufügen"}
+            </Button>
+            {imageSrc && (
+              <Button type="button" variant="ghost" className="gap-2" onClick={handleRemoveDirectImage}>
+                <ImageOff className="h-4 w-4" /> Bild entfernen
+              </Button>
+            )}
+          </div>
           <div>
             <h2 className="text-lg font-semibold text-slate-800">Zubereitung</h2>
             <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-slate-600">
@@ -145,7 +230,7 @@ const CocktailDetail = () => {
       </section>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[88vh] w-full max-w-4xl overflow-y-auto">
           <DialogTitle>{cocktail.Cocktail} bearbeiten</DialogTitle>
           <DialogDescription>
             Aktualisieren Sie die Daten und speichern Sie, um den Datensatz zu überschreiben.

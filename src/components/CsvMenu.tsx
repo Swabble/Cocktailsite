@@ -5,6 +5,7 @@ import { useCocktailContext } from "@/context/CocktailContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { parseCocktailCsvStrict, serialiseCocktailsToCsv } from "@/lib/csv";
+import { cn } from "@/lib/cn";
 
 const dateFormatter = new Intl.DateTimeFormat("de-DE", {
   dateStyle: "short",
@@ -17,9 +18,13 @@ const CsvMenu = () => {
     replaceAll,
     csvVersions,
     activeVersionId,
-    restoreVersion
+    restoreVersion,
+    groups,
+    activeGroup,
+    setActiveGroup
   } = useCocktailContext();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -34,15 +39,35 @@ const CsvMenu = () => {
   );
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isMounted || !isVisible) return;
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        closeMenu();
       }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [isOpen]);
+  }, [isMounted, isVisible]);
+
+  useEffect(() => {
+    if (!isMounted || isVisible) return;
+    const timeout = window.setTimeout(() => {
+      setIsMounted(false);
+      setError(null);
+    }, 220);
+    return () => window.clearTimeout(timeout);
+  }, [isMounted, isVisible]);
+
+  const openMenu = () => {
+    setIsMounted(true);
+    setFeedback(null);
+    setError(null);
+    requestAnimationFrame(() => setIsVisible(true));
+  };
+
+  const closeMenu = () => {
+    setIsVisible(false);
+  };
 
   const handleExport = () => {
     const csvString = serialiseCocktailsToCsv(cocktails);
@@ -96,7 +121,7 @@ const CsvMenu = () => {
 
       setFeedback(`CSV "${file.name}" erfolgreich importiert.`);
       setError(null);
-      setIsOpen(false);
+      closeMenu();
     } catch (importError) {
       console.error(importError);
       setError("Die Datei konnte nicht gelesen werden.");
@@ -108,9 +133,9 @@ const CsvMenu = () => {
     }
   };
 
-  const closeMenu = () => {
-    setIsOpen(false);
-    setError(null);
+  const handleSelectGroup = (value: string | null) => {
+    setActiveGroup(value);
+    closeMenu();
   };
 
   return (
@@ -121,16 +146,28 @@ const CsvMenu = () => {
         size="icon"
         aria-label="CSV-Menü öffnen"
         className="h-12 w-12 rounded-full border border-slate-200 bg-white text-slate-700 shadow-soft"
-        onClick={() => setIsOpen(true)}
+        onClick={openMenu}
       >
         <Menu className="h-5 w-5" />
       </Button>
 
-      {isOpen &&
+      {isMounted &&
         createPortal(
           <>
-            <div className="fixed inset-0 z-40 bg-slate-900/50" aria-hidden="true" onClick={closeMenu} />
-            <aside className="fixed inset-y-0 right-0 z-50 w-full max-w-md translate-x-0 bg-white shadow-xl transition-transform duration-200 ease-out">
+            <div
+              className={cn(
+                "fixed inset-0 z-40 bg-slate-900/50 transition-opacity duration-300",
+                isVisible ? "opacity-100" : "pointer-events-none opacity-0"
+              )}
+              aria-hidden="true"
+              onClick={closeMenu}
+            />
+            <aside
+              className={cn(
+                "fixed inset-y-0 right-0 z-50 w-full max-w-md transform bg-white shadow-xl transition-transform duration-300 ease-out",
+                isVisible ? "translate-x-0" : "translate-x-full"
+              )}
+            >
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
                 <span className="flex items-center gap-2 text-base font-semibold text-slate-800">
                   <History className="h-5 w-5" /> CSV-Verwaltung
@@ -177,6 +214,39 @@ const CsvMenu = () => {
                 </div>
 
                 <div className="space-y-3">
+                  <h3 className="text-sm font-semibold text-slate-700">Gruppen auswählen</h3>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Button
+                      type="button"
+                      variant={activeGroup === null ? "default" : "outline"}
+                      className="justify-start gap-2"
+                      onClick={() => handleSelectGroup(null)}
+                    >
+                      Alle
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={activeGroup === "__favorites__" ? "default" : "outline"}
+                      className="justify-start gap-2"
+                      onClick={() => handleSelectGroup("__favorites__")}
+                    >
+                      Favoriten
+                    </Button>
+                    {groups.map((group) => (
+                      <Button
+                        key={group}
+                        type="button"
+                        variant={activeGroup === group ? "default" : "outline"}
+                        className="justify-start capitalize"
+                        onClick={() => handleSelectGroup(group)}
+                      >
+                        {group}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
                   <h3 className="text-sm font-semibold text-slate-700">Gespeicherte Versionen</h3>
                   <ul className="space-y-3">
                     {versionOptions.length === 0 && (
@@ -204,7 +274,7 @@ const CsvMenu = () => {
                                 restoreVersion(version.id);
                                 setFeedback(`Version "${version.label}" wurde aktiviert.`);
                                 setError(null);
-                                setIsOpen(false);
+                                closeMenu();
                               }}
                             >
                               Übernehmen

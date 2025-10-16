@@ -196,193 +196,199 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
   };
 
   return (
-    <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-name">
-            Cocktail *
-          </label>
-          <Input
-            id="cocktail-name"
-            value={formValue.Cocktail}
-            onChange={handleChange("Cocktail")}
-            placeholder="z. B. Espresso Martini"
-            required
-            aria-invalid={errors.Cocktail ? "true" : "false"}
-            aria-describedby={errors.Cocktail ? "error-cocktail" : undefined}
-          />
-          {errors.Cocktail && (
-            <p className="text-xs text-red-500" id="error-cocktail">
-              {errors.Cocktail}
-            </p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-group">
-            Gruppe
-          </label>
-          <select
-            id="cocktail-group"
-            value={groupSelection}
-            onChange={handleGroupSelect}
-            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          >
-            <option value="">Keine Gruppe</option>
-            {groups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-            <option value="__custom__">Neue Gruppe hinzufügen…</option>
-          </select>
-          {groupSelection === "__custom__" && (
-            <Input
-              id="cocktail-custom-group"
-              value={customGroup}
-              onChange={handleCustomGroupChange}
-              placeholder="Neue Gruppe eingeben"
-              className="mt-2"
-            />
-          )}
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-rezeptur">
-          Rezeptur *
-        </label>
-        <Textarea
-          id="cocktail-rezeptur"
-          value={formValue.Rezeptur}
-          onChange={handleChange("Rezeptur")}
-          placeholder="Zutaten, kommagetrennt"
-          required
-          aria-invalid={errors.Rezeptur ? "true" : "false"}
-          aria-describedby={errors.Rezeptur ? "error-rezeptur" : undefined}
-        />
-        {errors.Rezeptur && (
-          <p className="text-xs text-red-500" id="error-rezeptur">
-            {errors.Rezeptur}
-          </p>
-        )}
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-deko">
-            Deko
-          </label>
-          <select
-            id="cocktail-deko"
-            value={decorationSelection}
-            onChange={handleDecorationSelect}
-            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          >
-            <option value="">Keine Deko</option>
-            {decorations.map((decoration) => (
-              <option key={decoration} value={decoration}>
-                {decoration}
-              </option>
-            ))}
-            <option value="__custom__">Neue Deko hinzufügen…</option>
-          </select>
-          {decorationSelection === "__custom__" && (
-            <Input
-              id="cocktail-custom-deko"
-              value={customDecoration}
-              onChange={handleCustomDecorationChange}
-              placeholder="Neue Deko eingeben"
-              className="mt-2"
-            />
-          )}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-glas">
-            Glas
-          </label>
-          <select
-            id="cocktail-glas"
-            value={glassSelection}
-            onChange={handleGlassSelect}
-            className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-          >
-            <option value="">Kein Glas angegeben</option>
-            {glasses.map((glass) => (
-              <option key={glass} value={glass}>
-                {glass}
-              </option>
-            ))}
-            <option value="__custom__">Neues Glas hinzufügen…</option>
-          </select>
-          {glassSelection === "__custom__" && (
-            <Input
-              id="cocktail-custom-glas"
-              value={customGlass}
-              onChange={handleCustomGlassChange}
-              placeholder="Neues Glas eingeben"
-              className="mt-2"
-            />
-          )}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-zubereitung">
-            Zubereitung
-          </label>
-          <Textarea
-            id="cocktail-zubereitung"
-            value={formValue.Zubereitung ?? ""}
-            onChange={handleChange("Zubereitung")}
-            placeholder="z. B. kräftig shaken und doppelt abseihen"
-            rows={3}
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-image">
-          Bild
-        </label>
-        <input
-          ref={fileInputRef}
-          id="cocktail-image"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          className="hidden"
-          onChange={handleImageSelect}
-        />
-        {imagePreview ? (
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <figure className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-              <img
-                src={imagePreview}
-                alt={`Bild von ${formValue.Cocktail || "Cocktail"}`}
-                className="h-36 w-36 object-cover"
+    <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
+      <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-name">
+                Cocktail *
+              </label>
+              <Input
+                id="cocktail-name"
+                value={formValue.Cocktail}
+                onChange={handleChange("Cocktail")}
+                placeholder="z. B. Espresso Martini"
+                required
+                aria-invalid={errors.Cocktail ? "true" : "false"}
+                aria-describedby={errors.Cocktail ? "error-cocktail" : undefined}
               />
-            </figure>
-            <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
-                Neues Bild wählen
-              </Button>
-              <Button type="button" variant="ghost" size="sm" onClick={handleRemoveImage}>
-                Bild entfernen
-              </Button>
+              {errors.Cocktail && (
+                <p className="text-xs text-red-500" id="error-cocktail">
+                  {errors.Cocktail}
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-group">
+                Gruppe
+              </label>
+              <select
+                id="cocktail-group"
+                value={groupSelection}
+                onChange={handleGroupSelect}
+                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              >
+                <option value="">Keine Gruppe</option>
+                {groups.map((group) => (
+                  <option key={group} value={group}>
+                    {group}
+                  </option>
+                ))}
+                <option value="__custom__">Neue Gruppe hinzufügen…</option>
+              </select>
+              {groupSelection === "__custom__" && (
+                <Input
+                  id="cocktail-custom-group"
+                  value={customGroup}
+                  onChange={handleCustomGroupChange}
+                  placeholder="Neue Gruppe eingeben"
+                  className="mt-2"
+                />
+              )}
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-            <p>
-              Optionales Foto hinzufügen oder mit der Gerätekamera aufnehmen, damit Gäste den Cocktail sofort
-              erkennen.
-            </p>
-            <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
-              Bild aufnehmen/hochladen
-            </Button>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-rezeptur">
+              Rezeptur *
+            </label>
+            <Textarea
+              id="cocktail-rezeptur"
+              value={formValue.Rezeptur}
+              onChange={handleChange("Rezeptur")}
+              placeholder="Zutaten, kommagetrennt"
+              required
+              aria-invalid={errors.Rezeptur ? "true" : "false"}
+              aria-describedby={errors.Rezeptur ? "error-rezeptur" : undefined}
+            />
+            {errors.Rezeptur && (
+              <p className="text-xs text-red-500" id="error-rezeptur">
+                {errors.Rezeptur}
+              </p>
+            )}
           </div>
-        )}
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-deko">
+                Deko
+              </label>
+              <select
+                id="cocktail-deko"
+                value={decorationSelection}
+                onChange={handleDecorationSelect}
+                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              >
+                <option value="">Keine Deko</option>
+                {decorations.map((decoration) => (
+                  <option key={decoration} value={decoration}>
+                    {decoration}
+                  </option>
+                ))}
+                <option value="__custom__">Neue Deko hinzufügen…</option>
+              </select>
+              {decorationSelection === "__custom__" && (
+                <Input
+                  id="cocktail-custom-deko"
+                  value={customDecoration}
+                  onChange={handleCustomDecorationChange}
+                  placeholder="Neue Deko eingeben"
+                  className="mt-2"
+                />
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-glas">
+                Glas
+              </label>
+              <select
+                id="cocktail-glas"
+                value={glassSelection}
+                onChange={handleGlassSelect}
+                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              >
+                <option value="">Kein Glas angegeben</option>
+                {glasses.map((glass) => (
+                  <option key={glass} value={glass}>
+                    {glass}
+                  </option>
+                ))}
+                <option value="__custom__">Neues Glas hinzufügen…</option>
+              </select>
+              {glassSelection === "__custom__" && (
+                <Input
+                  id="cocktail-custom-glas"
+                  value={customGlass}
+                  onChange={handleCustomGlassChange}
+                  placeholder="Neues Glas eingeben"
+                  className="mt-2"
+                />
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-zubereitung">
+                Zubereitung
+              </label>
+              <Textarea
+                id="cocktail-zubereitung"
+                value={formValue.Zubereitung ?? ""}
+                onChange={handleChange("Zubereitung")}
+                placeholder="z. B. kräftig shaken und doppelt abseihen"
+                rows={3}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-image">
+            Bild
+          </label>
+          <input
+            ref={fileInputRef}
+            id="cocktail-image"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={handleImageSelect}
+          />
+          <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4">
+            {imagePreview ? (
+              <div className="flex flex-col gap-4">
+                <figure className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <img
+                    src={imagePreview}
+                    alt={`Bild von ${formValue.Cocktail || "Cocktail"}`}
+                    className="h-40 w-full object-cover"
+                  />
+                </figure>
+                <div className="flex flex-wrap gap-2">
+                  <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+                    Neues Bild wählen
+                  </Button>
+                  <Button type="button" variant="ghost" size="sm" onClick={handleRemoveImage}>
+                    Bild entfernen
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex h-full flex-col justify-between gap-4 text-sm text-slate-500">
+                <p>
+                  Optionales Foto hinzufügen oder mit der Gerätekamera aufnehmen, damit Gäste den Cocktail sofort
+                  erkennen.
+                </p>
+                <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+                  Bild aufnehmen/hochladen
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center justify-end gap-2 pt-4">
+      <div className="flex flex-wrap items-center justify-end gap-2 pt-4">
         <Button type="button" variant="outline" onClick={onCancel}>
           Abbrechen
         </Button>

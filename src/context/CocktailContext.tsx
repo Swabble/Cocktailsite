@@ -8,7 +8,12 @@ import {
   type ReactNode
 } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Cocktail, CocktailImageMap, CsvVersion, CsvVersionSource } from "@/types";
+import type {
+  Cocktail,
+  CocktailImageMap,
+  CsvVersion,
+  CsvVersionSource
+} from "@/types";
 import { parseCocktailCsv } from "@/lib/csv";
 import {
   cocktailsEqual,
@@ -23,6 +28,7 @@ const COCKTAIL_QUERY_KEY = ["cocktails"] as const;
 const HISTORY_STORAGE_KEY = "cocktail-manager:csv-history";
 const HISTORY_ACTIVE_KEY = "cocktail-manager:csv-history-active";
 const IMAGE_STORAGE_KEY = "cocktail-manager:images";
+const FAVORITES_STORAGE_KEY = "cocktail-manager:favorites";
 
 type ReplaceOptions = {
   recordHistory?: boolean;
@@ -117,6 +123,7 @@ type CocktailContextValue = {
   error?: Error;
   csvVersions: CsvVersion[];
   activeVersionId: string | null;
+  favorites: string[];
   setActiveGroup: (group: string | null) => void;
   setSearch: (value: string) => void;
   upsertCocktail: (cocktail: Cocktail) => void;
@@ -126,6 +133,9 @@ type CocktailContextValue = {
   setCocktailImage: (slug: string, dataUrl: string) => void;
   removeCocktailImage: (slug: string) => void;
   renameCocktailImage: (oldSlug: string, newSlug: string) => void;
+  toggleFavorite: (slug: string) => void;
+  isFavorite: (slug: string) => boolean;
+  renameFavorite: (oldSlug: string, newSlug: string) => void;
 };
 
 const CocktailContext = createContext<CocktailContextValue | undefined>(undefined);
@@ -145,6 +155,18 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const [csvVersions, setCsvVersions] = useState<CsvVersion[]>(() => loadStoredHistory());
   const [activeVersionId, setActiveVersionId] = useState<string | null>(() => loadStoredActiveId());
   const [cocktailImages, setCocktailImages] = useState<CocktailImageMap>(() => loadStoredImages());
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const stored = window.localStorage.getItem(FAVORITES_STORAGE_KEY);
+      if (!stored) return [];
+      const parsed = JSON.parse(stored);
+      return Array.isArray(parsed) ? parsed.filter((item) => typeof item === "string") : [];
+    } catch (error) {
+      console.warn("Konnte Favoriten nicht laden", error);
+      return [];
+    }
+  });
 
   const { data, isLoading, error } = useQuery({
     queryKey: COCKTAIL_QUERY_KEY,
@@ -161,6 +183,14 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
         return previous;
       }
       return Object.fromEntries(filteredEntries);
+    });
+  }, [cocktails]);
+
+  useEffect(() => {
+    setFavorites((previous) => {
+      const allowed = new Set(cocktails.map((item) => slugify(item.Cocktail)));
+      const filtered = previous.filter((slug) => allowed.has(slug));
+      return filtered.length === previous.length ? previous : filtered;
     });
   }, [cocktails]);
 
@@ -184,6 +214,11 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   }, [cocktailImages]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
     if (!cocktails.length) return;
     setCsvVersions((previous) => {
       if (previous.length > 0) {
@@ -201,11 +236,25 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     setActiveVersionId((current) => current ?? csvVersions[0]?.id ?? null);
   }, [csvVersions]);
 
+  const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
+
   const filteredCocktails = useMemo(() => {
     const searched = searchCocktails(cocktails, search);
-    if (!activeGroup) return searched;
+
+    if (activeGroup === "__favorites__") {
+      return searched.filter((cocktail) => favoriteSet.has(slugify(cocktail.Cocktail)));
+    }
+
+    if (!activeGroup) {
+      return searched;
+    }
+
+    if (search.trim().length > 0) {
+      return searched;
+    }
+
     return searched.filter((cocktail) => (cocktail.Gruppe ?? "") === activeGroup);
-  }, [cocktails, search, activeGroup]);
+  }, [cocktails, search, activeGroup, favoriteSet]);
 
   const groups = useMemo(() => getUniqueGroups(cocktails), [cocktails]);
   const decorations = useMemo(() => getUniqueDecorations(cocktails), [cocktails]);
@@ -316,6 +365,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       );
       setActiveVersionId(null);
       removeCocktailImage(slugify(cocktail.Cocktail));
+      setFavorites((prev) => prev.filter((slug) => slug !== slugify(cocktail.Cocktail)));
     },
     [removeCocktailImage, updateCocktails]
   );
@@ -340,6 +390,12 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       } else if (options?.activeVersionId !== undefined) {
         setActiveVersionId(options.activeVersionId);
       }
+      setFavorites((previous) => {
+        const allowed = new Set(
+          cocktailList.map((item) => slugify(item.Cocktail))
+        );
+        return previous.filter((slug) => allowed.has(slug));
+      });
     },
     [updateCocktails, recordVersion]
   );
@@ -356,6 +412,25 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     [csvVersions, replaceAll]
   );
 
+  const toggleFavorite = useCallback((slug: string) => {
+    setFavorites((previous) => {
+      if (previous.includes(slug)) {
+        return previous.filter((item) => item !== slug);
+      }
+      return [slug, ...previous];
+    });
+  }, []);
+
+  const isFavorite = useCallback((slug: string) => favoriteSet.has(slug), [favoriteSet]);
+
+  const renameFavorite = useCallback((oldSlug: string, newSlug: string) => {
+    if (!favoriteSet.has(oldSlug)) return;
+    setFavorites((previous) => {
+      const filtered = previous.filter((item) => item !== oldSlug && item !== newSlug);
+      return newSlug ? [newSlug, ...filtered] : filtered;
+    });
+  }, [favoriteSet]);
+
   const value: CocktailContextValue = {
     cocktails,
     filteredCocktails,
@@ -370,6 +445,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     error: error instanceof Error ? error : undefined,
     csvVersions,
     activeVersionId,
+    favorites,
     setActiveGroup,
     setSearch,
     upsertCocktail,
@@ -378,7 +454,10 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     restoreVersion,
     setCocktailImage,
     removeCocktailImage,
-    renameCocktailImage
+    renameCocktailImage,
+    toggleFavorite,
+    isFavorite,
+    renameFavorite
   };
 
   return <CocktailContext.Provider value={value}>{children}</CocktailContext.Provider>;
