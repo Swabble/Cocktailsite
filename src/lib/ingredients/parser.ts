@@ -33,6 +33,12 @@ export type ParsedIngredient = {
   tokens: IngredientToken[];
 };
 
+export type IngredientSegment = {
+  text: string;
+  start: number;
+  end: number;
+};
+
 const FRACTION_MAP: Record<string, number> = {
   "½": 0.5,
   "¼": 0.25,
@@ -114,6 +120,65 @@ const cleanupIngredientRaw = (value: string): string =>
     .replace(/\s+,/g, ",")
     .replace(/,+$/g, "")
     .trim();
+
+const isDecimalComma = (value: string, index: number): boolean => {
+  const previous = value[index - 1];
+  const next = value[index + 1];
+  return Boolean(previous && next && /\d/.test(previous) && /\d/.test(next) && next !== " ");
+};
+
+export const splitIngredientTuples = (value: string): IngredientSegment[] => {
+  const segments: IngredientSegment[] = [];
+  const length = value.length;
+  let start: number | null = null;
+  let depth = 0;
+
+  const pushSegment = (rawStart: number, rawEnd: number) => {
+    let segmentStart = rawStart;
+    let segmentEnd = rawEnd;
+
+    while (segmentStart < segmentEnd && /\s/.test(value[segmentStart] ?? "")) {
+      segmentStart += 1;
+    }
+
+    while (segmentEnd > segmentStart && /\s/.test(value[segmentEnd - 1] ?? "")) {
+      segmentEnd -= 1;
+    }
+
+    if (segmentEnd <= segmentStart) return;
+    segments.push({ text: value.slice(segmentStart, segmentEnd), start: segmentStart, end: segmentEnd });
+  };
+
+  for (let index = 0; index <= length; index += 1) {
+    const char = value[index] ?? "\n";
+    const isLineBreak = char === "\n" || char === "\r" || index === length;
+    const isComma = char === ",";
+
+    if (char === "(") {
+      depth += 1;
+    } else if (char === ")" && depth > 0) {
+      depth -= 1;
+    }
+
+    if (start === null) {
+      if (!isLineBreak && (!isComma || isDecimalComma(value, index))) {
+        if (!/\s/.test(char)) {
+          start = index;
+        }
+      }
+      continue;
+    }
+
+    if (isLineBreak || (isComma && !isDecimalComma(value, index) && depth === 0)) {
+      pushSegment(start, index);
+      start = null;
+      depth = 0;
+      continue;
+    }
+  }
+
+  return segments;
+};
 
 const skipWhitespace = (input: string, position: number): number => {
   const match = input.slice(position).match(/^\s+/);

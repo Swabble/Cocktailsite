@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import type { ParseError } from "papaparse";
 import type { Cocktail } from "@/types";
 import { ingredientsFromRezeptur, normaliseKey, normaliseValue, slugify } from "./utils";
 
@@ -42,19 +43,19 @@ export const parseCocktailCsvStrict = (text: string): ParsedCocktailCsv => {
   const warnings: string[] = [];
 
   if (parsed.errors.length) {
-    parsed.errors.forEach((error) => {
+    parsed.errors.forEach((error: ParseError) => {
       errors.push(`Zeile ${error.row ?? "?"}: ${error.message}`);
     });
   }
 
-  const fields = parsed.meta.fields?.map((field) => normaliseKey(field ?? "")) ?? [];
+  const fields = parsed.meta.fields?.map((field: string | undefined) => normaliseKey(field ?? "")) ?? [];
   const missingColumns = CSV_COLUMNS.filter((column) => !fields.includes(column));
   if (missingColumns.length > 0) {
     errors.push(`Folgende Spalten fehlen: ${missingColumns.join(", ")}`);
   }
 
   const mapped = parsed.data
-    .map((row) => sanitiseCocktailRow(row))
+    .map((row: Record<string, string>) => sanitiseCocktailRow(row))
     .filter((row): row is Cocktail => row !== null);
 
   const invalidRows = parsed.data.length - mapped.length;
