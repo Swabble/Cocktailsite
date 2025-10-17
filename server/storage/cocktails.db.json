@@ -1,0 +1,2250 @@
+{
+  "cocktails": {
+    "mojito": {
+      "id": "d0a64526-a328-474e-9dc6-9d96fb0b4ffd",
+      "slug": "mojito",
+      "data": {
+        "Gruppe": "Mojitos",
+        "Cocktail": "Mojito",
+        "Rezeptur": "5 cl weißer Rum, 2 TL Rohrzucker, 1 Limette, Minze, Crushed Ice, Soda",
+        "Deko": "Minzzweig",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 0
+    },
+    "mojito-himbeer": {
+      "id": "906f59dd-fdcd-402b-bf47-9844e657752e",
+      "slug": "mojito-himbeer",
+      "data": {
+        "Gruppe": "Mojitos",
+        "Cocktail": "Mojito Himbeer",
+        "Rezeptur": "↳ plus Himbeerpüree",
+        "Deko": "Minzzweig",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 1
+    },
+    "mojito-erdbeer": {
+      "id": "3cf660b9-2954-4727-8148-1a8904d3617b",
+      "slug": "mojito-erdbeer",
+      "data": {
+        "Gruppe": "Mojitos",
+        "Cocktail": "Mojito Erdbeer",
+        "Rezeptur": "↳ plus Erdbeerpüree",
+        "Deko": "Minzzweig",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 2
+    },
+    "mojito-mango": {
+      "id": "258f22f2-501c-4630-8c0f-6b64996b3dce",
+      "slug": "mojito-mango",
+      "data": {
+        "Gruppe": "Mojitos",
+        "Cocktail": "Mojito Mango",
+        "Rezeptur": "↳ plus Mangopüree",
+        "Deko": "Minzzweig",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 3
+    },
+    "mojito-wilder-mann": {
+      "id": "8b10a1c2-cce4-4221-a636-6981ba057d49",
+      "slug": "mojito-wilder-mann",
+      "data": {
+        "Gruppe": "Mojitos",
+        "Cocktail": "Mojito Wilder Mann",
+        "Rezeptur": "↳ kein Wasser, Ginger Beer, Erdbeerpüree",
+        "Deko": "Minzzweig",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 4
+    },
+    "caipi": {
+      "id": "c492bc10-ec3e-4c41-947b-716cebeb743d",
+      "slug": "caipi",
+      "data": {
+        "Gruppe": "Caipirinhas",
+        "Cocktail": "Caipi",
+        "Rezeptur": "5 cl Cachaça, 1 Limette, brauner Zucker, Crushed Ice",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "kleines Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 5
+    },
+    "caipi-himbeere": {
+      "id": "211eb1d3-48b2-4f6f-9b8a-e07b7c258e54",
+      "slug": "caipi-himbeere",
+      "data": {
+        "Gruppe": "Caipirinhas",
+        "Cocktail": "Caipi Himbeere",
+        "Rezeptur": "↳ plus Himbeerpüree",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "kleines Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 6
+    },
+    "caipi-erdbeere": {
+      "id": "ab9debe9-11df-4c06-847b-e3a5df7e3772",
+      "slug": "caipi-erdbeere",
+      "data": {
+        "Gruppe": "Caipirinhas",
+        "Cocktail": "Caipi Erdbeere",
+        "Rezeptur": "↳ plus Erdbeerpüree",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "kleines Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 7
+    },
+    "caipi-mango": {
+      "id": "c04e8acd-8f44-47c5-b016-4cc38b02409a",
+      "slug": "caipi-mango",
+      "data": {
+        "Gruppe": "Caipirinhas",
+        "Cocktail": "Caipi Mango",
+        "Rezeptur": "↳ plus Mangopüree",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "kleines Granity",
+        "Zubereitung": "gebaut mit crushed Ice, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 8
+    },
+    "daiquiri": {
+      "id": "a7e41fa4-24d1-4d9f-8885-3de646e6eba4",
+      "slug": "daiquiri",
+      "data": {
+        "Gruppe": "Daiquiri",
+        "Cocktail": "Daiquiri",
+        "Rezeptur": "6 cl weißer Rum, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup",
+        "Deko": "Limettenzeste",
+        "Glas": "Cocktailschale",
+        "Zubereitung": "shaken, double strain"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 9
+    },
+    "margaritas": {
+      "id": "3a2c31cc-95f5-4188-8a3b-21a833e7975b",
+      "slug": "margaritas",
+      "data": {
+        "Gruppe": "Margaritas",
+        "Cocktail": "Margaritas",
+        "Rezeptur": "6 cl weißer Tequila, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup",
+        "Deko": "Limettenzeste, Salzrand",
+        "Glas": "Cocktailschale",
+        "Zubereitung": "shaken, double strain"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 10
+    },
+    "pornstar-martini": {
+      "id": "932882a6-b978-46c0-98f6-6ad145bcf8a2",
+      "slug": "pornstar-martini",
+      "data": {
+        "Gruppe": "Martinis",
+        "Cocktail": "Pornstar Martini",
+        "Rezeptur": "14 cl Pornstar Premix, Prosecco",
+        "Deko": "Dörrorange",
+        "Glas": "Cocktailschale",
+        "Zubereitung": "shaken, gebaut ohne Eis"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 11
+    },
+    "espresso-martini": {
+      "id": "626786be-0661-43a4-b400-88640e9f0658",
+      "slug": "espresso-martini",
+      "data": {
+        "Gruppe": "Martinis",
+        "Cocktail": "Espresso Martini",
+        "Rezeptur": "4 cl Wodka, Espresso, 3 cl Kahlua, Dash Zuckersirup",
+        "Deko": "3 Espressobohnen",
+        "Glas": "Cocktailschale",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 12
+    },
+    "tiramisu-martini": {
+      "id": "41a18ef9-3087-4409-ad8c-abb8f7001815",
+      "slug": "tiramisu-martini",
+      "data": {
+        "Gruppe": "Martinis",
+        "Cocktail": "Tiramisu Martini",
+        "Rezeptur": "Espresso, 2 Bl Mascarpone, 1 Stk. Eigelb, 2 cl Kahlua, 2 cl dunkler Rum, 2 cl Vodka, 1 Dash Zuckersirup",
+        "Deko": "",
+        "Glas": "",
+        "Zubereitung": ""
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 13
+    },
+    "whiskey-sour": {
+      "id": "de34c430-623a-4ec0-bd7b-1e71f638e1c2",
+      "slug": "whiskey-sour",
+      "data": {
+        "Gruppe": "Sours",
+        "Cocktail": "Whiskey Sour",
+        "Rezeptur": "6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Dash",
+        "Deko": "Orangenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 14
+    },
+    "amaretto-sour": {
+      "id": "38567762-637b-4191-8262-c8df11920fe3",
+      "slug": "amaretto-sour",
+      "data": {
+        "Gruppe": "Sours",
+        "Cocktail": "Amaretto Sour",
+        "Rezeptur": "6 cl Amaretto, 3 cl Zitronensaft, 2 cl Zuckersirup",
+        "Deko": "Orangenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 15
+    },
+    "gin-sour": {
+      "id": "d8026206-ebb2-4d93-8d06-0250be26a372",
+      "slug": "gin-sour",
+      "data": {
+        "Gruppe": "Sours",
+        "Cocktail": "Gin Sour",
+        "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup",
+        "Deko": "Zitronenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 16
+    },
+    "aperol-sour": {
+      "id": "55b8bb2a-e121-4f10-985e-bf8f2386f31d",
+      "slug": "aperol-sour",
+      "data": {
+        "Gruppe": "Sours",
+        "Cocktail": "Aperol Sour",
+        "Rezeptur": "4 cl Aperol, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup",
+        "Deko": "Orangenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 17
+    },
+    "lychee-sour": {
+      "id": "55430ac6-3f2f-49be-ba90-d60762b74412",
+      "slug": "lychee-sour",
+      "data": {
+        "Gruppe": "Sours",
+        "Cocktail": "Lychee Sour",
+        "Rezeptur": "4 cl Lycheelikör, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup",
+        "Deko": "Zitronenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 18
+    },
+    "gin-fizz": {
+      "id": "0969d4e2-bf5e-475d-a789-68fdcc653a9b",
+      "slug": "gin-fizz",
+      "data": {
+        "Gruppe": "Fizz & Smash",
+        "Cocktail": "Gin Fizz",
+        "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, Soda",
+        "Deko": "Zirtonenscheibe",
+        "Glas": "Longdrinkglas",
+        "Zubereitung": "shaken, gebaut auf crushed Ice"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 19
+    },
+    "gin-basis-smash": {
+      "id": "2ca2908b-b299-401d-9c38-3d453a30b24f",
+      "slug": "gin-basis-smash",
+      "data": {
+        "Gruppe": "Fizz & Smash",
+        "Cocktail": "Gin Basis Smash",
+        "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, 3 Basilikumzweige",
+        "Deko": "Basilikumblatt",
+        "Glas": "Tumbler",
+        "Zubereitung": "hardshake, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 20
+    },
+    "whiskey-smash": {
+      "id": "e10d0050-13a0-42ff-a78d-b0ae40a11bda",
+      "slug": "whiskey-smash",
+      "data": {
+        "Gruppe": "Fizz & Smash",
+        "Cocktail": "Whiskey Smash",
+        "Rezeptur": "6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Minzzweig",
+        "Deko": "Minzzweig",
+        "Glas": "Tumbler",
+        "Zubereitung": "hardshake, double strain, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 21
+    },
+    "bahama-mama": {
+      "id": "320f20b0-3a5f-4a2f-8849-c0a27b092da7",
+      "slug": "bahama-mama",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Bahama Mama",
+        "Rezeptur": "2 cl weißer Rum, 2 cl dunkler Rum, 2 cl 73% Rum, 1 cl Apricot, 3 cl Mandelsirup, 2 cl Zitrone, 2 cl Limejuice, Ananas Filler",
+        "Deko": "Dörr-Orange",
+        "Glas": "Cocktailglas",
+        "Zubereitung": "geshaked"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 22
+    },
+    "mai-tai": {
+      "id": "3c3ff596-1d77-4e41-8b67-f57ece22d341",
+      "slug": "mai-tai",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Mai Tai",
+        "Rezeptur": "5 cl dunkler Rum, 1 cl Cointreau, 3 cl Lime Juice, 2 cl Mandelsirup",
+        "Deko": "Limettenscheibe",
+        "Glas": "Tumbler",
+        "Zubereitung": "geshaked"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 23
+    },
+    "painkiller": {
+      "id": "580a97d1-ab80-4780-8c54-5b0504999439",
+      "slug": "painkiller",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Painkiller",
+        "Rezeptur": "5 cl dunkler Rum, 2 cl Kokossirup, 3 cl Ananassaft, 3 cl O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Kupferbecher",
+        "Zubereitung": "gebaut auf Eiswürfel, gerührt"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 24
+    },
+    "planters-punch": {
+      "id": "fe785ff7-9f69-4393-9132-7681df238537",
+      "slug": "planters-punch",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Planter’s Punch",
+        "Rezeptur": "4 cl dunkler Rum, 2 cl weißer Rum, 2 cl Zitronensaft, 2 cl Grenadine, Ananas & O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 25
+    },
+    "zombie": {
+      "id": "964f03cf-e599-47f2-be27-de273cbc7b2e",
+      "slug": "zombie",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Zombie",
+        "Rezeptur": "2 cl dunkler Rum, 2 cl weißer Rum, 2 cl 73% Rum, 1 cl Apricot, 2 cl Zitrone, 2 cl Lime, 2 cl Grenadine, O-Saft Filler",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 26
+    },
+    "jungle-bird": {
+      "id": "9e4b7565-631f-4af7-a89b-ba268dd0463d",
+      "slug": "jungle-bird",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Jungle Bird",
+        "Rezeptur": "4 cl Gin, 2cl Campari, 2 cl Lime Juice, 2cl Zuckersirup, Ananassaft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 27
+    },
+    "hawaiian-volcano": {
+      "id": "774c0829-551f-4e28-95fb-d3e17638fb9d",
+      "slug": "hawaiian-volcano",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Hawaiian Volcano",
+        "Rezeptur": "2 cl weißer Rum, 2 cl Southern Comfort, 2 cl Amaretto, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 28
+    },
+    "almond-joy": {
+      "id": "1d58bd5e-70c1-4b7b-85a1-28f4c6d1a8d8",
+      "slug": "almond-joy",
+      "data": {
+        "Gruppe": "Tiki & Tropical",
+        "Cocktail": "Almond Joy",
+        "Rezeptur": "4 cl Amaretto, 2 cl Schokolikör, 3 cl Kokossirup, 2 cl Sahne",
+        "Deko": "Kakaopulver",
+        "Glas": "Tumbler",
+        "Zubereitung": "shaken, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 29
+    },
+    "moscow-mule": {
+      "id": "9ace4758-2a92-4e58-a970-ba9d9cb9085a",
+      "slug": "moscow-mule",
+      "data": {
+        "Gruppe": "Mules",
+        "Cocktail": "Moscow Mule",
+        "Rezeptur": "6 cl Wodka, Gurkenscheibe, ½ Limette, Ginger Beer",
+        "Deko": "Minzzweig, Gurkenscheibe",
+        "Glas": "Kupferbecher",
+        "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 30
+    },
+    "london-mule": {
+      "id": "ff5816bd-6f0a-4a72-93c9-d7008bc4ebd1",
+      "slug": "london-mule",
+      "data": {
+        "Gruppe": "Mules",
+        "Cocktail": "London Mule",
+        "Rezeptur": "6 cl Gin, Gurkenscheibe, ½ Limette, Ginger Beer",
+        "Deko": "Minzzweig, Gurkenscheibe",
+        "Glas": "Kupferbecher",
+        "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 31
+    },
+    "mexico-mule": {
+      "id": "ecc41eda-375d-4068-8128-9623d2004b88",
+      "slug": "mexico-mule",
+      "data": {
+        "Gruppe": "Mules",
+        "Cocktail": "Mexico Mule",
+        "Rezeptur": "6 cl weißer Tequila, Gurkenscheibe, ½ Limette, Ginger Beer",
+        "Deko": "Minzzweig, Gurkenscheibe",
+        "Glas": "Kupferbecher",
+        "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 32
+    },
+    "pia-colada": {
+      "id": "fdcb43ee-82a0-46d6-b36b-9c70082deaa9",
+      "slug": "pia-colada",
+      "data": {
+        "Gruppe": "Coladas",
+        "Cocktail": "Piña Colada",
+        "Rezeptur": "4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 33
+    },
+    "pia-colada-strawberry": {
+      "id": "06990b68-96ff-43f4-aa71-4e64bf360570",
+      "slug": "pia-colada-strawberry",
+      "data": {
+        "Gruppe": "Coladas",
+        "Cocktail": "Piña Colada Strawberry",
+        "Rezeptur": "4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, 2 Bl Erdbeerpüree, Ananas",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken, Püree floaten"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 34
+    },
+    "pia-colada-baileys": {
+      "id": "bb53b387-d7eb-4648-bfc6-be3e5f85ecc7",
+      "slug": "pia-colada-baileys",
+      "data": {
+        "Gruppe": "Coladas",
+        "Cocktail": "Piña Colada Baileys",
+        "Rezeptur": "6 cl Baileys, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 35
+    },
+    "long-island-iced-tea": {
+      "id": "6f41d99c-df3f-4d52-aa8b-f888e3c15e5f",
+      "slug": "long-island-iced-tea",
+      "data": {
+        "Gruppe": "Iced Teas",
+        "Cocktail": "Long Island Iced Tea",
+        "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, kleine Cola",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 36
+    },
+    "long-beach-iced-tea": {
+      "id": "04ca75bd-a1eb-4fd1-b5d8-f1e29e4ed81e",
+      "slug": "long-beach-iced-tea",
+      "data": {
+        "Gruppe": "Iced Teas",
+        "Cocktail": "Long Beach Iced Tea",
+        "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, Cranberry",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 37
+    },
+    "tokyo-island": {
+      "id": "33bf2b32-0ef5-46a8-a0ea-303df92f3cbd",
+      "slug": "tokyo-island",
+      "data": {
+        "Gruppe": "Iced Teas",
+        "Cocktail": "Tokyo Island",
+        "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Pfirsichlikör, Tonic",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 38
+    },
+    "coco-loco": {
+      "id": "9164652e-6185-4a90-ad31-f5e98738b965",
+      "slug": "coco-loco",
+      "data": {
+        "Gruppe": "Iced Teas",
+        "Cocktail": "Coco Loco",
+        "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, 3 cl Kokossirup, 2 cl Sahne",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken, auf Eiswürfel"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 39
+    },
+    "red-punch": {
+      "id": "b25f3225-421a-445a-bff8-c6e4eba0ab1b",
+      "slug": "red-punch",
+      "data": {
+        "Gruppe": "Punches",
+        "Cocktail": "Red Punch",
+        "Rezeptur": "5 cl weißer Rum, 3 cl Zitrone, 1 cl Erdbeersirup, Erdbeerpüree, Ananas",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut, Erdbeerpüree floaten"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 40
+    },
+    "passionata": {
+      "id": "a9eeb133-3852-4eb0-ab2e-2941b51be267",
+      "slug": "passionata",
+      "data": {
+        "Gruppe": "Punches",
+        "Cocktail": "Passionata",
+        "Rezeptur": "4 cl Wodka, 2 cl Passionsfruchtlikör, 2 cl Kirschlikör, Maracuja",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 41
+    },
+    "prince": {
+      "id": "1c22400b-7e5d-47cf-9eba-f633494b4b35",
+      "slug": "prince",
+      "data": {
+        "Gruppe": "Punches",
+        "Cocktail": "Prince",
+        "Rezeptur": "4 cl brauner Tequila, 2 cl 43er, 3 cl Kokossirup, 2 cl Sahne, Maracuja",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 42
+    },
+    "sour-melone": {
+      "id": "e858d2cd-3ebf-4a48-a333-e85ee36334bd",
+      "slug": "sour-melone",
+      "data": {
+        "Gruppe": "Punches",
+        "Cocktail": "Sour Melone",
+        "Rezeptur": "2 cl weißer Rum, 2 cl 43er, 2 cl dunkler Rum, 2 cl Triple Sec, 2 Zitronensaft, 2 cl Wassermelonensirup, 1 cl Grenadine, O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 43
+    },
+    "singapore-sling": {
+      "id": "7587104d-ae0e-499c-8190-902669088117",
+      "slug": "singapore-sling",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Singapore Sling",
+        "Rezeptur": "4 cl Gin, 1 cl Kirschlikör, 1 cl D.O.M., 1 cl Cointreau, 2 cl Grenadine, 2 cl Zitronesaft, 4 Ananas, 1 Dash Angostura, Soda",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 44
+    },
+    "swimmingpool": {
+      "id": "ca3cbdcf-8b47-4b5e-a770-44291f87ae54",
+      "slug": "swimmingpool",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Swimmingpool",
+        "Rezeptur": "4 cl weißer Rum, 2 cl Wodka, 2 cl alkohlolisch Blue Curacao, 2 cl Blue Curacao, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 45
+    },
+    "blue-lagoon": {
+      "id": "929d1514-b44c-4e4b-8170-a082c65df0b1",
+      "slug": "blue-lagoon",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Blue Lagoon",
+        "Rezeptur": "4 cl Wodka, 2 cl alkoholischer Blue Curacao, 2 cl Zitronensaft, Sprite",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 46
+    },
+    "sunflower": {
+      "id": "3dc3c604-51b3-47ae-b8a4-65950a1d50d0",
+      "slug": "sunflower",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Sunflower",
+        "Rezeptur": "4 cl Aperol, 4 cl Malibu, 1 cl Grenadine, Ananas, O-Saft, Maracuja",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 47
+    },
+    "touch-down": {
+      "id": "e2c991c0-474c-4bd0-b662-f9cc0ea78130",
+      "slug": "touch-down",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Touch Down",
+        "Rezeptur": "4 cl Wodka, 2 cl Apricot, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, Maracujasaft Filler",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 48
+    },
+    "lady-killer": {
+      "id": "6f921b66-6816-4e56-b580-c33f42e28039",
+      "slug": "lady-killer",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Lady Killer",
+        "Rezeptur": "4 cl Gin, 2 cl Apricot, 2 cl Triple Sec, Maracuja - Ananas halb halb Filler",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 49
+    },
+    "sex-on-the-beach": {
+      "id": "d6767085-f880-4e1e-8880-a0ad3b8407e3",
+      "slug": "sex-on-the-beach",
+      "data": {
+        "Gruppe": "Sling & Co.",
+        "Cocktail": "Sex on the Beach",
+        "Rezeptur": "4 cl Wodka, 2 cl Pfirsichlikör, 1 cl Grenadine, 1 cl Pfirsichsirup, 2 cl Zitronensaft, Maracuja",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 50
+    },
+    "negroni": {
+      "id": "41c615ec-a6d6-425d-99d7-141b5eaa95b2",
+      "slug": "negroni",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Negroni",
+        "Rezeptur": "3 cl Gin, 3 cl Campari, 3 cl roter Wermut",
+        "Deko": "Orangenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 51
+    },
+    "boulevardier": {
+      "id": "c2988f70-5936-468b-a52f-64f1ef684d64",
+      "slug": "boulevardier",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Boulevardier",
+        "Rezeptur": "3 cl Whiskey, 3 cl Campari, 3 cl roter Wermut",
+        "Deko": "Orangenzeste",
+        "Glas": "Tumbler",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 52
+    },
+    "prohibition": {
+      "id": "0510c8e1-65a3-4622-95e3-dfa7d179688b",
+      "slug": "prohibition",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Prohibition",
+        "Rezeptur": "3 cl Whiskey, 3 cl Haselnusslikör, 3 cl Lime Juice, 2 cl Zuckersirup, Ginger Beer",
+        "Deko": "Dörr-Orange",
+        "Glas": "Kupferbecher",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 53
+    },
+    "lynchburg-lemonade": {
+      "id": "7b9ca37d-0be6-4480-a16b-b580b902f4b8",
+      "slug": "lynchburg-lemonade",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Lynchburg Lemonade",
+        "Rezeptur": "5 cl Jacky, 2 cl Triple Sec, 2 cl Lime Juice, 2 cl Zitronensaft, Sprite",
+        "Deko": "2 Limettenscheibe",
+        "Glas": "Lynchburglemonade Glas",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 54
+    },
+    "white-russian": {
+      "id": "749385bb-9625-4877-a43e-05bfa8677538",
+      "slug": "white-russian",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "White Russian",
+        "Rezeptur": "4 cl Wodka, 2 Kahlua, 3 Sahne",
+        "Deko": "-",
+        "Glas": "Tumbler",
+        "Zubereitung": "gebaut auf Eiswürfel, sahne shaken und floate"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 55
+    },
+    "alabama-slammer": {
+      "id": "24f11d8b-4ec4-4260-b398-f0edd7db1907",
+      "slug": "alabama-slammer",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Alabama Slammer",
+        "Rezeptur": "4 cl Wodka, 3 cl southern Comfort, O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "shaken"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 56
+    },
+    "motherfucker": {
+      "id": "52268fc9-ee5d-476f-81ec-32a1f0b3ddcd",
+      "slug": "motherfucker",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Motherfucker",
+        "Rezeptur": "3 cl weißer Rum, 3 cl dunkler Rum, 3 cl 72% Rum, 1 cl Lime Juice, 1 cl Zitronensaft, 1 cl Zuckersirup, Cola",
+        "Deko": "-",
+        "Glas": "Granity",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 57
+    },
+    "big-ben": {
+      "id": "ab9cfcff-149b-4b20-8a3c-7ee8b6ff420d",
+      "slug": "big-ben",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Big Ben",
+        "Rezeptur": "5 cl Gin, 2 cl Zitronensaft, 1 cl Grenadine, 4 cl O-Saft",
+        "Deko": "Dörr-Orange",
+        "Glas": "Tumbler",
+        "Zubereitung": "gebaut auf Eiswürfel, rühren"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 58
+    },
+    "ibiza": {
+      "id": "4b0562d7-1caa-4fef-8a5a-fe3e427d2a0b",
+      "slug": "ibiza",
+      "data": {
+        "Gruppe": "Strong/Classic",
+        "Cocktail": "Ibiza",
+        "Rezeptur": "4 cl Wodka, 2 cl Pfirsichlikör, 3 cl Lime Juice, 2 cl Zuckersirup, 2 Orangenscheiben, O-Saft, Cranberry",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "Orangenscheiben pressen, gebaut auf Eiswürfeln, Cranberry floaten"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 59
+    },
+    "daiquiri-himbeer": {
+      "id": "2a32066d-3192-4f32-a560-7ee3f4db9a6b",
+      "slug": "daiquiri-himbeer",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Daiquiri Himbeer",
+        "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Vanillesirup, Himbeerpüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "Granity",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 60
+    },
+    "daiquri-erdbeer": {
+      "id": "bf064602-db9d-4ce2-9888-f7d95609bd0b",
+      "slug": "daiquri-erdbeer",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Daiquri Erdbeer",
+        "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Erdbeersirup, Erdbeerpüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 61
+    },
+    "daiquiri-mango": {
+      "id": "e0264a65-99a6-4dfb-b572-8c2126cc14ba",
+      "slug": "daiquiri-mango",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Daiquiri Mango",
+        "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Mangosirup, Mangopüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 62
+    },
+    "margarita-himbeer": {
+      "id": "5e863e68-51be-4c76-add7-c2bc25260245",
+      "slug": "margarita-himbeer",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Margarita Himbeer",
+        "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Vanillesirup, 2 Bl Himbeerpüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 63
+    },
+    "margarita-erdbeer": {
+      "id": "8c343e09-734b-4f80-ad6d-fe59dc6c1d06",
+      "slug": "margarita-erdbeer",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Margarita Erdbeer",
+        "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Erdbeersirup, 2 Bl Erdbeerpüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 64
+    },
+    "margarita-mango": {
+      "id": "25cd9fb3-4b90-4244-aa17-c81c978f009f",
+      "slug": "margarita-mango",
+      "data": {
+        "Gruppe": "Frozen",
+        "Cocktail": "Margarita Mango",
+        "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Mangosirup, 2 Bl Mangopüree",
+        "Deko": "Dörr-Orange",
+        "Glas": "",
+        "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 65
+    },
+    "wm-fruit-mix": {
+      "id": "a35d3a80-bae6-4358-bfde-8dc473cda36a",
+      "slug": "wm-fruit-mix",
+      "data": {
+        "Gruppe": "Alkoholfrei",
+        "Cocktail": "WM Fruit Mix",
+        "Rezeptur": "2 cl Zitronensaft, 2 cl Vanillesirup, 50% Bananensaft, 25% Maracujasaft, 25% O-Saft",
+        "Deko": "",
+        "Glas": "",
+        "Zubereitung": ""
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 66
+    },
+    "tropic-dream": {
+      "id": "21803a28-3d25-4780-80b9-1d81dd920505",
+      "slug": "tropic-dream",
+      "data": {
+        "Gruppe": "Alkoholfrei",
+        "Cocktail": "Tropic Dream",
+        "Rezeptur": "2 cl Zitronensaft, 2 cl Mandelsirup, 50% Maracujasaft, 50% Ananassaft",
+        "Deko": "",
+        "Glas": "",
+        "Zubereitung": ""
+      },
+      "version": 1,
+      "createdAt": "2025-10-17T20:43:00.463Z",
+      "updatedAt": "2025-10-17T20:43:00.463Z",
+      "isDeleted": false,
+      "order": 67
+    }
+  },
+  "revisions": {
+    "mojito": [
+      {
+        "revisionId": "16da965a-92fb-404b-b2da-825005135372",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mojitos",
+          "Cocktail": "Mojito",
+          "Rezeptur": "5 cl weißer Rum, 2 TL Rohrzucker, 1 Limette, Minze, Crushed Ice, Soda",
+          "Deko": "Minzzweig",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "mojito-himbeer": [
+      {
+        "revisionId": "13f95236-baf2-463d-b996-e2c5e98c7da6",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mojitos",
+          "Cocktail": "Mojito Himbeer",
+          "Rezeptur": "↳ plus Himbeerpüree",
+          "Deko": "Minzzweig",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "mojito-erdbeer": [
+      {
+        "revisionId": "10c49222-487d-46f7-b0ac-ba6cb7f99eea",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mojitos",
+          "Cocktail": "Mojito Erdbeer",
+          "Rezeptur": "↳ plus Erdbeerpüree",
+          "Deko": "Minzzweig",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "mojito-mango": [
+      {
+        "revisionId": "74579671-402a-4b69-b07b-aa7647cf40aa",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mojitos",
+          "Cocktail": "Mojito Mango",
+          "Rezeptur": "↳ plus Mangopüree",
+          "Deko": "Minzzweig",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "mojito-wilder-mann": [
+      {
+        "revisionId": "6edfda2d-49be-44cd-a79a-66a6000ab74b",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mojitos",
+          "Cocktail": "Mojito Wilder Mann",
+          "Rezeptur": "↳ kein Wasser, Ginger Beer, Erdbeerpüree",
+          "Deko": "Minzzweig",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "caipi": [
+      {
+        "revisionId": "1e8ad083-cd4b-4510-a07f-df5bd5550e22",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Caipirinhas",
+          "Cocktail": "Caipi",
+          "Rezeptur": "5 cl Cachaça, 1 Limette, brauner Zucker, Crushed Ice",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "kleines Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "caipi-himbeere": [
+      {
+        "revisionId": "668d637f-3654-4520-a8f8-3e1ba5932d82",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Caipirinhas",
+          "Cocktail": "Caipi Himbeere",
+          "Rezeptur": "↳ plus Himbeerpüree",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "kleines Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "caipi-erdbeere": [
+      {
+        "revisionId": "08b77e7a-ec67-47e5-8fd6-0dfbee4bf8b4",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Caipirinhas",
+          "Cocktail": "Caipi Erdbeere",
+          "Rezeptur": "↳ plus Erdbeerpüree",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "kleines Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "caipi-mango": [
+      {
+        "revisionId": "0f877f7a-15dd-4239-85a3-f064edee218f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Caipirinhas",
+          "Cocktail": "Caipi Mango",
+          "Rezeptur": "↳ plus Mangopüree",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "kleines Granity",
+          "Zubereitung": "gebaut mit crushed Ice, rühren"
+        }
+      }
+    ],
+    "daiquiri": [
+      {
+        "revisionId": "72decdba-eeb1-4d4a-8b63-6463d2180e04",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Daiquiri",
+          "Cocktail": "Daiquiri",
+          "Rezeptur": "6 cl weißer Rum, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup",
+          "Deko": "Limettenzeste",
+          "Glas": "Cocktailschale",
+          "Zubereitung": "shaken, double strain"
+        }
+      }
+    ],
+    "margaritas": [
+      {
+        "revisionId": "e1d3dde6-eabd-4cf9-8b28-21f8041b7784",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Margaritas",
+          "Cocktail": "Margaritas",
+          "Rezeptur": "6 cl weißer Tequila, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup",
+          "Deko": "Limettenzeste, Salzrand",
+          "Glas": "Cocktailschale",
+          "Zubereitung": "shaken, double strain"
+        }
+      }
+    ],
+    "pornstar-martini": [
+      {
+        "revisionId": "7a7e90b8-4568-4cd4-8815-33300f98a3a4",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Martinis",
+          "Cocktail": "Pornstar Martini",
+          "Rezeptur": "14 cl Pornstar Premix, Prosecco",
+          "Deko": "Dörrorange",
+          "Glas": "Cocktailschale",
+          "Zubereitung": "shaken, gebaut ohne Eis"
+        }
+      }
+    ],
+    "espresso-martini": [
+      {
+        "revisionId": "5f8a0d85-406e-439b-afaa-c796bd02e4cc",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Martinis",
+          "Cocktail": "Espresso Martini",
+          "Rezeptur": "4 cl Wodka, Espresso, 3 cl Kahlua, Dash Zuckersirup",
+          "Deko": "3 Espressobohnen",
+          "Glas": "Cocktailschale",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "tiramisu-martini": [
+      {
+        "revisionId": "c9721365-de51-484e-a1a4-212314e4b26b",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Martinis",
+          "Cocktail": "Tiramisu Martini",
+          "Rezeptur": "Espresso, 2 Bl Mascarpone, 1 Stk. Eigelb, 2 cl Kahlua, 2 cl dunkler Rum, 2 cl Vodka, 1 Dash Zuckersirup",
+          "Deko": "",
+          "Glas": "",
+          "Zubereitung": ""
+        }
+      }
+    ],
+    "whiskey-sour": [
+      {
+        "revisionId": "15178d7c-70cd-4b3d-a39e-6c2b2bf34598",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sours",
+          "Cocktail": "Whiskey Sour",
+          "Rezeptur": "6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Dash",
+          "Deko": "Orangenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "amaretto-sour": [
+      {
+        "revisionId": "cd163536-64e6-4e3a-9759-a9fd632c9659",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sours",
+          "Cocktail": "Amaretto Sour",
+          "Rezeptur": "6 cl Amaretto, 3 cl Zitronensaft, 2 cl Zuckersirup",
+          "Deko": "Orangenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "gin-sour": [
+      {
+        "revisionId": "6ca7ed01-d2a5-40d6-a927-f940e42c960b",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sours",
+          "Cocktail": "Gin Sour",
+          "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup",
+          "Deko": "Zitronenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "aperol-sour": [
+      {
+        "revisionId": "dea0a57c-b22f-47a0-b6a5-edca89ae644f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sours",
+          "Cocktail": "Aperol Sour",
+          "Rezeptur": "4 cl Aperol, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup",
+          "Deko": "Orangenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "lychee-sour": [
+      {
+        "revisionId": "2d4f590f-292c-49f3-9dac-3174dea9a638",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sours",
+          "Cocktail": "Lychee Sour",
+          "Rezeptur": "4 cl Lycheelikör, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup",
+          "Deko": "Zitronenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "gin-fizz": [
+      {
+        "revisionId": "d8c95316-c69a-49c0-9e87-77531c1b08cf",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Fizz & Smash",
+          "Cocktail": "Gin Fizz",
+          "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, Soda",
+          "Deko": "Zirtonenscheibe",
+          "Glas": "Longdrinkglas",
+          "Zubereitung": "shaken, gebaut auf crushed Ice"
+        }
+      }
+    ],
+    "gin-basis-smash": [
+      {
+        "revisionId": "c6728fd0-4a83-4263-a9fb-d562e89fb160",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Fizz & Smash",
+          "Cocktail": "Gin Basis Smash",
+          "Rezeptur": "6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, 3 Basilikumzweige",
+          "Deko": "Basilikumblatt",
+          "Glas": "Tumbler",
+          "Zubereitung": "hardshake, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "whiskey-smash": [
+      {
+        "revisionId": "e0f2ddbc-b64e-4d79-a461-eeaac542027b",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Fizz & Smash",
+          "Cocktail": "Whiskey Smash",
+          "Rezeptur": "6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Minzzweig",
+          "Deko": "Minzzweig",
+          "Glas": "Tumbler",
+          "Zubereitung": "hardshake, double strain, auf Eiswürfel"
+        }
+      }
+    ],
+    "bahama-mama": [
+      {
+        "revisionId": "2134d428-27a6-4c9c-acb4-0581aee4b5c3",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Bahama Mama",
+          "Rezeptur": "2 cl weißer Rum, 2 cl dunkler Rum, 2 cl 73% Rum, 1 cl Apricot, 3 cl Mandelsirup, 2 cl Zitrone, 2 cl Limejuice, Ananas Filler",
+          "Deko": "Dörr-Orange",
+          "Glas": "Cocktailglas",
+          "Zubereitung": "geshaked"
+        }
+      }
+    ],
+    "mai-tai": [
+      {
+        "revisionId": "7c56e96a-72fe-45a5-a938-49b6c514fb12",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Mai Tai",
+          "Rezeptur": "5 cl dunkler Rum, 1 cl Cointreau, 3 cl Lime Juice, 2 cl Mandelsirup",
+          "Deko": "Limettenscheibe",
+          "Glas": "Tumbler",
+          "Zubereitung": "geshaked"
+        }
+      }
+    ],
+    "painkiller": [
+      {
+        "revisionId": "d5320591-e6bb-481c-8485-ef461a1f19db",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Painkiller",
+          "Rezeptur": "5 cl dunkler Rum, 2 cl Kokossirup, 3 cl Ananassaft, 3 cl O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Kupferbecher",
+          "Zubereitung": "gebaut auf Eiswürfel, gerührt"
+        }
+      }
+    ],
+    "planters-punch": [
+      {
+        "revisionId": "2e52064e-6c50-41f4-96aa-86e049b205ac",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Planter’s Punch",
+          "Rezeptur": "4 cl dunkler Rum, 2 cl weißer Rum, 2 cl Zitronensaft, 2 cl Grenadine, Ananas & O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "zombie": [
+      {
+        "revisionId": "72b77c98-41b6-4eba-b14c-5f13134855bf",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Zombie",
+          "Rezeptur": "2 cl dunkler Rum, 2 cl weißer Rum, 2 cl 73% Rum, 1 cl Apricot, 2 cl Zitrone, 2 cl Lime, 2 cl Grenadine, O-Saft Filler",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "jungle-bird": [
+      {
+        "revisionId": "5cdfa7ca-40d3-4b50-a23b-ee693635a76e",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Jungle Bird",
+          "Rezeptur": "4 cl Gin, 2cl Campari, 2 cl Lime Juice, 2cl Zuckersirup, Ananassaft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "hawaiian-volcano": [
+      {
+        "revisionId": "f3bd9ce8-ea40-4518-8b25-e9d4dd8a53d1",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Hawaiian Volcano",
+          "Rezeptur": "2 cl weißer Rum, 2 cl Southern Comfort, 2 cl Amaretto, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "almond-joy": [
+      {
+        "revisionId": "0c85c63e-4a0c-4a81-8777-1d2ae71a5a09",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Tiki & Tropical",
+          "Cocktail": "Almond Joy",
+          "Rezeptur": "4 cl Amaretto, 2 cl Schokolikör, 3 cl Kokossirup, 2 cl Sahne",
+          "Deko": "Kakaopulver",
+          "Glas": "Tumbler",
+          "Zubereitung": "shaken, auf Eiswürfel"
+        }
+      }
+    ],
+    "moscow-mule": [
+      {
+        "revisionId": "d6dfbff1-bdba-44ba-9c6e-df61f34931fb",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mules",
+          "Cocktail": "Moscow Mule",
+          "Rezeptur": "6 cl Wodka, Gurkenscheibe, ½ Limette, Ginger Beer",
+          "Deko": "Minzzweig, Gurkenscheibe",
+          "Glas": "Kupferbecher",
+          "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+        }
+      }
+    ],
+    "london-mule": [
+      {
+        "revisionId": "0a2a397d-6298-47cb-a172-70158bda8930",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mules",
+          "Cocktail": "London Mule",
+          "Rezeptur": "6 cl Gin, Gurkenscheibe, ½ Limette, Ginger Beer",
+          "Deko": "Minzzweig, Gurkenscheibe",
+          "Glas": "Kupferbecher",
+          "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+        }
+      }
+    ],
+    "mexico-mule": [
+      {
+        "revisionId": "bf44423a-c887-4e12-90a1-58a4d13489e2",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Mules",
+          "Cocktail": "Mexico Mule",
+          "Rezeptur": "6 cl weißer Tequila, Gurkenscheibe, ½ Limette, Ginger Beer",
+          "Deko": "Minzzweig, Gurkenscheibe",
+          "Glas": "Kupferbecher",
+          "Zubereitung": "Gurke gestampft, auf Eiswürfel gebaut, gerührt"
+        }
+      }
+    ],
+    "pia-colada": [
+      {
+        "revisionId": "a59df1d0-bcba-478a-9c7f-6041476e4ab4",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Coladas",
+          "Cocktail": "Piña Colada",
+          "Rezeptur": "4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "pia-colada-strawberry": [
+      {
+        "revisionId": "4648731d-626a-4577-b24b-9e44511c6719",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Coladas",
+          "Cocktail": "Piña Colada Strawberry",
+          "Rezeptur": "4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, 2 Bl Erdbeerpüree, Ananas",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken, Püree floaten"
+        }
+      }
+    ],
+    "pia-colada-baileys": [
+      {
+        "revisionId": "7d507ec0-aaa3-4b53-a490-21b1d2ff77c6",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Coladas",
+          "Cocktail": "Piña Colada Baileys",
+          "Rezeptur": "6 cl Baileys, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "long-island-iced-tea": [
+      {
+        "revisionId": "93224bc7-86fe-41e4-aa72-03b05aae1e58",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Iced Teas",
+          "Cocktail": "Long Island Iced Tea",
+          "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, kleine Cola",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut"
+        }
+      }
+    ],
+    "long-beach-iced-tea": [
+      {
+        "revisionId": "3c74efea-a0fd-49bc-a4f2-766fb3484c9f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Iced Teas",
+          "Cocktail": "Long Beach Iced Tea",
+          "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, Cranberry",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut"
+        }
+      }
+    ],
+    "tokyo-island": [
+      {
+        "revisionId": "7b929038-1483-4082-81e2-ef20e76d4df5",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Iced Teas",
+          "Cocktail": "Tokyo Island",
+          "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Pfirsichlikör, Tonic",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut"
+        }
+      }
+    ],
+    "coco-loco": [
+      {
+        "revisionId": "1177243d-6e90-4639-8bc3-fde61621c603",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Iced Teas",
+          "Cocktail": "Coco Loco",
+          "Rezeptur": "2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, 3 cl Kokossirup, 2 cl Sahne",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken, auf Eiswürfel"
+        }
+      }
+    ],
+    "red-punch": [
+      {
+        "revisionId": "c71f0c3b-7a5a-4d92-8d63-52d7ed21905e",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Punches",
+          "Cocktail": "Red Punch",
+          "Rezeptur": "5 cl weißer Rum, 3 cl Zitrone, 1 cl Erdbeersirup, Erdbeerpüree, Ananas",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut, Erdbeerpüree floaten"
+        }
+      }
+    ],
+    "passionata": [
+      {
+        "revisionId": "6e492242-5795-4577-bd1a-0bd66956119f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Punches",
+          "Cocktail": "Passionata",
+          "Rezeptur": "4 cl Wodka, 2 cl Passionsfruchtlikör, 2 cl Kirschlikör, Maracuja",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "prince": [
+      {
+        "revisionId": "22d88ad1-14c1-4c3f-a1f1-9313924e0314",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Punches",
+          "Cocktail": "Prince",
+          "Rezeptur": "4 cl brauner Tequila, 2 cl 43er, 3 cl Kokossirup, 2 cl Sahne, Maracuja",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "sour-melone": [
+      {
+        "revisionId": "7ee322ae-d067-4d0e-92e6-242d71700d6c",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Punches",
+          "Cocktail": "Sour Melone",
+          "Rezeptur": "2 cl weißer Rum, 2 cl 43er, 2 cl dunkler Rum, 2 cl Triple Sec, 2 Zitronensaft, 2 cl Wassermelonensirup, 1 cl Grenadine, O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "singapore-sling": [
+      {
+        "revisionId": "26fce47b-4269-4937-a041-884d577eb743",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Singapore Sling",
+          "Rezeptur": "4 cl Gin, 1 cl Kirschlikör, 1 cl D.O.M., 1 cl Cointreau, 2 cl Grenadine, 2 cl Zitronesaft, 4 Ananas, 1 Dash Angostura, Soda",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "swimmingpool": [
+      {
+        "revisionId": "745bb87b-993b-4cdb-a9a6-f20a2185f17f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Swimmingpool",
+          "Rezeptur": "4 cl weißer Rum, 2 cl Wodka, 2 cl alkohlolisch Blue Curacao, 2 cl Blue Curacao, 3 cl Kokossirup, 2 cl Sahne, Ananas",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "blue-lagoon": [
+      {
+        "revisionId": "5b3164fc-d1a2-4074-abb2-900ad5fc138f",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Blue Lagoon",
+          "Rezeptur": "4 cl Wodka, 2 cl alkoholischer Blue Curacao, 2 cl Zitronensaft, Sprite",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "sunflower": [
+      {
+        "revisionId": "ccc14e7e-d288-4a65-b963-116b416314c8",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Sunflower",
+          "Rezeptur": "4 cl Aperol, 4 cl Malibu, 1 cl Grenadine, Ananas, O-Saft, Maracuja",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "touch-down": [
+      {
+        "revisionId": "cb960203-8c62-4a99-95a4-80c4506250c0",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Touch Down",
+          "Rezeptur": "4 cl Wodka, 2 cl Apricot, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, Maracujasaft Filler",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "lady-killer": [
+      {
+        "revisionId": "5d63fbeb-5467-4034-9c2c-517f078649eb",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Lady Killer",
+          "Rezeptur": "4 cl Gin, 2 cl Apricot, 2 cl Triple Sec, Maracuja - Ananas halb halb Filler",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "sex-on-the-beach": [
+      {
+        "revisionId": "9ee0c682-dbd4-43d7-b819-47090a54a209",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Sling & Co.",
+          "Cocktail": "Sex on the Beach",
+          "Rezeptur": "4 cl Wodka, 2 cl Pfirsichlikör, 1 cl Grenadine, 1 cl Pfirsichsirup, 2 cl Zitronensaft, Maracuja",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "negroni": [
+      {
+        "revisionId": "19657333-d189-4ffb-a57f-1ff3b4ab55e9",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Negroni",
+          "Rezeptur": "3 cl Gin, 3 cl Campari, 3 cl roter Wermut",
+          "Deko": "Orangenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "boulevardier": [
+      {
+        "revisionId": "25453f8e-97ef-497b-a489-93c71894fb9c",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Boulevardier",
+          "Rezeptur": "3 cl Whiskey, 3 cl Campari, 3 cl roter Wermut",
+          "Deko": "Orangenzeste",
+          "Glas": "Tumbler",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "prohibition": [
+      {
+        "revisionId": "e5bd8803-7296-477e-9521-6c287bb06975",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Prohibition",
+          "Rezeptur": "3 cl Whiskey, 3 cl Haselnusslikör, 3 cl Lime Juice, 2 cl Zuckersirup, Ginger Beer",
+          "Deko": "Dörr-Orange",
+          "Glas": "Kupferbecher",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "lynchburg-lemonade": [
+      {
+        "revisionId": "ac332787-967c-4fe5-a657-caa1f0d22d9e",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Lynchburg Lemonade",
+          "Rezeptur": "5 cl Jacky, 2 cl Triple Sec, 2 cl Lime Juice, 2 cl Zitronensaft, Sprite",
+          "Deko": "2 Limettenscheibe",
+          "Glas": "Lynchburglemonade Glas",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "white-russian": [
+      {
+        "revisionId": "ae402819-7f43-4a4d-bbf5-2f9636ca68de",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "White Russian",
+          "Rezeptur": "4 cl Wodka, 2 Kahlua, 3 Sahne",
+          "Deko": "-",
+          "Glas": "Tumbler",
+          "Zubereitung": "gebaut auf Eiswürfel, sahne shaken und floate"
+        }
+      }
+    ],
+    "alabama-slammer": [
+      {
+        "revisionId": "ced52af0-5300-4d22-9a47-890c5aa4b316",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Alabama Slammer",
+          "Rezeptur": "4 cl Wodka, 3 cl southern Comfort, O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "shaken"
+        }
+      }
+    ],
+    "motherfucker": [
+      {
+        "revisionId": "2790021c-7f8c-43bf-ad37-5b357426936b",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Motherfucker",
+          "Rezeptur": "3 cl weißer Rum, 3 cl dunkler Rum, 3 cl 72% Rum, 1 cl Lime Juice, 1 cl Zitronensaft, 1 cl Zuckersirup, Cola",
+          "Deko": "-",
+          "Glas": "Granity",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "big-ben": [
+      {
+        "revisionId": "446e11de-8294-49f6-bcb4-460bad3d2d86",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Big Ben",
+          "Rezeptur": "5 cl Gin, 2 cl Zitronensaft, 1 cl Grenadine, 4 cl O-Saft",
+          "Deko": "Dörr-Orange",
+          "Glas": "Tumbler",
+          "Zubereitung": "gebaut auf Eiswürfel, rühren"
+        }
+      }
+    ],
+    "ibiza": [
+      {
+        "revisionId": "2123a8b5-4d86-4f55-a97a-5b2d29ea56db",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Strong/Classic",
+          "Cocktail": "Ibiza",
+          "Rezeptur": "4 cl Wodka, 2 cl Pfirsichlikör, 3 cl Lime Juice, 2 cl Zuckersirup, 2 Orangenscheiben, O-Saft, Cranberry",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "Orangenscheiben pressen, gebaut auf Eiswürfeln, Cranberry floaten"
+        }
+      }
+    ],
+    "daiquiri-himbeer": [
+      {
+        "revisionId": "8706b718-8bd5-4656-93c6-baff0908df55",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Daiquiri Himbeer",
+          "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Vanillesirup, Himbeerpüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "Granity",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "daiquri-erdbeer": [
+      {
+        "revisionId": "f7934ea9-fb4a-4a66-8f9f-ec9e93ad5979",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Daiquri Erdbeer",
+          "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Erdbeersirup, Erdbeerpüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "daiquiri-mango": [
+      {
+        "revisionId": "981de30c-af13-492b-a838-5eb8da26f483",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Daiquiri Mango",
+          "Rezeptur": "4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Mangosirup, Mangopüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "margarita-himbeer": [
+      {
+        "revisionId": "c314b3b8-fe77-44a2-9e01-6c0009cc3bf4",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Margarita Himbeer",
+          "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Vanillesirup, 2 Bl Himbeerpüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "margarita-erdbeer": [
+      {
+        "revisionId": "e572dfd0-5de2-4d5f-962b-763639edd766",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Margarita Erdbeer",
+          "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Erdbeersirup, 2 Bl Erdbeerpüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "margarita-mango": [
+      {
+        "revisionId": "ae101490-cdb1-4c79-a47b-763f20fc469e",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Frozen",
+          "Cocktail": "Margarita Mango",
+          "Rezeptur": "5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Mangosirup, 2 Bl Mangopüree",
+          "Deko": "Dörr-Orange",
+          "Glas": "",
+          "Zubereitung": "blenden mit crushed Ice bis sich Eis bildet"
+        }
+      }
+    ],
+    "wm-fruit-mix": [
+      {
+        "revisionId": "156bc9cc-3041-48bd-ab5a-4ce353f6ac28",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Alkoholfrei",
+          "Cocktail": "WM Fruit Mix",
+          "Rezeptur": "2 cl Zitronensaft, 2 cl Vanillesirup, 50% Bananensaft, 25% Maracujasaft, 25% O-Saft",
+          "Deko": "",
+          "Glas": "",
+          "Zubereitung": ""
+        }
+      }
+    ],
+    "tropic-dream": [
+      {
+        "revisionId": "1eae6a09-3a97-477c-85d6-f59ab20d6d23",
+        "timestamp": "2025-10-17T20:43:00.463Z",
+        "version": 1,
+        "operation": "import",
+        "snapshot": {
+          "Gruppe": "Alkoholfrei",
+          "Cocktail": "Tropic Dream",
+          "Rezeptur": "2 cl Zitronensaft, 2 cl Mandelsirup, 50% Maracujasaft, 50% Ananassaft",
+          "Deko": "",
+          "Glas": "",
+          "Zubereitung": ""
+        }
+      }
+    ]
+  }
+}

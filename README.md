@@ -85,7 +85,18 @@ Eine moderne Single-Page-Web-App zur Verwaltung der `Cocktail_Liste.csv`. Erstel
 | `npm run build`   | Produktionsbuild erzeugen (inkl. CSV-Sync)         |
 | `npm run preview` | Produktionsbuild lokal testen                       |
 | `npm run sync:csv`| CSV aus dem Projektwurzelverzeichnis nach `public/` kopieren |
+| `npm run build:csv-db` | Erstellt eine JSON-Datenbank (`server/storage/cocktails.db.json`) aus der CSV |
 | `npm run lint`    | (Falls hinzugefügt) Linting ausführen                |
+
+## CSV-Datenbank & Revisionen
+
+- Die Server-API legt alle Cocktails zusätzlich in `server/storage/cocktails.db.json` ab. Die Datei wird automatisch erzeugt,
+  sobald der Server das erste Mal läuft oder `npm run build:csv-db` ausgeführt wird.
+- Jedes Speichern über die API erzeugt Versionen und Revisionen, die über folgende Endpunkte abrufbar sind:
+  - `GET /api/cocktails/:slug/revisions` – liefert die Historie inklusive Versionsnummern.
+  - `POST /api/cocktails/:slug/rollback` mit `{ "toVersion": <nummer> }` – stellt eine frühere Version wieder her.
+- Die JSON-Datenbank wird aus der CSV synchron gehalten. Änderungen an der CSV (z. B. manuelles Editieren) werden bei der nächs
+ten Anfrage erkannt und als Revision protokolliert.
 
 ## Zutaten-Parser & Stammdaten
 
