@@ -97,7 +97,7 @@ const App = () => {
   const otherGroups = useMemo(() => groups.filter((group) => group !== ""), [groups]);
   const topRowCount = Math.ceil(otherGroups.length / 2);
   const bottomRowCount = otherGroups.length - topRowCount;
-  const columnCount = Math.max(topRowCount, bottomRowCount, 1);
+  const columnCount = Math.max(topRowCount, 1);
   const topRow = otherGroups.slice(0, topRowCount);
   const bottomRow = otherGroups.slice(topRowCount);
 
@@ -184,13 +184,17 @@ const App = () => {
           <div
             className="hidden items-stretch gap-3 lg:grid"
             style={{
-              gridTemplateColumns: `minmax(150px, 180px) minmax(0, 1fr) minmax(150px, 180px)`,
+              gridTemplateColumns: "minmax(140px, 160px) minmax(0, 1fr) minmax(140px, 160px)",
               gridTemplateRows: "repeat(2, minmax(0, 1fr))"
             }}
           >
-            <div className="row-span-2">{renderGroupButton("Alle", null, "h-full text-base py-5")}</div>
+            <div className="row-span-2">
+              <div className="aspect-square w-full">
+                {renderGroupButton("Alle", null, "h-full w-full text-base")}
+              </div>
+            </div>
 
-            <div className="grid grid-rows-2 gap-3">
+            <div className="grid h-full grid-rows-2 gap-3">
               <div
                 className="grid gap-3"
                 style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
@@ -212,7 +216,9 @@ const App = () => {
             </div>
 
             <div className="row-span-2">
-              {renderGroupButton("Favoriten", "__favorites__", "h-full text-base py-5")}
+              <div className="aspect-square w-full">
+                {renderGroupButton("Favoriten", "__favorites__", "h-full w-full text-base")}
+              </div>
             </div>
           </div>
 
