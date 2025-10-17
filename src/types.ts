@@ -18,3 +18,11 @@ export type CsvVersion = {
 };
 
 export type CocktailImageMap = Record<string, string>;
+
+export type CocktailMetadataMap = Record<string, number>;
+
+export type CocktailDataset = {
+  cocktails: Cocktail[];
+  images: CocktailImageMap;
+  modified: CocktailMetadataMap;
+};

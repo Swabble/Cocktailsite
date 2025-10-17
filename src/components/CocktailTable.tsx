@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, ChevronUp, Filter, Star } from "lucide-react";
 import type { Cocktail } from "@/types";
 import {
@@ -59,6 +59,7 @@ const CocktailTable = ({
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [filters, setFilters] = useState<ColumnFilters>(() => createEmptyFilters());
   const [animationKey, setAnimationKey] = useState(0);
+  const [expandedSlugs, setExpandedSlugs] = useState<string[]>([]);
 
   const highlightedSet = useMemo(
     () => new Set(highlightedSlugs.map((slug) => slug)),
@@ -151,6 +152,22 @@ const CocktailTable = ({
   useEffect(() => {
     setAnimationKey((previous) => previous + 1);
   }, [sortedCocktails, filters, sortKey, sortDirection]);
+
+  useEffect(() => {
+    setExpandedSlugs((previous) =>
+      previous.filter((slug) =>
+        sortedCocktails.some((cocktail) => slugify(cocktail.Cocktail) === slug)
+      )
+    );
+  }, [sortedCocktails]);
+
+  const toggleCard = useCallback((slug: string) => {
+    setExpandedSlugs((previous) =>
+      previous.includes(slug)
+        ? previous.filter((entry) => entry !== slug)
+        : [...previous, slug]
+    );
+  }, []);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -263,7 +280,7 @@ const CocktailTable = ({
                     onClick={() => onSelect(cocktail)}
                     className={cn(
                       "cursor-pointer border-l-4 border-transparent transition-all duration-300",
-                      index % 2 === 0 ? "bg-white" : "bg-slate-200/70",
+                      index % 2 === 0 ? "bg-white" : "bg-slate-100",
                       "hover:bg-slate-100/90",
                       isHighlighted &&
                         "border-amber-400 bg-amber-50/80 hover:bg-amber-100 focus-visible:bg-amber-100"
@@ -292,6 +309,7 @@ const CocktailTable = ({
             const slug = slugify(cocktail.Cocktail);
             const isHighlighted = highlightedSet.has(slug);
             const isFavorite = favoritesSet.has(slug);
+            const isExpanded = expandedSlugs.includes(slug);
             const handleSelect = () => onSelect(cocktail);
             return (
               <div
@@ -303,29 +321,53 @@ const CocktailTable = ({
                   isFavorite && !isHighlighted && "border-amber-200"
                 )}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-base font-semibold text-slate-900">{cocktail.Cocktail}</p>
-                    {cocktail.Gruppe && (
-                      <p className="text-xs uppercase tracking-wide text-slate-500">{cocktail.Gruppe}</p>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
+                  onClick={() => toggleCard(slug)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      toggleCard(slug);
+                    }
+                  }}
+                  className="flex cursor-pointer flex-col gap-4 focus:outline-none"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-base font-semibold text-slate-900">{cocktail.Cocktail}</p>
+                      {cocktail.Gruppe && (
+                        <p className="text-xs uppercase tracking-wide text-slate-500">{cocktail.Gruppe}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {isFavorite && <Star className="h-5 w-5 fill-amber-400 text-amber-400" />}
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8 rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          handleSelect();
+                        }}
+                        aria-label={`Details zu ${cocktail.Cocktail} öffnen`}
+                      >
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-600">
+                    <Field label="Rezeptur" value={cocktail.Rezeptur} />
+                    {isExpanded && (
+                      <div className="space-y-3">
+                        <Field label="Deko" value={cocktail.Deko || "–"} />
+                        <Field label="Glas" value={cocktail.Glas || "–"} />
+                        <Field label="Zubereitung" value={cocktail.Zubereitung || "–"} />
+                      </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    {isFavorite && <Star className="h-5 w-5 fill-amber-400 text-amber-400" />}
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="ghost"
-                      className="h-8 w-8 rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm"
-                      onClick={handleSelect}
-                      aria-label={`Details zu ${cocktail.Cocktail} öffnen`}
-                    >
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="mt-4 space-y-3 text-sm text-slate-600">
-                  <Field label="Rezeptur" value={cocktail.Rezeptur} />
                 </div>
               </div>
             );

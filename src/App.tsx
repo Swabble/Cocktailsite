@@ -174,10 +174,10 @@ const App = () => {
           className="rounded-2xl bg-white p-4 shadow-soft transition-all duration-300"
         >
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="aspect-square">
+            <div className="h-20 sm:h-24">
               {renderGroupButton("Alle", null, "h-full w-full text-base")}
             </div>
-            <div className="aspect-square">
+            <div className="h-20 sm:h-24">
               {renderGroupButton("Favoriten", "__favorites__", "h-full w-full text-base")}
             </div>
           </div>

@@ -1,69 +1,69 @@
 ﻿Gruppe;Cocktail;Rezeptur;Deko;Glas;Zubereitung
 Mojitos;Mojito;5 cl weißer Rum, 2 TL Rohrzucker, 1 Limette, Minze, Crushed Ice, Soda;Minzzweig;Granity;gebaut mit crushed Ice, rühren
-Mojitos;Mojito Himbeer;↳ plus Himbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
-Mojitos;Mojito Erdbeer;↳ plus Erdbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
-Mojitos;Mojito Mango;↳ plus Mangopüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
-Mojitos;Mojito Wilder Mann;↳ kein Wasser, Ginger Beer, Erdbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
+;Mojito Himbeer;↳ plus Himbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
+;Mojito Erdbeer;↳ plus Erdbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
+;Mojito Mango;↳ plus Mangopüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
+;Mojito Wilder Mann;↳ kein Wasser, Ginger Beer, Erdbeerpüree;Minzzweig;Granity;gebaut mit crushed Ice, rühren
 Caipirinhas;Caipi;5 cl Cachaça, 1 Limette, brauner Zucker, Crushed Ice;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
-Caipirinhas;Caipi Himbeere;↳ plus Himbeerpüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
-Caipirinhas;Caipi Erdbeere;↳ plus Erdbeerpüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
-Caipirinhas;Caipi Mango;↳ plus Mangopüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
-Daiquiri;Daiquiri;6 cl weißer Rum, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup;Limettenzeste;Cocktailschale;shaken, double strain
-Margaritas;Margaritas;6 cl weißer Tequila, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup;Limettenzeste, Salzrand;Cocktailschale;shaken, double strain
+;Caipi Himbeere;↳ plus Himbeerpüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
+;Caipi Erdbeere;↳ plus Erdbeerpüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
+;Caipi Mango;↳ plus Mangopüree;2 Limettenscheibe;kleines Granity;gebaut mit crushed Ice, rühren
+Daiquiri;;6 cl weißer Rum, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup;Limettenzeste;Cocktailschale;shaken, double strain
+Margaritas;;6 cl weißer Tequila, ½ Limette, 2 cl Lime Juice, 2 cl Triple Sec, 3 cl Zuckersirup;Limettenzeste, Salzrand;Cocktailschale;shaken, double strain
 Martinis;Pornstar Martini;14 cl Pornstar Premix, Prosecco;Dörrorange;Cocktailschale;shaken, gebaut ohne Eis
-Martinis;Espresso Martini;4 cl Wodka, Espresso, 3 cl Kahlua, Dash Zuckersirup;3 Espressobohnen;Cocktailschale;shaken, double strain, auf Eiswürfel
-Martinis;Tiramisu Martini ;Espresso, 2 Bl Mascarpone, 1 Stk. Eigelb, 2 cl Kahlua, 2 cl dunkler Rum, 2 cl Vodka, 1 Dash Zuckersirup;;;
+;Espresso Martini;4 cl Wodka, Espresso, 3 cl Kahlua, Dash Zuckersirup;3 Espressobohnen;Cocktailschale;shaken, double strain, auf Eiswürfel
+;Tiramisu Martini ;Espresso, 2 Bl Mascarpone, 1 Stk. Eigelb, 2 cl Kahlua, 2 cl dunkler Rum, 2 cl Vodka, 1 Dash Zuckersirup;;;
 Sours;Whiskey Sour;6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Dash;Orangenzeste;Tumbler;shaken, double strain, auf Eiswürfel
-Sours;Amaretto Sour;6 cl Amaretto, 3 cl Zitronensaft, 2 cl Zuckersirup;Orangenzeste;Tumbler;shaken, double strain, auf Eiswürfel
-Sours;Gin Sour;6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup;Zitronenzeste;Tumbler;shaken, double strain, auf Eiswürfel
-Sours;Aperol Sour;4 cl Aperol, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup;Orangenzeste;Tumbler;shaken, double strain, auf Eiswürfel
-Sours;Lychee Sour;4 cl Lycheelikör, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup;Zitronenzeste;Tumbler;shaken, double strain, auf Eiswürfel
+;Amaretto Sour;6 cl Amaretto, 3 cl Zitronensaft, 2 cl Zuckersirup;Orangenzeste;Tumbler;shaken, double strain, auf Eiswürfel
+;Gin Sour;6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup;Zitronenzeste;Tumbler;shaken, double strain, auf Eiswürfel
+;Aperol Sour;4 cl Aperol, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup;Orangenzeste;Tumbler;shaken, double strain, auf Eiswürfel
+;Lychee Sour;4 cl Lycheelikör, 2 cl Wodka, 3 cl Zitronensaft, 2 cl Zuckersirup;Zitronenzeste;Tumbler;shaken, double strain, auf Eiswürfel
 Fizz & Smash;Gin Fizz;6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, Soda ;Zirtonenscheibe;Longdrinkglas;shaken, gebaut auf crushed Ice
-Fizz & Smash;Gin Basis Smash;6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, 3 Basilikumzweige;Basilikumblatt;Tumbler;hardshake, double strain, auf Eiswürfel
-Fizz & Smash;Whiskey Smash;6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Minzzweig;Minzzweig;Tumbler;hardshake, double strain, auf Eiswürfel
+;Gin Basis Smash;6 cl Gin, 3 cl Zitronensaft, 2 cl Zuckersirup, 3 Basilikumzweige;Basilikumblatt;Tumbler;hardshake, double strain, auf Eiswürfel
+;Whiskey Smash;6 cl 4 Roses, 3 cl Zitronensaft, 2 cl Zuckersirup, 1 Minzzweig;Minzzweig;Tumbler;hardshake, double strain, auf Eiswürfel
 Tiki & Tropical;Bahama Mama;2 cl weißer Rum, 2 cl dunkler Rum, 2 cl 73% Rum, 1 cl Apricot, 3 cl Mandelsirup, 2 cl Zitrone, 2 cl Limejuice, Ananas Filler;Dörr-Orange;Cocktailglas;geshaked
-Tiki & Tropical;Mai Tai;5 cl dunkler Rum, 1 cl Cointreau, 3 cl Lime Juice, 2 cl Mandelsirup;Limettenscheibe;Tumbler;geshaked
-Tiki & Tropical;Painkiller;5 cl dunkler Rum, 2 cl Kokossirup, 3 cl Ananassaft, 3 cl O-Saft;Dörr-Orange;Kupferbecher;gebaut auf Eiswürfel, gerührt
-Tiki & Tropical;Planter’s Punch;4 cl dunkler Rum, 2 cl weißer Rum, 2 cl Zitronensaft, 2 cl Grenadine, Ananas & O-Saft;Dörr-Orange;Granity;shaken
-Tiki & Tropical;Zombie;2 cl dunkler Rum, 2 cl weißer Rum, 2 cl 73% Rum, 1 cl Apricot, 2 cl Zitrone, 2 cl Lime, 2 cl Grenadine, O-Saft Filler;Dörr-Orange;Granity;shaken 
-Tiki & Tropical;Jungle Bird;4 cl Gin, 2cl Campari, 2 cl Lime Juice, 2cl Zuckersirup, Ananassaft;Dörr-Orange;Granity;shaken
-Tiki & Tropical;Hawaiian Volcano;2 cl weißer Rum, 2 cl Southern Comfort, 2 cl Amaretto, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, O-Saft;Dörr-Orange;Granity;shaken
-Tiki & Tropical;Almond Joy;4 cl Amaretto, 2 cl Schokolikör, 3 cl Kokossirup, 2 cl Sahne;Kakaopulver;Tumbler;shaken, auf Eiswürfel
+;Mai Tai;5 cl dunkler Rum, 1 cl Cointreau, 3 cl Lime Juice, 2 cl Mandelsirup;Limettenscheibe;Tumbler;geshaked
+;Painkiller;5 cl dunkler Rum, 2 cl Kokossirup, 3 cl Ananassaft, 3 cl O-Saft;Dörr-Orange;Kupferbecher;gebaut auf Eiswürfel, gerührt
+;Planter’s Punch;4 cl dunkler Rum, 2 cl weißer Rum, 2 cl Zitronensaft, 2 cl Grenadine, Ananas & O-Saft;Dörr-Orange;Granity;shaken
+;Zombie;2 cl dunkler Rum, 2 cl weißer Rum, 2 cl 73% Rum, 1 cl Apricot, 2 cl Zitrone, 2 cl Lime, 2 cl Grenadine, O-Saft Filler;Dörr-Orange;Granity;shaken 
+;Jungle Bird;4 cl Gin, 2cl Campari, 2 cl Lime Juice, 2cl Zuckersirup, Ananassaft;Dörr-Orange;Granity;shaken
+;Hawaiian Volcano;2 cl weißer Rum, 2 cl Southern Comfort, 2 cl Amaretto, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, O-Saft;Dörr-Orange;Granity;shaken
+;Almond Joy;4 cl Amaretto, 2 cl Schokolikör, 3 cl Kokossirup, 2 cl Sahne;Kakaopulver;Tumbler;shaken, auf Eiswürfel
 Mules;Moscow Mule;6 cl Wodka, Gurkenscheibe, ½ Limette, Ginger Beer;Minzzweig, Gurkenscheibe ;Kupferbecher;Gurke gestampft, auf Eiswürfel gebaut, gerührt
-Mules;London Mule;6 cl Gin, Gurkenscheibe, ½ Limette, Ginger Beer;Minzzweig, Gurkenscheibe ;Kupferbecher;Gurke gestampft, auf Eiswürfel gebaut, gerührt
-Mules;Mexico Mule;6 cl weißer Tequila, Gurkenscheibe, ½ Limette, Ginger Beer;Minzzweig, Gurkenscheibe ;Kupferbecher;Gurke gestampft, auf Eiswürfel gebaut, gerührt
+;London Mule;6 cl Gin, Gurkenscheibe, ½ Limette, Ginger Beer;Minzzweig, Gurkenscheibe ;Kupferbecher;Gurke gestampft, auf Eiswürfel gebaut, gerührt
+;Mexico Mule;6 cl weißer Tequila, Gurkenscheibe, ½ Limette, Ginger Beer;Minzzweig, Gurkenscheibe ;Kupferbecher;Gurke gestampft, auf Eiswürfel gebaut, gerührt
 Coladas;Piña Colada;4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, Ananas;Dörr-Orange;Granity;shaken
-Coladas;Piña Colada Strawberry;4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, 2 Bl Erdbeerpüree, Ananas;Dörr-Orange;Granity;shaken, Püree floaten
-Coladas;Piña Colada Baileys;6 cl Baileys, 3 cl Kokossirup, 2 cl Sahne, Ananas;Dörr-Orange;Granity;shaken
+;Piña Colada Strawberry;4 cl weißer Rum, 2 cl dunkler Rum, 3 cl Kokossirup, 2 cl Sahne, 2 Bl Erdbeerpüree, Ananas;Dörr-Orange;Granity;shaken, Püree floaten
+;Piña Colada Baileys;6 cl Baileys, 3 cl Kokossirup, 2 cl Sahne, Ananas;Dörr-Orange;Granity;shaken
 Iced Teas;Long Island Iced Tea;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, kleine Cola;2 Limettenscheibe;Granity;gebaut
-Iced Teas;Long Beach Iced Tea;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, Cranberry;2 Limettenscheibe;Granity;gebaut 
-Iced Teas;Tokyo Island;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Pfirsichlikör, Tonic;2 Limettenscheibe;Granity;gebaut 
-Iced Teas;Coco Loco;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, 3 cl Kokossirup, 2 cl Sahne;Dörr-Orange;Granity;shaken, auf Eiswürfel
+;Long Beach Iced Tea;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Triple Sec, Cranberry;2 Limettenscheibe;Granity;gebaut 
+;Tokyo Island;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, ½ Limette, 2 cl Pfirsichlikör, Tonic;2 Limettenscheibe;Granity;gebaut 
+;Coco Loco;2 cl Gin, 2 cl Wodka, 2 cl weißer Rum, 2 cl weißer Tequila, 3 cl Kokossirup, 2 cl Sahne;Dörr-Orange;Granity;shaken, auf Eiswürfel
 Punches;Red Punch;5 cl weißer Rum, 3 cl Zitrone, 1 cl Erdbeersirup, Erdbeerpüree, Ananas;Dörr-Orange;Granity;gebaut, Erdbeerpüree floaten
-Punches;Passionata;4 cl Wodka, 2 cl Passionsfruchtlikör, 2 cl Kirschlikör, Maracuja;Dörr-Orange;Granity;shaken
-Punches;Prince;4 cl brauner Tequila, 2 cl 43er, 3 cl Kokossirup, 2 cl Sahne, Maracuja;Dörr-Orange;Granity;shaken
-Punches;Sour Melone;2 cl weißer Rum, 2 cl 43er, 2 cl dunkler Rum, 2 cl Triple Sec, 2 Zitronensaft, 2 cl Wassermelonensirup, 1 cl Grenadine, O-Saft;Dörr-Orange;Granity;shaken
+;Passionata;4 cl Wodka, 2 cl Passionsfruchtlikör, 2 cl Kirschlikör, Maracuja;Dörr-Orange;Granity;shaken
+;Prince;4 cl brauner Tequila, 2 cl 43er, 3 cl Kokossirup, 2 cl Sahne, Maracuja;Dörr-Orange;Granity;shaken
+;Sour Melone;2 cl weißer Rum, 2 cl 43er, 2 cl dunkler Rum, 2 cl Triple Sec, 2 Zitronensaft, 2 cl Wassermelonensirup, 1 cl Grenadine, O-Saft;Dörr-Orange;Granity;shaken
 Sling & Co.;Singapore Sling;4 cl Gin, 1 cl Kirschlikör, 1 cl D.O.M., 1 cl Cointreau, 2 cl Grenadine, 2 cl Zitronesaft, 4 Ananas, 1 Dash Angostura, Soda;Dörr-Orange;Granity;shaken
-Sling & Co.;Swimmingpool;4 cl weißer Rum, 2 cl Wodka, 2 cl alkohlolisch Blue Curacao, 2 cl Blue Curacao, 3 cl Kokossirup, 2 cl Sahne, Ananas;Dörr-Orange;Granity;shaken
-Sling & Co.;Blue Lagoon;4 cl Wodka, 2 cl alkoholischer Blue Curacao, 2 cl Zitronensaft, Sprite;Dörr-Orange;Granity;shaken
-Sling & Co.;Sunflower;4 cl Aperol, 4 cl Malibu, 1 cl Grenadine, Ananas, O-Saft, Maracuja;Dörr-Orange;Granity;shaken
-Sling & Co.;Touch Down;4 cl Wodka, 2 cl Apricot, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, Maracujasaft Filler;Dörr-Orange;Granity;shaken
-Sling & Co.;Lady Killer;4 cl Gin, 2 cl Apricot, 2 cl Triple Sec, Maracuja - Ananas halb halb Filler;Dörr-Orange;Granity;shaken
-Sling & Co.;Sex on the Beach;4 cl Wodka, 2 cl Pfirsichlikör, 1 cl Grenadine, 1 cl Pfirsichsirup, 2 cl Zitronensaft, Maracuja;Dörr-Orange;Granity;shaken
+;Swimmingpool;4 cl weißer Rum, 2 cl Wodka, 2 cl alkohlolisch Blue Curacao, 2 cl Blue Curacao, 3 cl Kokossirup, 2 cl Sahne, Ananas;Dörr-Orange;Granity;shaken
+;Blue Lagoon;4 cl Wodka, 2 cl alkoholischer Blue Curacao, 2 cl Zitronensaft, Sprite;Dörr-Orange;Granity;shaken
+;Sunflower;4 cl Aperol, 4 cl Malibu, 1 cl Grenadine, Ananas, O-Saft, Maracuja;Dörr-Orange;Granity;shaken
+;Touch Down;4 cl Wodka, 2 cl Apricot, 2 cl Zitronensaft, 2 cl Lime Juice, 1 cl Grenadine, Maracujasaft Filler;Dörr-Orange;Granity;shaken
+;Lady Killer;4 cl Gin, 2 cl Apricot, 2 cl Triple Sec, Maracuja - Ananas halb halb Filler;Dörr-Orange;Granity;shaken
+;Sex on the Beach;4 cl Wodka, 2 cl Pfirsichlikör, 1 cl Grenadine, 1 cl Pfirsichsirup, 2 cl Zitronensaft, Maracuja;Dörr-Orange;Granity;shaken
 Strong/Classic;Negroni;3 cl Gin, 3 cl Campari, 3 cl roter Wermut;Orangenzeste;Tumbler;gebaut auf Eiswürfel, rühren
-Strong/Classic;Boulevardier;3 cl Whiskey, 3 cl Campari, 3 cl roter Wermut;Orangenzeste;Tumbler;gebaut auf Eiswürfel, rühren
-Strong/Classic;Prohibition;3 cl Whiskey, 3 cl Haselnusslikör, 3 cl Lime Juice, 2 cl Zuckersirup, Ginger Beer;Dörr-Orange;Kupferbecher;gebaut auf Eiswürfel, rühren
-Strong/Classic;Lynchburg Lemonade;5 cl Jacky, 2 cl Triple Sec, 2 cl Lime Juice, 2 cl Zitronensaft, Sprite;2 Limettenscheibe;Lynchburglemonade Glas;gebaut auf Eiswürfel, rühren
-Strong/Classic;White Russian;4 cl Wodka, 2 Kahlua, 3 Sahne;-;Tumbler;gebaut auf Eiswürfel, sahne shaken und floate
-Strong/Classic;Alabama Slammer;4 cl Wodka, 3 cl southern Comfort, O-Saft;Dörr-Orange;Granity;shaken
-Strong/Classic;Motherfucker;3 cl weißer Rum, 3 cl dunkler Rum, 3 cl 72% Rum, 1 cl Lime Juice, 1 cl Zitronensaft, 1 cl Zuckersirup, Cola;-;Granity;gebaut auf Eiswürfel, rühren
-Strong/Classic;Big Ben;5 cl Gin, 2 cl Zitronensaft, 1 cl Grenadine, 4 cl O-Saft;Dörr-Orange;Tumbler;gebaut auf Eiswürfel, rühren
-Strong/Classic;Ibiza;4 cl Wodka, 2 cl Pfirsichlikör, 3 cl Lime Juice, 2 cl Zuckersirup, 2 Orangenscheiben, O-Saft, Cranberry;Dörr-Orange;Granity;Orangenscheiben pressen, gebaut auf Eiswürfeln, Cranberry floaten
+;Boulevardier;3 cl Whiskey, 3 cl Campari, 3 cl roter Wermut;Orangenzeste;Tumbler;gebaut auf Eiswürfel, rühren
+;Prohibition;3 cl Whiskey, 3 cl Haselnusslikör, 3 cl Lime Juice, 2 cl Zuckersirup, Ginger Beer;Dörr-Orange;Kupferbecher;gebaut auf Eiswürfel, rühren
+;Lynchburg Lemonade;5 cl Jacky, 2 cl Triple Sec, 2 cl Lime Juice, 2 cl Zitronensaft, Sprite;2 Limettenscheibe;Lynchburglemonade Glas;gebaut auf Eiswürfel, rühren
+;White Russian;4 cl Wodka, 2 Kahlua, 3 Sahne;-;Tumbler;gebaut auf Eiswürfel, sahne shaken und floate
+;Alabama Slammer;4 cl Wodka, 3 cl southern Comfort, O-Saft;Dörr-Orange;Granity;shaken
+;Motherfucker;3 cl weißer Rum, 3 cl dunkler Rum, 3 cl 72% Rum, 1 cl Lime Juice, 1 cl Zitronensaft, 1 cl Zuckersirup, Cola;-;Granity;gebaut auf Eiswürfel, rühren
+;Big Ben;5 cl Gin, 2 cl Zitronensaft, 1 cl Grenadine, 4 cl O-Saft;Dörr-Orange;Tumbler;gebaut auf Eiswürfel, rühren
+;Ibiza;4 cl Wodka, 2 cl Pfirsichlikör, 3 cl Lime Juice, 2 cl Zuckersirup, 2 Orangenscheiben, O-Saft, Cranberry;Dörr-Orange;Granity;Orangenscheiben pressen, gebaut auf Eiswürfeln, Cranberry floaten
 Frozen;Daiquiri Himbeer;4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Vanillesirup, Himbeerpüree;Dörr-Orange;Granity;blenden mit crushed Ice bis sich Eis bildet
-Frozen;Daiquri Erdbeer;4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Erdbeersirup, Erdbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
-Frozen;Daiquiri Mango;4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Mangosirup, Mangopüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
-Frozen;Margarita Himbeer;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Vanillesirup, 2 Bl Himbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
-Frozen;Margarita Erdbeer;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Erdbeersirup, 2 Bl Erdbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
-Frozen;Margarita Mango;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Mangosirup, 2 Bl Mangopüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
+;Daiquri Erdbeer;4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Erdbeersirup, Erdbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
+;Daiquiri Mango;4 cl weißer Rum, 2 cl Zitronensaft, 2 cl Mangosirup, Mangopüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
+;Margarita Himbeer;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Vanillesirup, 2 Bl Himbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
+;Margarita Erdbeer;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Erdbeersirup, 2 Bl Erdbeerpüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
+;Margarita Mango;5 cl weißer Tequila, 2 cl 43er, 2 cl Lime Juice, 2 cl Triple Sec, 1 cl Mangosirup, 2 Bl Mangopüree;Dörr-Orange;;blenden mit crushed Ice bis sich Eis bildet
 Alkoholfrei;WM Fruit Mix ;2 cl Zitronensaft, 2 cl Vanillesirup, 50% Bananensaft, 25% Maracujasaft, 25% O-Saft;;;
-Alkoholfrei;Tropic Dream ;2 cl Zitronensaft, 2 cl Mandelsirup, 50% Maracujasaft, 50% Ananassaft;;;
+;Tropic Dream ;2 cl Zitronensaft, 2 cl Mandelsirup, 50% Maracujasaft, 50% Ananassaft;;;

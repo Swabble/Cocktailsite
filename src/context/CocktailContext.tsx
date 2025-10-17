@@ -10,13 +10,14 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   Cocktail,
+  CocktailDataset,
   CocktailImageMap,
+  CocktailMetadataMap,
   CsvVersion,
   CsvVersionSource
 } from "@/types";
 import { parseCocktailCsv } from "@/lib/csv";
 import {
-  cocktailsEqual,
   getUniqueDecorations,
   getUniqueGlasses,
   getUniqueGroups,
@@ -27,8 +28,17 @@ import {
 const COCKTAIL_QUERY_KEY = ["cocktails"] as const;
 const HISTORY_STORAGE_KEY = "cocktail-manager:csv-history";
 const HISTORY_ACTIVE_KEY = "cocktail-manager:csv-history-active";
-const IMAGE_STORAGE_KEY = "cocktail-manager:images";
 const FAVORITES_STORAGE_KEY = "cocktail-manager:favorites";
+const MODIFIED_WINDOW_MS = 1000 * 60 * 60 * 24 * 60; // 60 Tage
+
+const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
+const buildApiUrl = (path: string): string => `${API_BASE}${path}`;
+
+const EMPTY_DATASET: CocktailDataset = {
+  cocktails: [],
+  images: {},
+  modified: {}
+};
 
 type ReplaceOptions = {
   recordHistory?: boolean;
@@ -63,25 +73,6 @@ const loadStoredActiveId = (): string | null => {
   return active && active.length > 0 ? active : null;
 };
 
-const loadStoredImages = (): CocktailImageMap => {
-  if (typeof window === "undefined") return {};
-  try {
-    const raw = window.localStorage.getItem(IMAGE_STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw) as CocktailImageMap;
-    if (!parsed || typeof parsed !== "object") {
-      return {};
-    }
-    const entries = Object.entries(parsed).filter(
-      ([, value]) => typeof value === "string" && value.length > 0
-    );
-    return Object.fromEntries(entries);
-  } catch (error) {
-    console.warn("Konnte gespeicherte Bilder nicht laden", error);
-    return {};
-  }
-};
-
 const createVersion = (
   cocktails: Cocktail[],
   label: string,
@@ -97,17 +88,45 @@ const createVersion = (
   cocktails: cloneCocktails(cocktails)
 });
 
-const fetchCocktails = async (): Promise<Cocktail[]> => {
-  const url = new URL(`${import.meta.env.BASE_URL}Cocktail_Liste.csv`, window.location.origin);
-  url.searchParams.set("t", Date.now().toString());
-
-  const response = await fetch(url.toString(), { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error("CSV konnte nicht geladen werden");
+const fetchCocktails = async (): Promise<CocktailDataset> => {
+  const endpoint = buildApiUrl("/api/cocktails");
+  try {
+    const response = await fetch(endpoint, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`API-Fehler: ${response.status}`);
+    }
+    const payload = (await response.json()) as Partial<CocktailDataset>;
+    return {
+      cocktails: Array.isArray(payload.cocktails) ? payload.cocktails : [],
+      images: payload.images ?? {},
+      modified: payload.modified ?? {}
+    };
+  } catch (apiError) {
+    console.warn("API nicht erreichbar, lese CSV direkt", apiError);
+    const url = new URL(
+      `${import.meta.env.BASE_URL}Cocktail_Liste.csv`,
+      window.location.origin
+    );
+    url.searchParams.set("t", Date.now().toString());
+    const response = await fetch(url.toString(), { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("CSV konnte nicht geladen werden");
+    }
+    const text = await response.text();
+    const cocktails = await parseCocktailCsv(text);
+    return {
+      cocktails,
+      images: {},
+      modified: {}
+    };
   }
-  const text = await response.text();
-  return parseCocktailCsv(text);
 };
+
+const cloneDataset = (source: CocktailDataset): CocktailDataset => ({
+  cocktails: source.cocktails.map((cocktail) => ({ ...cocktail })),
+  images: { ...source.images },
+  modified: { ...source.modified }
+});
 
 type CocktailContextValue = {
   cocktails: Cocktail[];
@@ -154,7 +173,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string>("");
   const [csvVersions, setCsvVersions] = useState<CsvVersion[]>(() => loadStoredHistory());
   const [activeVersionId, setActiveVersionId] = useState<string | null>(() => loadStoredActiveId());
-  const [cocktailImages, setCocktailImages] = useState<CocktailImageMap>(() => loadStoredImages());
+  const [dataset, setDataset] = useState<CocktailDataset>(EMPTY_DATASET);
   const [favorites, setFavorites] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -168,23 +187,40 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     }
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<CocktailDataset>({
     queryKey: COCKTAIL_QUERY_KEY,
     queryFn: fetchCocktails
   });
 
-  const cocktails = data ?? [];
+  const applyServerDataset = useCallback(
+    (payload: CocktailDataset) => {
+      const cloned = cloneDataset(payload);
+      queryClient.setQueryData(COCKTAIL_QUERY_KEY, cloned);
+      setDataset(cloned);
+    },
+    [queryClient]
+  );
 
   useEffect(() => {
-    setCocktailImages((previous) => {
-      const allowed = new Set(cocktails.map((item) => slugify(item.Cocktail)));
-      const filteredEntries = Object.entries(previous).filter(([slug]) => allowed.has(slug));
-      if (filteredEntries.length === Object.entries(previous).length) {
-        return previous;
-      }
-      return Object.fromEntries(filteredEntries);
-    });
-  }, [cocktails]);
+    if (!data) return;
+    applyServerDataset(data);
+  }, [data, applyServerDataset]);
+
+  const syncDataset = useCallback(
+    (updater: (current: CocktailDataset) => CocktailDataset) => {
+      setDataset((previous) => {
+        const base = cloneDataset(previous);
+        const next = updater(base);
+        queryClient.setQueryData(COCKTAIL_QUERY_KEY, next);
+        return next;
+      });
+    },
+    [queryClient]
+  );
+
+  const cocktails = dataset.cocktails;
+  const cocktailImages = dataset.images;
+  const modificationMap: CocktailMetadataMap = dataset.modified;
 
   useEffect(() => {
     setFavorites((previous) => {
@@ -207,11 +243,6 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       window.localStorage.removeItem(HISTORY_ACTIVE_KEY);
     }
   }, [activeVersionId]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(cocktailImages));
-  }, [cocktailImages]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -260,62 +291,113 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const decorations = useMemo(() => getUniqueDecorations(cocktails), [cocktails]);
   const glasses = useMemo(() => getUniqueGlasses(cocktails), [cocktails]);
 
-  const baselineCocktails = useMemo(() => {
-    if (!cocktails.length) return null;
-    if (activeVersionId) {
-      const activeIndex = csvVersions.findIndex((entry) => entry.id === activeVersionId);
-      if (activeIndex >= 0 && activeIndex + 1 < csvVersions.length) {
-        return csvVersions[activeIndex + 1].cocktails;
-      }
-    }
-    if (csvVersions.length >= 2) {
-      return csvVersions[1].cocktails;
-    }
-    if (csvVersions.length === 1) {
-      return csvVersions[0].cocktails;
-    }
-    return null;
-  }, [activeVersionId, cocktails, csvVersions]);
-
   const recentlyChangedSlugs = useMemo(() => {
-    if (!baselineCocktails) return [];
-    const baselineMap = new Map<string, Cocktail>();
-    baselineCocktails.forEach((entry) => {
-      baselineMap.set(slugify(entry.Cocktail), entry);
-    });
-    const changed = new Set<string>();
-    cocktails.forEach((entry) => {
-      const slug = slugify(entry.Cocktail);
-      const reference = baselineMap.get(slug);
-      if (!reference || !cocktailsEqual(entry, reference)) {
-        changed.add(slug);
-      }
-    });
-    return Array.from(changed);
-  }, [baselineCocktails, cocktails]);
+    const threshold = Date.now() - MODIFIED_WINDOW_MS;
+    return cocktails
+      .map((entry) => slugify(entry.Cocktail))
+      .filter((slug) => (modificationMap[slug] ?? 0) >= threshold);
+  }, [cocktails, modificationMap]);
 
-  const setCocktailImage = useCallback((slug: string, dataUrl: string) => {
-    if (!slug || !dataUrl) return;
-    setCocktailImages((previous) => ({ ...previous, [slug]: dataUrl }));
-  }, []);
+  const replaceImages = useCallback(
+    (images: CocktailImageMap) => {
+      setDataset((previous) => {
+        const next = cloneDataset(previous);
+        next.images = { ...images };
+        queryClient.setQueryData(COCKTAIL_QUERY_KEY, next);
+        return next;
+      });
+    },
+    [queryClient]
+  );
 
-  const removeCocktailImage = useCallback((slug: string) => {
-    if (!slug) return;
-    setCocktailImages((previous) => {
-      if (!(slug in previous)) return previous;
-      const { [slug]: _removed, ...rest } = previous;
-      return rest;
-    });
-  }, []);
+  const setCocktailImage = useCallback(
+    (slug: string, dataUrl: string) => {
+      if (!slug || !dataUrl) return;
+      syncDataset((current) => {
+        current.images = { ...current.images, [slug]: dataUrl };
+        return current;
+      });
 
-  const renameCocktailImage = useCallback((oldSlug: string, newSlug: string) => {
-    if (!oldSlug || !newSlug || oldSlug === newSlug) return;
-    setCocktailImages((previous) => {
-      if (!(oldSlug in previous)) return previous;
-      const { [oldSlug]: image, ...rest } = previous;
-      return image ? { ...rest, [newSlug]: image } : rest;
-    });
-  }, []);
+      void (async () => {
+        try {
+          const response = await fetch(buildApiUrl("/api/cocktails/image"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ slug, dataUrl })
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const payload = (await response.json()) as { images: CocktailImageMap };
+          replaceImages(payload.images);
+        } catch (imageError) {
+          console.error("Bild konnte nicht gespeichert werden", imageError);
+          queryClient.invalidateQueries({ queryKey: COCKTAIL_QUERY_KEY });
+        }
+      })();
+    },
+    [queryClient, replaceImages, syncDataset]
+  );
+
+  const removeCocktailImage = useCallback(
+    (slug: string) => {
+      if (!slug) return;
+      syncDataset((current) => {
+        if (!(slug in current.images)) return current;
+        const { [slug]: _removed, ...rest } = current.images;
+        current.images = rest;
+        return current;
+      });
+
+      void (async () => {
+        try {
+          const response = await fetch(buildApiUrl(`/api/cocktails/image/${slug}`), {
+            method: "DELETE"
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const payload = (await response.json()) as { images: CocktailImageMap };
+          replaceImages(payload.images);
+        } catch (imageError) {
+          console.error("Bild konnte nicht gelöscht werden", imageError);
+          queryClient.invalidateQueries({ queryKey: COCKTAIL_QUERY_KEY });
+        }
+      })();
+    },
+    [queryClient, replaceImages, syncDataset]
+  );
+
+  const renameCocktailImage = useCallback(
+    (oldSlug: string, newSlug: string) => {
+      if (!oldSlug || !newSlug || oldSlug === newSlug) return;
+      syncDataset((current) => {
+        if (!(oldSlug in current.images)) return current;
+        const { [oldSlug]: image, ...rest } = current.images;
+        current.images = image ? { ...rest, [newSlug]: image } : rest;
+        return current;
+      });
+
+      void (async () => {
+        try {
+          const response = await fetch(buildApiUrl("/api/cocktails/image/rename"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ oldSlug, newSlug })
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const payload = (await response.json()) as { images: CocktailImageMap };
+          replaceImages(payload.images);
+        } catch (imageError) {
+          console.error("Bild konnte nicht umbenannt werden", imageError);
+          queryClient.invalidateQueries({ queryKey: COCKTAIL_QUERY_KEY });
+        }
+      })();
+    },
+    [queryClient, replaceImages, syncDataset]
+  );
 
   const recordVersion = useCallback(
     (cocktailList: Cocktail[], label: string, source: CsvVersionSource) => {
@@ -330,74 +412,146 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
-  const updateCocktails = useCallback(
-    (updater: (previous: Cocktail[]) => Cocktail[]) => {
-      queryClient.setQueryData(COCKTAIL_QUERY_KEY, (previous?: Cocktail[]) => {
-        const next = updater(previous ?? []);
-        return next;
+  const persistCocktailList = useCallback(
+    async (
+      nextCocktails: Cocktail[],
+      changedSlugs: string[],
+      options?: {
+        recordHistory?: boolean;
+        label?: string;
+        source?: CsvVersionSource;
+        activeVersionId?: string | null;
+      }
+    ) => {
+      try {
+        const response = await fetch(buildApiUrl("/api/cocktails"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cocktails: nextCocktails, changedSlugs })
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const payload = (await response.json()) as CocktailDataset;
+        applyServerDataset(payload);
+        setFavorites((previous) => {
+          const allowed = new Set(payload.cocktails.map((item) => slugify(item.Cocktail)));
+          return previous.filter((slug) => allowed.has(slug));
+        });
+
+        if (options?.recordHistory) {
+          const formatter = new Intl.DateTimeFormat("de-DE", {
+            dateStyle: "short",
+            timeStyle: "short"
+          });
+          const label = options.label ?? `Version vom ${formatter.format(new Date())}`;
+          recordVersion(payload.cocktails, label, options.source ?? "manual");
+        } else if (options?.activeVersionId !== undefined) {
+          setActiveVersionId(options.activeVersionId);
+        }
+      } catch (persistError) {
+        console.error("Speichern der Cocktails fehlgeschlagen", persistError);
+        queryClient.invalidateQueries({ queryKey: COCKTAIL_QUERY_KEY });
+      }
+    },
+    [applyServerDataset, queryClient, recordVersion]
+  );
+
+  const applyCocktailList = useCallback(
+    (
+      nextCocktails: Cocktail[],
+      options?: {
+        changedSlugs?: string[];
+        recordHistory?: boolean;
+        label?: string;
+        source?: CsvVersionSource;
+        activeVersionId?: string | null;
+      }
+    ) => {
+      const sluggedChanges = (options?.changedSlugs ?? []).map((slug) => slugify(slug));
+      const allowedSlugs = new Set(nextCocktails.map((item) => slugify(item.Cocktail)));
+      const timestamp = Date.now();
+
+      syncDataset((current) => {
+        current.cocktails = nextCocktails.map((item) => ({ ...item }));
+        current.images = Object.fromEntries(
+          Object.entries(current.images).filter(([slug]) => allowedSlugs.has(slug))
+        );
+        const filteredModified = Object.fromEntries(
+          Object.entries(current.modified).filter(([slug]) => allowedSlugs.has(slug))
+        );
+        sluggedChanges.forEach((slug) => {
+          if (allowedSlugs.has(slug)) {
+            filteredModified[slug] = timestamp;
+          }
+        });
+        current.modified = filteredModified;
+        return current;
+      });
+
+      setFavorites((previous) => previous.filter((slug) => allowedSlugs.has(slug)));
+
+      void persistCocktailList(nextCocktails, sluggedChanges, {
+        recordHistory: options?.recordHistory,
+        label: options?.label,
+        source: options?.source,
+        activeVersionId: options?.activeVersionId
       });
     },
-    [queryClient]
+    [persistCocktailList, setFavorites, syncDataset]
   );
 
   const upsertCocktail = useCallback(
     (cocktail: Cocktail) => {
-      updateCocktails((previous) => {
-        const existingIndex = previous.findIndex(
-          (item) => slugify(item.Cocktail) === slugify(cocktail.Cocktail)
-        );
-        if (existingIndex >= 0) {
-          const copy = [...previous];
-          copy[existingIndex] = { ...cocktail };
-          return copy;
-        }
-        return [...previous, { ...cocktail }];
+      const slug = slugify(cocktail.Cocktail);
+      const existingIndex = cocktails.findIndex(
+        (item) => slugify(item.Cocktail) === slug
+      );
+      const nextList =
+        existingIndex >= 0
+          ? cocktails.map((item, index) => (index === existingIndex ? { ...cocktail } : item))
+          : [...cocktails, { ...cocktail }];
+      applyCocktailList(nextList, {
+        changedSlugs: [slug],
+        source: "manual",
+        activeVersionId: null
       });
       setActiveVersionId(null);
     },
-    [updateCocktails]
+    [applyCocktailList, cocktails]
   );
 
   const deleteCocktail = useCallback(
     (cocktail: Cocktail) => {
-      updateCocktails((previous) =>
-        previous.filter((item) => slugify(item.Cocktail) !== slugify(cocktail.Cocktail))
-      );
+      const slug = slugify(cocktail.Cocktail);
+      const nextList = cocktails.filter((item) => slugify(item.Cocktail) !== slug);
+      applyCocktailList(nextList, {
+        changedSlugs: [slug],
+        source: "manual",
+        activeVersionId: null
+      });
       setActiveVersionId(null);
-      removeCocktailImage(slugify(cocktail.Cocktail));
-      setFavorites((prev) => prev.filter((slug) => slug !== slugify(cocktail.Cocktail)));
+      removeCocktailImage(slug);
     },
-    [removeCocktailImage, updateCocktails]
+    [applyCocktailList, cocktails, removeCocktailImage]
   );
 
   const replaceAll = useCallback(
     (cocktailList: Cocktail[], options?: ReplaceOptions) => {
-      updateCocktails(() => cocktailList);
       setActiveGroup(null);
       setSearch("");
-      setCocktailImages((previous) => {
-        const allowed = new Set(cocktailList.map((item) => slugify(item.Cocktail)));
-        const filteredEntries = Object.entries(previous).filter(([slug]) => allowed.has(slug));
-        return Object.fromEntries(filteredEntries);
+      applyCocktailList(cocktailList, {
+        changedSlugs: [],
+        recordHistory: options?.recordHistory,
+        label: options?.label,
+        source: options?.source ?? "manual",
+        activeVersionId: options?.activeVersionId ?? null
       });
-      if (options?.recordHistory) {
-        const formatter = new Intl.DateTimeFormat("de-DE", {
-          dateStyle: "short",
-          timeStyle: "short"
-        });
-        const label = options.label ?? `Version vom ${formatter.format(new Date())}`;
-        recordVersion(cocktailList, label, options.source ?? "manual");
-      } else if (options?.activeVersionId !== undefined) {
-        setActiveVersionId(options.activeVersionId);
+      if (!options?.recordHistory && options?.activeVersionId === undefined) {
+        setActiveVersionId(null);
       }
-      setFavorites((previous) => {
-        const allowed = new Set(
-          cocktailList.map((item) => slugify(item.Cocktail))
-        );
-        return previous.filter((slug) => allowed.has(slug));
-      });
     },
-    [updateCocktails, recordVersion]
+    [applyCocktailList, setActiveGroup, setSearch]
   );
 
   const restoreVersion = useCallback(
@@ -406,7 +560,8 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       if (!version) return;
       replaceAll(cloneCocktails(version.cocktails), {
         recordHistory: false,
-        activeVersionId: version.id
+        activeVersionId: version.id,
+        source: "restore"
       });
     },
     [csvVersions, replaceAll]

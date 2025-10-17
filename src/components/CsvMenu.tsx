@@ -159,7 +159,7 @@ const CsvMenu = () => {
         type="button"
         variant="ghost"
         size="icon"
-        aria-label="CSV-Menü öffnen"
+        aria-label="Menü öffnen"
         className="h-12 w-12 rounded-full border border-slate-200 bg-white text-slate-700 shadow-soft"
         onClick={openMenu}
       >
@@ -185,13 +185,13 @@ const CsvMenu = () => {
             >
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
                 <span className="flex items-center gap-2 text-base font-semibold text-slate-800">
-                  <History className="h-5 w-5" /> CSV-Verwaltung
+                  <History className="h-5 w-5" /> Menü
                 </span>
-                <Button type="button" size="icon" variant="ghost" aria-label="CSV-Menü schließen" onClick={closeMenu}>
+                <Button type="button" size="icon" variant="ghost" aria-label="Menü schließen" onClick={closeMenu}>
                   <X className="h-5 w-5" />
                 </Button>
               </div>
-              <div className="flex h-full flex-col gap-6 overflow-y-auto px-6 py-6">
+              <div className="flex h-full flex-col gap-6 overflow-y-auto overscroll-y-contain px-6 py-6 pb-28">
                 <div className="space-y-3">
                   <h3 className="text-sm font-semibold text-slate-700">Gruppen</h3>
                   <div className="grid gap-2 sm:grid-cols-2">
