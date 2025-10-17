@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
+import { formatStructuredRezeptur, slugify } from "@/lib/utils";
 import { cn } from "@/lib/cn";
 import type { Cocktail } from "@/types";
 
@@ -23,7 +23,8 @@ const CocktailDetail = () => {
     renameCocktailImage,
     toggleFavorite,
     isFavorite,
-    renameFavorite
+    renameFavorite,
+    structuredIngredients
   } = useCocktailContext();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -90,10 +91,18 @@ const CocktailDetail = () => {
     }
   };
 
-  const ingredients = ingredientsFromRezeptur(cocktail.Rezeptur);
   const slugified = slugify(cocktail.Cocktail);
   const imageSrc = cocktailImages[slugified] ?? null;
   const isCurrentFavorite = isFavorite(slugified);
+
+  const recipeDisplay = formatStructuredRezeptur(
+    structuredIngredients[slugified],
+    cocktail.Rezeptur
+  );
+  const ingredients = recipeDisplay
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
 
   const handleToggleFavorite = () => {
     toggleFavorite(slugified);
@@ -128,7 +137,7 @@ const CocktailDetail = () => {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-5xl flex-col gap-8 px-4 pb-16 pt-10">
+    <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-8 px-4 pb-16 pt-10">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <Button variant="ghost" onClick={() => navigate("/")} className="gap-2">
           <ArrowLeft className="h-4 w-4" /> Zurück

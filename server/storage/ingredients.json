@@ -1,0 +1,2650 @@
+{
+  "mojito": [
+    {
+      "raw": "5 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 TL Rohrzucker",
+      "amount": null,
+      "amountText": null,
+      "unit": "TL",
+      "ingredient": "Rohrzucker",
+      "notes": null
+    },
+    {
+      "raw": "1 Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "1 Limette",
+      "notes": null
+    },
+    {
+      "raw": "Minze",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Minze",
+      "notes": null
+    },
+    {
+      "raw": "Crushed Ice",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Crushed Ice",
+      "notes": null
+    },
+    {
+      "raw": "Soda",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Soda",
+      "notes": null
+    }
+  ],
+  "mojito-himbeer": [
+    {
+      "raw": "↳ plus Himbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Himbeerpüree",
+      "notes": null
+    }
+  ],
+  "mojito-erdbeer": [
+    {
+      "raw": "↳ plus Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Erdbeerpüree",
+      "notes": null
+    }
+  ],
+  "mojito-mango": [
+    {
+      "raw": "↳ plus Mangopüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Mangopüree",
+      "notes": null
+    }
+  ],
+  "mojito-wilder-mann": [
+    {
+      "raw": "↳ kein Wasser",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ kein Wasser",
+      "notes": null
+    },
+    {
+      "raw": "Ginger Beer",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ginger Beer",
+      "notes": null
+    },
+    {
+      "raw": "Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Erdbeerpüree",
+      "notes": null
+    }
+  ],
+  "caipi": [
+    {
+      "raw": "5 cl Cachaça",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Cachaça",
+      "notes": null
+    },
+    {
+      "raw": "1 Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "1 Limette",
+      "notes": null
+    },
+    {
+      "raw": "brauner Zucker",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "brauner Zucker",
+      "notes": null
+    },
+    {
+      "raw": "Crushed Ice",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Crushed Ice",
+      "notes": null
+    }
+  ],
+  "caipi-himbeere": [
+    {
+      "raw": "↳ plus Himbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Himbeerpüree",
+      "notes": null
+    }
+  ],
+  "caipi-erdbeere": [
+    {
+      "raw": "↳ plus Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Erdbeerpüree",
+      "notes": null
+    }
+  ],
+  "caipi-mango": [
+    {
+      "raw": "↳ plus Mangopüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "↳ plus Mangopüree",
+      "notes": null
+    }
+  ],
+  "daiquiri": [
+    {
+      "raw": "6 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "margaritas": [
+    {
+      "raw": "6 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "pornstar-martini": [
+    {
+      "raw": "14 cl Pornstar Premix",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Pornstar Premix",
+      "notes": null
+    },
+    {
+      "raw": "Prosecco",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Prosecco",
+      "notes": null
+    }
+  ],
+  "espresso-martini": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "Espresso",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Espresso",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kahlua",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kahlua",
+      "notes": null
+    },
+    {
+      "raw": "Dash Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Dash Zuckersirup",
+      "notes": null
+    }
+  ],
+  "tiramisu-martini": [
+    {
+      "raw": "Espresso",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Espresso",
+      "notes": null
+    },
+    {
+      "raw": "2 Bl Mascarpone",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Bl Mascarpone",
+      "notes": null
+    },
+    {
+      "raw": "1 Stk. Eigelb",
+      "amount": null,
+      "amountText": null,
+      "unit": "Stück",
+      "ingredient": "Eigelb",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Kahlua",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kahlua",
+      "notes": null
+    },
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Vodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Vodka",
+      "notes": null
+    },
+    {
+      "raw": "1 Dash Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "Dash",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "whiskey-sour": [
+    {
+      "raw": "6 cl 4 Roses",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "4 Roses",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "1 Dash",
+      "amount": null,
+      "amountText": null,
+      "unit": "Dash",
+      "ingredient": "1 Dash",
+      "notes": null
+    }
+  ],
+  "amaretto-sour": [
+    {
+      "raw": "6 cl Amaretto",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Amaretto",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "gin-sour": [
+    {
+      "raw": "6 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "aperol-sour": [
+    {
+      "raw": "4 cl Aperol",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Aperol",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "lychee-sour": [
+    {
+      "raw": "4 cl Lycheelikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lycheelikör",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    }
+  ],
+  "gin-fizz": [
+    {
+      "raw": "6 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "Soda",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Soda",
+      "notes": null
+    }
+  ],
+  "gin-basis-smash": [
+    {
+      "raw": "6 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "3 Basilikumzweige",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "3 Basilikumzweige",
+      "notes": null
+    }
+  ],
+  "whiskey-smash": [
+    {
+      "raw": "6 cl 4 Roses",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "4 Roses",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "1 Minzzweig",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "1 Minzzweig",
+      "notes": null
+    }
+  ],
+  "bahama-mama": [
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 73% Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "73% Rum",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Apricot",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Apricot",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Mandelsirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Mandelsirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitrone",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitrone",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Limejuice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Limejuice",
+      "notes": null
+    },
+    {
+      "raw": "Ananas Filler",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas Filler",
+      "notes": null
+    }
+  ],
+  "mai-tai": [
+    {
+      "raw": "5 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Cointreau",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Cointreau",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Mandelsirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Mandelsirup",
+      "notes": null
+    }
+  ],
+  "painkiller": [
+    {
+      "raw": "5 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Ananassaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Ananassaft",
+      "notes": null
+    },
+    {
+      "raw": "3 cl O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "O-Saft",
+      "notes": null
+    }
+  ],
+  "planters-punch": [
+    {
+      "raw": "4 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "Ananas & O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas & O-Saft",
+      "notes": null
+    }
+  ],
+  "zombie": [
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 73% Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "73% Rum",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Apricot",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Apricot",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitrone",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitrone",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft Filler",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft Filler",
+      "notes": null
+    }
+  ],
+  "jungle-bird": [
+    {
+      "raw": "4 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2cl Campari",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2cl Campari",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2cl Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "Ananassaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananassaft",
+      "notes": null
+    }
+  ],
+  "hawaiian-volcano": [
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Southern Comfort",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Southern Comfort",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Amaretto",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Amaretto",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft",
+      "notes": null
+    }
+  ],
+  "almond-joy": [
+    {
+      "raw": "4 cl Amaretto",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Amaretto",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Schokolikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Schokolikör",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    }
+  ],
+  "moscow-mule": [
+    {
+      "raw": "6 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "Gurkenscheibe",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Gurkenscheibe",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "Ginger Beer",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ginger Beer",
+      "notes": null
+    }
+  ],
+  "london-mule": [
+    {
+      "raw": "6 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "Gurkenscheibe",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Gurkenscheibe",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "Ginger Beer",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ginger Beer",
+      "notes": null
+    }
+  ],
+  "mexico-mule": [
+    {
+      "raw": "6 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "Gurkenscheibe",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Gurkenscheibe",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "Ginger Beer",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ginger Beer",
+      "notes": null
+    }
+  ],
+  "pia-colada": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    }
+  ],
+  "pia-colada-strawberry": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    },
+    {
+      "raw": "2 Bl Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Bl Erdbeerpüree",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    }
+  ],
+  "pia-colada-baileys": [
+    {
+      "raw": "6 cl Baileys",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Baileys",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    }
+  ],
+  "long-island-iced-tea": [
+    {
+      "raw": "2 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "kleine Cola",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "kleine Cola",
+      "notes": null
+    }
+  ],
+  "long-beach-iced-tea": [
+    {
+      "raw": "2 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "Cranberry",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Cranberry",
+      "notes": null
+    }
+  ],
+  "tokyo-island": [
+    {
+      "raw": "2 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "½ Limette",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "½ Limette",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Pfirsichlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Pfirsichlikör",
+      "notes": null
+    },
+    {
+      "raw": "Tonic",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Tonic",
+      "notes": null
+    }
+  ],
+  "coco-loco": [
+    {
+      "raw": "2 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    }
+  ],
+  "red-punch": [
+    {
+      "raw": "5 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Zitrone",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitrone",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Erdbeersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Erdbeersirup",
+      "notes": null
+    },
+    {
+      "raw": "Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Erdbeerpüree",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    }
+  ],
+  "passionata": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Passionsfruchtlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Passionsfruchtlikör",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Kirschlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kirschlikör",
+      "notes": null
+    },
+    {
+      "raw": "Maracuja",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracuja",
+      "notes": null
+    }
+  ],
+  "prince": [
+    {
+      "raw": "4 cl brauner Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "brauner Tequila",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 43er",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "43er",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    },
+    {
+      "raw": "Maracuja",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracuja",
+      "notes": null
+    }
+  ],
+  "sour-melone": [
+    {
+      "raw": "2 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 43er",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "43er",
+      "notes": null
+    },
+    {
+      "raw": "2 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "2 Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wassermelonensirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wassermelonensirup",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft",
+      "notes": null
+    }
+  ],
+  "singapore-sling": [
+    {
+      "raw": "4 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Kirschlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kirschlikör",
+      "notes": null
+    },
+    {
+      "raw": "1 cl D.O.M.",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "D.O.M.",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Cointreau",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Cointreau",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronesaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronesaft",
+      "notes": null
+    },
+    {
+      "raw": "4 Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "4 Ananas",
+      "notes": null
+    },
+    {
+      "raw": "1 Dash Angostura",
+      "amount": null,
+      "amountText": null,
+      "unit": "Dash",
+      "ingredient": "Angostura",
+      "notes": null
+    },
+    {
+      "raw": "Soda",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Soda",
+      "notes": null
+    }
+  ],
+  "swimmingpool": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl alkohlolisch Blue Curacao",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "alkohlolisch Blue Curacao",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Blue Curacao",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Blue Curacao",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Kokossirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Kokossirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Sahne",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    }
+  ],
+  "blue-lagoon": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl alkoholischer Blue Curacao",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "alkoholischer Blue Curacao",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "Sprite",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Sprite",
+      "notes": null
+    }
+  ],
+  "sunflower": [
+    {
+      "raw": "4 cl Aperol",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Aperol",
+      "notes": null
+    },
+    {
+      "raw": "4 cl Malibu",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Malibu",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "Ananas",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ananas",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft",
+      "notes": null
+    },
+    {
+      "raw": "Maracuja",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracuja",
+      "notes": null
+    }
+  ],
+  "touch-down": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Apricot",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Apricot",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "Maracujasaft Filler",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracujasaft Filler",
+      "notes": null
+    }
+  ],
+  "lady-killer": [
+    {
+      "raw": "4 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Apricot",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Apricot",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "Maracuja - Ananas halb halb Filler",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracuja - Ananas halb halb Filler",
+      "notes": null
+    }
+  ],
+  "sex-on-the-beach": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Pfirsichlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Pfirsichlikör",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Pfirsichsirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Pfirsichsirup",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "Maracuja",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Maracuja",
+      "notes": null
+    }
+  ],
+  "negroni": [
+    {
+      "raw": "3 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Campari",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Campari",
+      "notes": null
+    },
+    {
+      "raw": "3 cl roter Wermut",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "roter Wermut",
+      "notes": null
+    }
+  ],
+  "boulevardier": [
+    {
+      "raw": "3 cl Whiskey",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Whiskey",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Campari",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Campari",
+      "notes": null
+    },
+    {
+      "raw": "3 cl roter Wermut",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "roter Wermut",
+      "notes": null
+    }
+  ],
+  "prohibition": [
+    {
+      "raw": "3 cl Whiskey",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Whiskey",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Haselnusslikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Haselnusslikör",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "Ginger Beer",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Ginger Beer",
+      "notes": null
+    }
+  ],
+  "lynchburg-lemonade": [
+    {
+      "raw": "5 cl Jacky",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Jacky",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "Sprite",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Sprite",
+      "notes": null
+    }
+  ],
+  "white-russian": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 Kahlua",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Kahlua",
+      "notes": null
+    },
+    {
+      "raw": "3 Sahne",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "3 Sahne",
+      "notes": null
+    }
+  ],
+  "alabama-slammer": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "3 cl southern Comfort",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "southern Comfort",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft",
+      "notes": null
+    }
+  ],
+  "motherfucker": [
+    {
+      "raw": "3 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "3 cl dunkler Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "dunkler Rum",
+      "notes": null
+    },
+    {
+      "raw": "3 cl 72% Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "72% Rum",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "Cola",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Cola",
+      "notes": null
+    }
+  ],
+  "big-ben": [
+    {
+      "raw": "5 cl Gin",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Gin",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Grenadine",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Grenadine",
+      "notes": null
+    },
+    {
+      "raw": "4 cl O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "O-Saft",
+      "notes": null
+    }
+  ],
+  "ibiza": [
+    {
+      "raw": "4 cl Wodka",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Wodka",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Pfirsichlikör",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Pfirsichlikör",
+      "notes": null
+    },
+    {
+      "raw": "3 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zuckersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zuckersirup",
+      "notes": null
+    },
+    {
+      "raw": "2 Orangenscheiben",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Orangenscheiben",
+      "notes": null
+    },
+    {
+      "raw": "O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "O-Saft",
+      "notes": null
+    },
+    {
+      "raw": "Cranberry",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Cranberry",
+      "notes": null
+    }
+  ],
+  "daiquiri-himbeer": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Vanillesirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Vanillesirup",
+      "notes": null
+    },
+    {
+      "raw": "Himbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Himbeerpüree",
+      "notes": null
+    }
+  ],
+  "daiquri-erdbeer": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Erdbeersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Erdbeersirup",
+      "notes": null
+    },
+    {
+      "raw": "Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Erdbeerpüree",
+      "notes": null
+    }
+  ],
+  "daiquiri-mango": [
+    {
+      "raw": "4 cl weißer Rum",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Rum",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Mangosirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Mangosirup",
+      "notes": null
+    },
+    {
+      "raw": "Mangopüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "Mangopüree",
+      "notes": null
+    }
+  ],
+  "margarita-himbeer": [
+    {
+      "raw": "5 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 43er",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "43er",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Vanillesirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Vanillesirup",
+      "notes": null
+    },
+    {
+      "raw": "2 Bl Himbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Bl Himbeerpüree",
+      "notes": null
+    }
+  ],
+  "margarita-erdbeer": [
+    {
+      "raw": "5 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 43er",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "43er",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Erdbeersirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Erdbeersirup",
+      "notes": null
+    },
+    {
+      "raw": "2 Bl Erdbeerpüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Bl Erdbeerpüree",
+      "notes": null
+    }
+  ],
+  "margarita-mango": [
+    {
+      "raw": "5 cl weißer Tequila",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "weißer Tequila",
+      "notes": null
+    },
+    {
+      "raw": "2 cl 43er",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "43er",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Lime Juice",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Lime Juice",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Triple Sec",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Triple Sec",
+      "notes": null
+    },
+    {
+      "raw": "1 cl Mangosirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Mangosirup",
+      "notes": null
+    },
+    {
+      "raw": "2 Bl Mangopüree",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "2 Bl Mangopüree",
+      "notes": null
+    }
+  ],
+  "wm-fruit-mix": [
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Vanillesirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Vanillesirup",
+      "notes": null
+    },
+    {
+      "raw": "50% Bananensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "50% Bananensaft",
+      "notes": null
+    },
+    {
+      "raw": "25% Maracujasaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "25% Maracujasaft",
+      "notes": null
+    },
+    {
+      "raw": "25% O-Saft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "25% O-Saft",
+      "notes": null
+    }
+  ],
+  "tropic-dream": [
+    {
+      "raw": "2 cl Zitronensaft",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Zitronensaft",
+      "notes": null
+    },
+    {
+      "raw": "2 cl Mandelsirup",
+      "amount": null,
+      "amountText": null,
+      "unit": "cl",
+      "ingredient": "Mandelsirup",
+      "notes": null
+    },
+    {
+      "raw": "50% Maracujasaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "50% Maracujasaft",
+      "notes": null
+    },
+    {
+      "raw": "50% Ananassaft",
+      "amount": null,
+      "amountText": null,
+      "unit": null,
+      "ingredient": "50% Ananassaft",
+      "notes": null
+    }
+  ]
+}

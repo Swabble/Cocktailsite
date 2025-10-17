@@ -1,5 +1,5 @@
-import type { Cocktail } from "@/types";
-import { ingredientsFromRezeptur } from "@/lib/utils";
+import type { Cocktail, StructuredIngredientMap } from "@/types";
+import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
 import { normaliseText, suggest } from "./fuzzy";
 
 export type MasterRecord = {
@@ -81,9 +81,24 @@ const mergeRecords = (base: MasterRecord[], dynamic: MasterRecord[]): MasterReco
   return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
 };
 
-const extractDynamicIngredients = (cocktails: Cocktail[]): MasterRecord[] => {
+const extractDynamicIngredients = (
+  cocktails: Cocktail[],
+  structured?: StructuredIngredientMap
+): MasterRecord[] => {
   const counts = new Map<string, number>();
   cocktails.forEach((cocktail) => {
+    const slug = slugify(cocktail.Cocktail);
+    const structuredEntries = structured?.[slug];
+    if (structuredEntries?.length) {
+      structuredEntries
+        .map((entry) => entry.ingredient?.trim() ?? entry.raw?.trim() ?? "")
+        .filter((ingredient) => ingredient.length > 0)
+        .forEach((ingredient) => {
+          counts.set(ingredient, (counts.get(ingredient) ?? 0) + 1);
+        });
+      return;
+    }
+
     ingredientsFromRezeptur(cocktail.Rezeptur)
       .map((ingredient) => ingredient.replace(/\(.*?\)/g, "").trim())
       .filter((ingredient) => ingredient.length > 0)
@@ -100,18 +115,47 @@ const extractDynamicIngredients = (cocktails: Cocktail[]): MasterRecord[] => {
   }));
 };
 
+const extractDynamicUnits = (structured?: StructuredIngredientMap): MasterRecord[] => {
+  if (!structured) return [];
+  const counts = new Map<string, number>();
+  Object.values(structured).forEach((entries) => {
+    entries
+      .map((entry) => entry.unit?.trim() ?? "")
+      .filter((unit) => unit.length > 0 && unit !== "-")
+      .forEach((unit) => {
+        counts.set(unit, (counts.get(unit) ?? 0) + 1);
+      });
+  });
+
+  return Array.from(counts.entries()).map(([name, popularity]) => ({
+    name,
+    popularity
+  }));
+};
+
 let cachedKey = "";
 let cachedData: MasterData | null = null;
 
-export const buildMasterData = (cocktails: Cocktail[]): MasterData => {
-  const key = JSON.stringify(cocktails.map((cocktail) => cocktail.Cocktail));
+export const buildMasterData = (
+  cocktails: Cocktail[],
+  structured?: StructuredIngredientMap
+): MasterData => {
+  const key = JSON.stringify({
+    cocktails: cocktails.map((cocktail) => cocktail.Cocktail),
+    structured: structured
+      ? Object.entries(structured)
+          .map(([slug, entries]) => [slug, entries.length] as [string, number])
+          .sort((a, b) => a[0].localeCompare(b[0]))
+      : []
+  });
   if (cachedData && cachedKey === key) {
     return cachedData;
   }
 
-  const dynamicIngredients = extractDynamicIngredients(cocktails);
+  const dynamicIngredients = extractDynamicIngredients(cocktails, structured);
+  const dynamicUnits = extractDynamicUnits(structured);
   const ingredients = mergeRecords(BASE_INGREDIENTS, dynamicIngredients);
-  const units = mergeRecords(BASE_UNITS, []);
+  const units = mergeRecords(BASE_UNITS, dynamicUnits);
 
   const master: MasterData = {
     units,

@@ -1,4 +1,4 @@
-import type { Cocktail } from "@/types";
+import type { Cocktail, StructuredIngredient } from "@/types";
 
 export const normaliseKey = (key: string): string => key.replace(/^\ufeff/, "").trim();
 
@@ -31,6 +31,53 @@ export const ingredientsForFilter = (rezeptur: string): string[] => {
     .filter((ingredient) => ingredient.length > 0);
 
   return Array.from(new Set(normalised));
+};
+
+const trimPlaceholder = (value: string | null | undefined): string => {
+  if (!value) return "";
+  const trimmed = value.trim();
+  return trimmed === "-" ? "" : trimmed;
+};
+
+export const formatStructuredIngredient = (entry: StructuredIngredient): string => {
+  const parts: string[] = [];
+  const amount = trimPlaceholder(entry.amountText);
+  if (amount) {
+    parts.push(amount);
+  }
+  const unit = trimPlaceholder(entry.unit);
+  if (unit) {
+    parts.push(unit);
+  }
+  const ingredient = trimPlaceholder(entry.ingredient) || trimPlaceholder(entry.raw);
+  if (ingredient) {
+    parts.push(ingredient);
+  }
+  const line = parts.join(" ").replace(/\s+/g, " ").trim();
+  const notes = trimPlaceholder(entry.notes);
+  return notes ? `${line} ${notes}`.trim() : line;
+};
+
+export const formatStructuredRezeptur = (
+  entries: StructuredIngredient[] | undefined,
+  fallback: string
+): string => {
+  if (!entries?.length) return fallback;
+  const lines = entries.map((entry) => formatStructuredIngredient(entry)).filter((line) => line.length > 0);
+  return lines.length ? lines.join("\n") : fallback;
+};
+
+export const structuredFilterValues = (
+  entries: StructuredIngredient[] | undefined,
+  fallback: string
+): string[] => {
+  if (!entries?.length) return ingredientsForFilter(fallback);
+  const unique = new Set<string>();
+  entries
+    .map((entry) => trimPlaceholder(entry.ingredient) || trimPlaceholder(entry.raw))
+    .filter((value) => value.length > 0)
+    .forEach((value) => unique.add(value));
+  return unique.size ? Array.from(unique) : ingredientsForFilter(fallback);
 };
 
 export const searchCocktails = (cocktails: Cocktail[], query: string): Cocktail[] => {
