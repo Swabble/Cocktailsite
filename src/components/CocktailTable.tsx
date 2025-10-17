@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { ChevronDown, ChevronUp, Filter, Star } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronUp, Filter, Star } from "lucide-react";
 import type { Cocktail } from "@/types";
 import {
   Table,
@@ -292,13 +292,12 @@ const CocktailTable = ({
             const slug = slugify(cocktail.Cocktail);
             const isHighlighted = highlightedSet.has(slug);
             const isFavorite = favoritesSet.has(slug);
+            const handleSelect = () => onSelect(cocktail);
             return (
-              <button
+              <div
                 key={cocktail.Cocktail}
-                type="button"
-                onClick={() => onSelect(cocktail)}
                 className={cn(
-                  "group rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-sm transition",
+                  "rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition",
                   "hover:-translate-y-0.5 hover:shadow-md",
                   isHighlighted && "border-amber-400/80 bg-amber-50/80",
                   isFavorite && !isHighlighted && "border-amber-200"
@@ -311,15 +310,24 @@ const CocktailTable = ({
                       <p className="text-xs uppercase tracking-wide text-slate-500">{cocktail.Gruppe}</p>
                     )}
                   </div>
-                  {isFavorite && <Star className="h-5 w-5 fill-amber-400 text-amber-400" />}
+                  <div className="flex items-center gap-2">
+                    {isFavorite && <Star className="h-5 w-5 fill-amber-400 text-amber-400" />}
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="h-8 w-8 rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm"
+                      onClick={handleSelect}
+                      aria-label={`Details zu ${cocktail.Cocktail} öffnen`}
+                    >
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
                 <div className="mt-4 space-y-3 text-sm text-slate-600">
                   <Field label="Rezeptur" value={cocktail.Rezeptur} />
-                  <Field label="Deko" value={cocktail.Deko || "–"} />
-                  <Field label="Glas" value={cocktail.Glas || "–"} />
-                  <Field label="Zubereitung" value={cocktail.Zubereitung || "–"} />
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>

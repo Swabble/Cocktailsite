@@ -17,7 +17,6 @@ const App = () => {
   const {
     cocktails,
     filteredCocktails,
-    groups,
     activeGroup,
     setActiveGroup,
     search,
@@ -93,13 +92,6 @@ const App = () => {
 
     return matches.slice(0, 5);
   }, [cocktails, searchInput]);
-
-  const otherGroups = useMemo(() => groups.filter((group) => group !== ""), [groups]);
-  const topRowCount = Math.ceil(otherGroups.length / 2);
-  const bottomRowCount = otherGroups.length - topRowCount;
-  const columnCount = Math.max(topRowCount, 1);
-  const topRow = otherGroups.slice(0, topRowCount);
-  const bottomRow = otherGroups.slice(topRowCount);
 
   const renderGroupButton = (label: string, value: string | null, extraClasses?: string) => {
     const isActive = (value === null && !activeGroup) || value === activeGroup;
@@ -179,52 +171,15 @@ const App = () => {
 
         <nav
           aria-label="Cocktail-Gruppen"
-          className="grid gap-3 rounded-2xl bg-white p-4 shadow-soft transition-all duration-300"
+          className="rounded-2xl bg-white p-4 shadow-soft transition-all duration-300"
         >
-          <div
-            className="hidden items-stretch gap-3 lg:grid"
-            style={{
-              gridTemplateColumns: "minmax(140px, 160px) minmax(0, 1fr) minmax(140px, 160px)",
-              gridTemplateRows: "repeat(2, minmax(0, 1fr))"
-            }}
-          >
-            <div className="row-span-2">
-              <div className="aspect-square w-full">
-                {renderGroupButton("Alle", null, "h-full w-full text-base")}
-              </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="aspect-square">
+              {renderGroupButton("Alle", null, "h-full w-full text-base")}
             </div>
-
-            <div className="grid h-full grid-rows-2 gap-3">
-              <div
-                className="grid gap-3"
-                style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
-              >
-                {topRow.map((group) => renderGroupButton(group, group, "h-full"))}
-                {Array.from({ length: Math.max(columnCount - topRow.length, 0) }).map((_, index) => (
-                  <div key={`placeholder-top-${index}`} aria-hidden="true" />
-                ))}
-              </div>
-              <div
-                className="grid gap-3"
-                style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
-              >
-                {bottomRow.map((group) => renderGroupButton(group, group, "h-full"))}
-                {Array.from({ length: Math.max(columnCount - bottomRow.length, 0) }).map((_, index) => (
-                  <div key={`placeholder-bottom-${index}`} aria-hidden="true" />
-                ))}
-              </div>
+            <div className="aspect-square">
+              {renderGroupButton("Favoriten", "__favorites__", "h-full w-full text-base")}
             </div>
-
-            <div className="row-span-2">
-              <div className="aspect-square w-full">
-                {renderGroupButton("Favoriten", "__favorites__", "h-full w-full text-base")}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3 lg:hidden">
-            <div className="w-1/2">{renderGroupButton("Alle", null, "w-full text-base py-4")}</div>
-            <div className="w-1/2">{renderGroupButton("Favoriten", "__favorites__", "w-full text-base py-4")}</div>
           </div>
         </nav>
       </header>

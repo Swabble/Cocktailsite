@@ -13,23 +13,6 @@ const dateFormatter = new Intl.DateTimeFormat("de-DE", {
   timeStyle: "short"
 });
 
-const useMediaQuery = (query: string): boolean => {
-  const [matches, setMatches] = useState(() =>
-    typeof window === "undefined" ? false : window.matchMedia(query).matches
-  );
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia(query);
-    const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
-    mediaQuery.addEventListener("change", handler);
-    setMatches(mediaQuery.matches);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, [query]);
-
-  return matches;
-};
-
 const CsvMenu = () => {
   const {
     cocktails,
@@ -46,8 +29,6 @@ const CsvMenu = () => {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const isLargeLayout = useMediaQuery("(min-width: 1024px)");
-  const showGroupShortcuts = !isLargeLayout;
 
   const versionOptions = useMemo(
     () =>
@@ -56,6 +37,20 @@ const CsvMenu = () => {
         formattedDate: dateFormatter.format(version.createdAt)
       })),
     [csvVersions]
+  );
+
+  const activeVersion = useMemo(
+    () => versionOptions.find((version) => version.id === activeVersionId) ?? null,
+    [activeVersionId, versionOptions]
+  );
+
+  const normalisedGroups = useMemo(
+    () =>
+      groups
+        .map((group) => group.trim())
+        .filter((group, index, array) => group.length > 0 && array.indexOf(group) === index)
+        .sort((a, b) => a.localeCompare(b)),
+    [groups]
   );
 
   useEffect(() => {
@@ -197,75 +192,91 @@ const CsvMenu = () => {
                 </Button>
               </div>
               <div className="flex h-full flex-col gap-6 overflow-y-auto px-6 py-6">
-                <div className="space-y-2">
-                  <p className="text-sm text-slate-600">
-                    Importieren, exportieren und wechseln Sie zwischen den letzten fünf CSV-Ständen.
-                  </p>
-                  {error && <p className="text-sm text-red-500 whitespace-pre-line">{error}</p>}
-                  {feedback && !error && (
-                    <p className="text-sm text-emerald-600 whitespace-pre-line">{feedback}</p>
-                  )}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-semibold text-slate-700">Gruppen</h3>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Button
+                      type="button"
+                      variant={activeGroup === null ? "default" : "outline"}
+                      className="justify-start gap-2"
+                      onClick={() => handleSelectGroup(null)}
+                    >
+                      Alle
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={activeGroup === "__favorites__" ? "default" : "outline"}
+                      className="justify-start gap-2"
+                      onClick={() => handleSelectGroup("__favorites__")}
+                    >
+                      Favoriten
+                    </Button>
+                    {normalisedGroups.map((group) => (
+                      <Button
+                        key={group}
+                        type="button"
+                        variant={activeGroup === group ? "default" : "outline"}
+                        className="justify-start capitalize"
+                        onClick={() => handleSelectGroup(group)}
+                      >
+                        {group}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
 
-                {showGroupShortcuts && (
-                  <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-slate-700">Gruppen auswählen</h3>
-                    <div className="grid gap-2 sm:grid-cols-2">
-                      <Button
-                        type="button"
-                        variant={activeGroup === null ? "default" : "outline"}
-                        className="justify-start gap-2"
-                        onClick={() => handleSelectGroup(null)}
-                      >
-                        Alle
-                      </Button>
-                      <Button
-                        type="button"
-                        variant={activeGroup === "__favorites__" ? "default" : "outline"}
-                        className="justify-start gap-2"
-                        onClick={() => handleSelectGroup("__favorites__")}
-                      >
-                        Favoriten
-                      </Button>
-                      {groups.map((group) => (
-                        <Button
-                          key={group}
-                          type="button"
-                          variant={activeGroup === group ? "default" : "outline"}
-                          className="justify-start capitalize"
-                          onClick={() => handleSelectGroup(group)}
-                        >
-                          {group}
-                        </Button>
-                      ))}
-                    </div>
+                {(error || feedback) && (
+                  <div className="space-y-1">
+                    {error && <p className="text-sm text-red-500 whitespace-pre-line">{error}</p>}
+                    {feedback && !error && (
+                      <p className="text-sm text-emerald-600 whitespace-pre-line">{feedback}</p>
+                    )}
                   </div>
                 )}
 
-                <div className="flex flex-col gap-3">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".csv"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="justify-start gap-2 bg-slate-50 hover:bg-slate-100"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Upload className="h-4 w-4" /> CSV importieren
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="justify-start gap-2 bg-slate-50 hover:bg-slate-100"
-                    onClick={handleExport}
-                  >
-                    <Download className="h-4 w-4" /> CSV exportieren
-                  </Button>
+                <div className="space-y-3">
+                  <h3 className="text-sm font-semibold text-slate-700">Daten</h3>
+                  <div className="flex flex-col gap-3">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".csv"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="justify-start gap-2 bg-slate-50 hover:bg-slate-100"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Upload className="h-4 w-4" /> CSV importieren
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="justify-start gap-2 bg-slate-50 hover:bg-slate-100"
+                      onClick={handleExport}
+                    >
+                      <Download className="h-4 w-4" /> CSV exportieren
+                    </Button>
+                  </div>
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3 text-sm text-slate-600">
+                    <p className="font-medium text-slate-700">Aktive Version</p>
+                    <p>
+                      {activeVersion ? (
+                        <>
+                          {activeVersion.label}
+                          <br />
+                          <span className="text-xs text-slate-500">
+                            {activeVersion.formattedDate} · {activeVersion.cocktails.length} Cocktails
+                          </span>
+                        </>
+                      ) : (
+                        "Aktuelle Daten aus Cocktail_Liste.csv"
+                      )}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="space-y-3">
