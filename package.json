@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "jest",
     "sync:csv": "node ./scripts/sync-csv.mjs",
-    "start:server": "node ./server/index.mjs"
+    "start:server": "node ./server/index.mjs",
+    "build:csv-db": "node ./scripts/build-csv-database.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",

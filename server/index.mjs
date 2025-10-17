@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { promises as fs } from "fs";
 import path from "path";
+import crypto from "crypto";
 import Papa from "papaparse";
 
 const app = express();
@@ -17,6 +18,7 @@ const imagesDir = path.join(rootDir, "public", "cocktail-images");
 const imageManifestPath = path.join(rootDir, "public", "cocktail-images.json");
 const metadataPath = path.join(rootDir, "server", "storage", "modifications.json");
 const structuredPath = path.join(rootDir, "server", "storage", "ingredients.json");
+const databasePath = path.join(rootDir, "server", "storage", "cocktails.db.json");
 const masterDataDir = path.join(rootDir, "public", "master-data");
 const ingredientListPath = path.join(masterDataDir, "ingredients.csv");
 const unitListPath = path.join(masterDataDir, "units.csv");
@@ -521,9 +523,279 @@ const writeMasterLists = async (structured) => {
   await writeListCsv(amountListPath, amounts);
 };
 
+const serialiseState = (state) => JSON.stringify(state, null, 2);
+
+class CsvDatabase {
+  constructor({ statePath }) {
+    this.statePath = statePath;
+    this.state = {
+      cocktails: {},
+      revisions: {}
+    };
+    this.loaded = false;
+  }
+
+  async ensureLoaded() {
+    if (this.loaded) {
+      return;
+    }
+
+    try {
+      const raw = await fs.readFile(this.statePath, "utf8");
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        this.state = {
+          cocktails: parsed.cocktails ?? {},
+          revisions: parsed.revisions ?? {}
+        };
+        this.loaded = true;
+        return;
+      }
+    } catch {
+      /* ignore */
+    }
+
+    this.state = { cocktails: {}, revisions: {} };
+    this.loaded = true;
+    const cocktails = await parseCocktailCsvFile();
+    await this.syncFromFile(cocktails, { reason: "initial_import" });
+  }
+
+  async persist() {
+    await fs.writeFile(this.statePath, serialiseState(this.state), "utf8");
+  }
+
+  getActiveCocktails() {
+    return Object.values(this.state.cocktails)
+      .filter((entry) => !entry.isDeleted)
+      .sort((a, b) => {
+        const orderA = Number.isFinite(a.order) ? a.order : 0;
+        const orderB = Number.isFinite(b.order) ? b.order : 0;
+        if (orderA === orderB) {
+          return a.createdAt.localeCompare(b.createdAt);
+        }
+        return orderA - orderB;
+      })
+      .map((entry) => ({ ...entry.data }));
+  }
+
+  getEntry(slug) {
+    return this.state.cocktails[slug] ?? null;
+  }
+
+  getRevisions(slug) {
+    const revisions = this.state.revisions[slug];
+    if (!Array.isArray(revisions)) {
+      return [];
+    }
+    return [...revisions].sort((a, b) => b.version - a.version);
+  }
+
+  resolveOperation(reason, { dataChanged, forced }) {
+    if (reason === "initial_import") {
+      return "import";
+    }
+    if (reason === "user_save") {
+      return dataChanged ? "update" : "metadata";
+    }
+    if (reason === "rollback") {
+      return "rollback";
+    }
+    if (reason === "file_sync") {
+      return dataChanged ? "sync_update" : "sync_touch";
+    }
+    return forced && !dataChanged ? "metadata" : "update";
+  }
+
+  reassignOrders() {
+    const active = Object.values(this.state.cocktails)
+      .filter((entry) => !entry.isDeleted)
+      .sort((a, b) => {
+        const orderA = Number.isFinite(a.order) ? a.order : Number.MAX_SAFE_INTEGER;
+        const orderB = Number.isFinite(b.order) ? b.order : Number.MAX_SAFE_INTEGER;
+        if (orderA === orderB) {
+          return (a.createdAt ?? "").localeCompare(b.createdAt ?? "");
+        }
+        return orderA - orderB;
+      });
+
+    active.forEach((entry, index) => {
+      entry.order = index;
+    });
+  }
+
+  async syncFromFile(cocktails, options = {}) {
+    if (!this.loaded) {
+      this.state = { cocktails: {}, revisions: {} };
+      this.loaded = true;
+    }
+
+    const { reason = "file_sync", changedSlugs = [] } = options;
+    const changedSet = new Set((changedSlugs ?? []).map((slug) => slugify(slug)));
+    const nextSlugs = new Set();
+    const now = new Date().toISOString();
+    let hasChanges = false;
+
+    cocktails.forEach((cocktail, index) => {
+      if (!cocktail || typeof cocktail !== "object") {
+        return;
+      }
+      const slug = slugify(cocktail.Cocktail ?? "");
+      if (!slug) {
+        return;
+      }
+      nextSlugs.add(slug);
+      const snapshot = {
+        Gruppe: cocktail.Gruppe ?? "",
+        Cocktail: cocktail.Cocktail ?? "",
+        Rezeptur: cocktail.Rezeptur ?? "",
+        Deko: cocktail.Deko ?? "",
+        Glas: cocktail.Glas ?? "",
+        Zubereitung: cocktail.Zubereitung ?? ""
+      };
+      let entry = this.state.cocktails[slug];
+      if (!entry) {
+        const revisionId = crypto.randomUUID();
+        entry = {
+          id: crypto.randomUUID(),
+          slug,
+          data: snapshot,
+          version: 1,
+          createdAt: now,
+          updatedAt: now,
+          isDeleted: false,
+          order: index
+        };
+        this.state.cocktails[slug] = entry;
+        this.state.revisions[slug] = [
+          {
+            revisionId,
+            timestamp: now,
+            version: 1,
+            operation: this.resolveOperation(reason, { dataChanged: true, forced: false }),
+            snapshot
+          }
+        ];
+        hasChanges = true;
+        return;
+      }
+
+      entry.order = index;
+      const dataChanged = entry.isDeleted || !cocktailsEqual(entry.data, snapshot);
+      const forced = changedSet.has(slug) && reason !== "file_sync";
+
+      if (entry.isDeleted && !dataChanged) {
+        entry.isDeleted = false;
+        entry.updatedAt = now;
+        hasChanges = true;
+      }
+
+      if (dataChanged || forced) {
+        entry.data = snapshot;
+        entry.isDeleted = false;
+        entry.updatedAt = now;
+        entry.version = (entry.version ?? 0) + 1;
+        const operation = this.resolveOperation(reason, { dataChanged, forced });
+        const revisionId = crypto.randomUUID();
+        const revision = {
+          revisionId,
+          timestamp: now,
+          version: entry.version,
+          operation,
+          snapshot
+        };
+        const list = this.state.revisions[slug] ?? [];
+        list.push(revision);
+        this.state.revisions[slug] = list;
+        hasChanges = true;
+      }
+    });
+
+    Object.entries(this.state.cocktails).forEach(([slug, entry]) => {
+      if (!nextSlugs.has(slug) && !entry.isDeleted) {
+        entry.isDeleted = true;
+        entry.updatedAt = now;
+        entry.version = (entry.version ?? 0) + 1;
+        const list = this.state.revisions[slug] ?? [];
+        list.push({
+          revisionId: crypto.randomUUID(),
+          timestamp: now,
+          version: entry.version,
+          operation: reason === "rollback" ? "rollback_delete" : "delete",
+          snapshot: null
+        });
+        this.state.revisions[slug] = list;
+        hasChanges = true;
+      }
+    });
+
+    this.reassignOrders();
+
+    if (hasChanges) {
+      await this.persist();
+    }
+  }
+
+  async rollback(slug, targetVersion) {
+    await this.ensureLoaded();
+    const entry = this.state.cocktails[slug];
+    if (!entry) {
+      const error = new Error("Nicht gefunden");
+      error.code = "NOT_FOUND";
+      throw error;
+    }
+
+    const revisions = this.state.revisions[slug] ?? [];
+    const target = revisions.find((revision) => revision.version === targetVersion);
+    if (!target) {
+      const error = new Error("Revision nicht gefunden");
+      error.code = "REVISION_NOT_FOUND";
+      throw error;
+    }
+
+    const now = new Date().toISOString();
+    entry.updatedAt = now;
+    entry.version = (entry.version ?? 0) + 1;
+
+    let snapshot = null;
+    if (target.snapshot) {
+      snapshot = {
+        Gruppe: target.snapshot.Gruppe ?? "",
+        Cocktail: target.snapshot.Cocktail ?? "",
+        Rezeptur: target.snapshot.Rezeptur ?? "",
+        Deko: target.snapshot.Deko ?? "",
+        Glas: target.snapshot.Glas ?? "",
+        Zubereitung: target.snapshot.Zubereitung ?? ""
+      };
+      entry.data = snapshot;
+      entry.isDeleted = false;
+    } else {
+      entry.isDeleted = true;
+    }
+
+    const list = this.state.revisions[slug] ?? [];
+    list.push({
+      revisionId: crypto.randomUUID(),
+      timestamp: now,
+      version: entry.version,
+      operation: "rollback",
+      snapshot
+    });
+    this.state.revisions[slug] = list;
+    this.reassignOrders();
+    await this.persist();
+
+    return this.getActiveCocktails();
+  }
+}
+
+const database = new CsvDatabase({ statePath: databasePath });
+
 app.get("/api/cocktails", async (_req, res) => {
   try {
+    await database.ensureLoaded();
     const cocktails = await parseCocktailCsvFile();
+    await database.syncFromFile(cocktails, { reason: "file_sync" });
     const manifest = await readManifest();
     const metadata = await readMetadata();
     const structured = await readStructured();
@@ -562,6 +834,7 @@ app.post("/api/cocktails", async (req, res) => {
   }
 
   try {
+    await database.ensureLoaded();
     const sanitised = rawCocktails
       .map((row) => sanitiseCocktailRow(row))
       .filter((row) => row !== null)
@@ -585,6 +858,10 @@ app.post("/api/cocktails", async (req, res) => {
 
     const changed = collectChangedSlugs(previous, deduped);
     changedSlugs.forEach((slug) => changed.add(slugify(slug)));
+    await database.syncFromFile(deduped, {
+      reason: "user_save",
+      changedSlugs: Array.from(changed)
+    });
 
     const manifest = await readManifest();
     const allowedSlugs = new Set(deduped.map((cocktail) => slugify(cocktail.Cocktail)));
@@ -615,6 +892,95 @@ app.post("/api/cocktails", async (req, res) => {
   } catch (error) {
     console.error("Fehler beim Speichern der Cocktails:", error);
     res.status(500).json({ error: "Cocktails konnten nicht gespeichert werden." });
+  }
+});
+
+app.get("/api/cocktails/:slug/revisions", async (req, res) => {
+  const slugParam = req.params.slug ?? "";
+  const slug = slugify(slugParam);
+  if (!slug) {
+    res.status(400).json({ error: "Ungültiger Slug." });
+    return;
+  }
+
+  try {
+    await database.ensureLoaded();
+    const entry = database.getEntry(slug);
+    if (!entry) {
+      res.status(404).json({ error: "Cocktail wurde nicht gefunden." });
+      return;
+    }
+
+    const revisions = database.getRevisions(slug);
+    res.json({ revisions, currentVersion: entry.version ?? 0 });
+  } catch (error) {
+    console.error("Fehler beim Laden der Revisionen:", error);
+    res.status(500).json({ error: "Revisionen konnten nicht geladen werden." });
+  }
+});
+
+app.post("/api/cocktails/:slug/rollback", async (req, res) => {
+  const slugParam = req.params.slug ?? "";
+  const slug = slugify(slugParam);
+  const { toVersion } = req.body ?? {};
+
+  if (!slug) {
+    res.status(400).json({ error: "Ungültiger Slug." });
+    return;
+  }
+
+  const parsedVersion = Number.parseInt(toVersion, 10);
+  if (!Number.isInteger(parsedVersion) || parsedVersion < 1) {
+    res.status(400).json({ error: "Zielversion ist ungültig." });
+    return;
+  }
+
+  try {
+    await database.ensureLoaded();
+    const entry = database.getEntry(slug);
+    if (!entry) {
+      res.status(404).json({ error: "Cocktail wurde nicht gefunden." });
+      return;
+    }
+
+    const cocktailsAfterRollback = await database.rollback(slug, parsedVersion);
+    await writeCsvFiles(cocktailsAfterRollback);
+
+    const manifest = await readManifest();
+    const allowedSlugs = new Set(cocktailsAfterRollback.map((cocktail) => slugify(cocktail.Cocktail)));
+    const cleanedManifest = await applyImageCleanup(manifest, allowedSlugs);
+
+    const metadata = await readMetadata();
+    const timestamp = Date.now();
+    const updatedMetadata = Object.fromEntries(
+      Object.entries(metadata).filter(([existingSlug]) => allowedSlugs.has(existingSlug))
+    );
+    if (allowedSlugs.has(slug)) {
+      updatedMetadata[slug] = timestamp;
+    }
+    await writeMetadata(updatedMetadata);
+
+    const structured = await readStructured();
+    const cleanedStructured = cleanStructured(structured, allowedSlugs);
+    await writeStructured(cleanedStructured);
+    await writeMasterLists(cleanedStructured);
+
+    const revisions = database.getRevisions(slug);
+
+    res.json({
+      cocktails: cocktailsAfterRollback,
+      images: cleanedManifest,
+      modified: updatedMetadata,
+      structured: cleanedStructured,
+      revisions
+    });
+  } catch (error) {
+    if (error?.code === "REVISION_NOT_FOUND") {
+      res.status(404).json({ error: "Revision wurde nicht gefunden." });
+      return;
+    }
+    console.error("Fehler beim Zurücksetzen der Cocktail-Version:", error);
+    res.status(500).json({ error: "Rollback fehlgeschlagen." });
   }
 });
 
