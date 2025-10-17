@@ -7,6 +7,7 @@ import {
   useState,
   type ChangeEvent,
   type KeyboardEvent,
+  type UIEvent,
   type ReactNode
 } from "react";
 import { HelpCircle } from "lucide-react";
@@ -32,17 +33,6 @@ type IngredientInputProps = {
   onParsedChange?: (parsed: ParsedIngredient[]) => void;
 };
 
-const getLines = (value: string): string[] => value.split(/\r?\n/);
-
-const sumWithNewlines = (lines: string[], index: number): number => {
-  let total = 0;
-  for (let i = 0; i < index; i += 1) {
-    total += lines[i]?.length ?? 0;
-    total += 1; // newline
-  }
-  return total;
-};
-
 const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChange }: IngredientInputProps) => {
   const { cocktails, structuredIngredients } = useCocktailContext();
   const masterData = useMemo(() => buildMasterData(cocktails, structuredIngredients), [cocktails, structuredIngredients]);
@@ -55,6 +45,7 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
   const [activeToken, setActiveToken] = useState<IngredientTokenType | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [showSyntax, setShowSyntax] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     const handle = window.setTimeout(() => {
@@ -65,6 +56,18 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
 
     return () => window.clearTimeout(handle);
   }, [segments, masterData, onParsedChange]);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const { scrollTop, scrollLeft } = textarea;
+    setScrollPosition((previous) => {
+      if (previous.top === scrollTop && previous.left === scrollLeft) {
+        return previous;
+      }
+      return { top: scrollTop, left: scrollLeft };
+    });
+  }, [value]);
 
   const highlighted = useMemo(() => {
     const nodes: ReactNode[] = [];
@@ -157,9 +160,35 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
     setActiveToken(null);
   }, [parsed, segments]);
 
-  const handleInternalChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(event.target.value);
-  };
+  const handleInternalChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      const target = event.currentTarget;
+      const nextValue = target.value;
+      const caret = typeof target.selectionEnd === "number" ? target.selectionEnd : nextValue.length;
+
+      onChange(nextValue);
+
+      window.requestAnimationFrame(() => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+        const nextCaret = Math.max(0, Math.min(nextValue.length, caret));
+        textarea.setSelectionRange(nextCaret, nextCaret);
+        updateActiveContext();
+      });
+    },
+    [onChange, updateActiveContext]
+  );
+
+  const handleScroll = useCallback((event: UIEvent<HTMLTextAreaElement>) => {
+    const target = event.currentTarget;
+    const { scrollTop, scrollLeft } = target;
+    setScrollPosition((previous) => {
+      if (previous.top === scrollTop && previous.left === scrollLeft) {
+        return previous;
+      }
+      return { top: scrollTop, left: scrollLeft };
+    });
+  }, []);
 
   const activeEntry = activeSegment !== null ? parsed[activeSegment] : undefined;
   const suggestionSource =
@@ -311,7 +340,7 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
 
       <div className="relative">
         {isFocused && suggestions.length > 0 && activeToken ? (
-          <div className="pointer-events-auto absolute right-3 top-3 z-10 flex flex-wrap justify-end gap-2">
+          <div className="pointer-events-auto absolute left-3 right-3 top-full z-10 mt-3 flex flex-wrap gap-2">
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
@@ -330,6 +359,7 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
           ref={textareaRef}
           value={value}
           onChange={handleInternalChange}
+          onScroll={handleScroll}
           placeholder={placeholder}
           onClick={updateActiveContext}
           onKeyUp={updateActiveContext}
@@ -344,7 +374,7 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
           }}
           onKeyDown={handleKeyNavigation}
           className={cn(
-            "min-h-[200px] resize-y overflow-auto pr-16 text-transparent caret-slate-800 placeholder:text-slate-400",
+            "min-h-[200px] resize-y overflow-auto pr-4 text-transparent caret-slate-800 placeholder:text-slate-400",
             error ? "border-red-400 focus-visible:border-red-400" : ""
           )}
           aria-invalid={error ? "true" : "false"}
@@ -353,9 +383,10 @@ const IngredientInput = ({ id, value, placeholder, error, onChange, onParsedChan
         <pre
           aria-hidden="true"
           className={cn(
-            "ingredient-highlight-layer pointer-events-none absolute inset-0 rounded-2xl px-3 py-2 text-sm text-transparent",
+            "ingredient-highlight-layer pointer-events-none absolute inset-0 m-0 overflow-hidden rounded-2xl px-4 py-3 text-sm text-transparent",
             value ? "opacity-100" : "opacity-0"
           )}
+          style={{ transform: `translate(${-scrollPosition.left}px, ${-scrollPosition.top}px)` }}
         >
           <span className="text-slate-800">{highlighted}</span>
         </pre>

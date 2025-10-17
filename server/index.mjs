@@ -302,6 +302,27 @@ const parseCocktailCsvFile = async () => {
   }));
 };
 
+const dedupeCocktails = (cocktails) => {
+  const result = [];
+  const lookup = new Map();
+
+  cocktails.forEach((cocktail) => {
+    if (!cocktail || typeof cocktail !== "object") return;
+    const slug = slugify(cocktail.Cocktail ?? "");
+    if (!slug) return;
+
+    if (lookup.has(slug)) {
+      const index = lookup.get(slug);
+      result[index] = cocktail;
+    } else {
+      lookup.set(slug, result.length);
+      result.push(cocktail);
+    }
+  });
+
+  return result;
+};
+
 const serialiseCocktailsToCsv = (cocktails) => {
   const data = cocktails.map((cocktail) => ({
     Gruppe: normaliseValue(cocktail.Gruppe ?? ""),
@@ -552,19 +573,21 @@ app.post("/api/cocktails", async (req, res) => {
         Zubereitung: row.Zubereitung || ""
       }));
 
-    if (!sanitised.length) {
+    const deduped = dedupeCocktails(sanitised);
+
+    if (!deduped.length) {
       res.status(400).json({ error: "Mindestens ein Cocktail wird benötigt." });
       return;
     }
 
     const previous = await parseCocktailCsvFile();
-    await writeCsvFiles(sanitised);
+    await writeCsvFiles(deduped);
 
-    const changed = collectChangedSlugs(previous, sanitised);
+    const changed = collectChangedSlugs(previous, deduped);
     changedSlugs.forEach((slug) => changed.add(slugify(slug)));
 
     const manifest = await readManifest();
-    const allowedSlugs = new Set(sanitised.map((cocktail) => slugify(cocktail.Cocktail)));
+    const allowedSlugs = new Set(deduped.map((cocktail) => slugify(cocktail.Cocktail)));
     const cleanedManifest = await applyImageCleanup(manifest, allowedSlugs);
 
     const metadata = await readMetadata();
@@ -584,7 +607,7 @@ app.post("/api/cocktails", async (req, res) => {
     await writeMasterLists(structuredInput);
 
     res.json({
-      cocktails: sanitised,
+      cocktails: deduped,
       images: cleanedManifest,
       modified: updatedMetadata,
       structured: structuredInput
