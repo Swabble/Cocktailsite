@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, ChevronUp, Filter, Star } from "lucide-react";
-import type { Cocktail } from "@/types";
+import type { Cocktail, StructuredIngredientMap } from "@/types";
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
-import { ingredientsForFilter, slugify } from "@/lib/utils";
+import { formatStructuredRezeptur, structuredFilterValues, slugify } from "@/lib/utils";
 
 type SortKey = "Cocktail" | "Gruppe" | "Rezeptur" | "Deko" | "Glas" | "Zubereitung";
 type ColumnKey = SortKey;
@@ -36,6 +36,7 @@ type Props = {
   onSelect: (cocktail: Cocktail) => void;
   highlightedSlugs: string[];
   favorites: string[];
+  structured: StructuredIngredientMap;
 };
 
 const columns: { key: ColumnKey; label: string }[] = [
@@ -53,7 +54,8 @@ const CocktailTable = ({
   error,
   onSelect,
   highlightedSlugs,
-  favorites
+  favorites,
+  structured
 }: Props) => {
   const [sortKey, setSortKey] = useState<SortKey>("Cocktail");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
@@ -81,7 +83,8 @@ const CocktailTable = ({
     cocktails.forEach((cocktail) => {
       columns.forEach((column) => {
         if (column.key === "Rezeptur") {
-          const ingredients = ingredientsForFilter(cocktail.Rezeptur);
+          const slug = slugify(cocktail.Cocktail);
+          const ingredients = structuredFilterValues(structured[slug], cocktail.Rezeptur);
           if (!ingredients.length) {
             optionMap.Rezeptur.add(EMPTY_TOKEN);
           } else {
@@ -116,7 +119,8 @@ const CocktailTable = ({
         if (!selected.length) return true;
 
         if (key === "Rezeptur") {
-          const ingredients = ingredientsForFilter(cocktail.Rezeptur);
+          const slug = slugify(cocktail.Cocktail);
+          const ingredients = structuredFilterValues(structured[slug], cocktail.Rezeptur);
           if (!ingredients.length) {
             return selected.includes(EMPTY_TOKEN);
           }
@@ -293,7 +297,9 @@ const CocktailTable = ({
                         {isFavorite && <Star className="h-4 w-4 fill-amber-400 text-amber-400" />}
                       </span>
                     </TableCell>
-                    <TableCell>{cocktail.Rezeptur}</TableCell>
+                    <TableCell className="whitespace-pre-line">
+                      {formatStructuredRezeptur(structured[slug], cocktail.Rezeptur)}
+                    </TableCell>
                     <TableCell>{cocktail.Deko || "–"}</TableCell>
                     <TableCell>{cocktail.Glas || "–"}</TableCell>
                     <TableCell>{cocktail.Zubereitung || "–"}</TableCell>
@@ -358,8 +364,11 @@ const CocktailTable = ({
                       </Button>
                     </div>
                   </div>
-                  <div className="space-y-3 text-sm text-slate-600">
-                    <Field label="Rezeptur" value={cocktail.Rezeptur} />
+                    <div className="space-y-3 text-sm text-slate-600">
+                      <Field
+                        label="Rezeptur"
+                        value={formatStructuredRezeptur(structured[slug], cocktail.Rezeptur)}
+                      />
                     {isExpanded && (
                       <div className="space-y-3">
                         <Field label="Deko" value={cocktail.Deko || "–"} />

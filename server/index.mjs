@@ -17,6 +17,10 @@ const imagesDir = path.join(rootDir, "public", "cocktail-images");
 const imageManifestPath = path.join(rootDir, "public", "cocktail-images.json");
 const metadataPath = path.join(rootDir, "server", "storage", "modifications.json");
 const structuredPath = path.join(rootDir, "server", "storage", "ingredients.json");
+const masterDataDir = path.join(rootDir, "public", "master-data");
+const ingredientListPath = path.join(masterDataDir, "ingredients.csv");
+const unitListPath = path.join(masterDataDir, "units.csv");
+const amountListPath = path.join(masterDataDir, "amounts.csv");
 
 const CSV_COLUMNS = ["Gruppe", "Cocktail", "Rezeptur", "Deko", "Glas", "Zubereitung"];
 
@@ -42,11 +46,192 @@ const cocktailsEqual = (a, b) => {
   );
 };
 
+const FRACTION_MAP = {
+  "½": 0.5,
+  "¼": 0.25,
+  "¾": 0.75
+};
+
+const BASE_UNITS = [
+  { name: "cl", aliases: ["zentiliter", "centiliter", "cl.", "cL"] },
+  { name: "ml", aliases: ["milliliter", "millilitre", "ml.", "mL"] },
+  { name: "TL", aliases: ["teelöffel", "teeloeffel", "teaspoon", "tsp"] },
+  { name: "EL", aliases: ["esslöffel", "essloeffel", "tablespoon", "tbsp"] },
+  { name: "Dash", aliases: ["dash", "spritzer", "dashs"] },
+  { name: "Prise", aliases: ["prise", "pinch"] },
+  { name: "Stück", aliases: ["stück", "stücke", "piece", "pieces", "stk", "stk."] },
+  { name: "Scheibe", aliases: ["scheibe", "scheiben", "slice", "slices"] },
+  { name: "handvoll", aliases: ["handvoll", "hand voll", "handfull"] },
+  { name: "Barlöffel", aliases: ["barlöffel", "bar loeffel", "bar spoon", "barspoon"] },
+  { name: "Filler", aliases: ["auffüllen", "top up", "fill", "filler"] },
+  { name: "%", aliases: ["prozent", "percent"] }
+];
+
+const normaliseUnitToken = (token) => token.toLowerCase().replace(/[^a-zäöüß%]/g, "");
+
+const unitAliasMap = new Map();
+BASE_UNITS.forEach((unit) => {
+  unitAliasMap.set(normaliseUnitToken(unit.name), unit.name);
+  (unit.aliases ?? []).forEach((alias) => {
+    unitAliasMap.set(normaliseUnitToken(alias), unit.name);
+  });
+});
+
+const resolveUnitAlias = (raw) => {
+  const normalised = normaliseUnitToken(raw);
+  return unitAliasMap.get(normalised) ?? null;
+};
+
+const trimPlaceholder = (value) => {
+  if (!value) return "";
+  const trimmed = value.trim();
+  return trimmed === "-" ? "" : trimmed;
+};
+
+const extractNotes = (value) => {
+  const matches = value.match(/\(.*?\)/g);
+  if (!matches) {
+    return { text: value.trim(), notes: null };
+  }
+  const text = value.replace(/\(.*?\)/g, "").trim();
+  const notes = matches.join(" ");
+  return { text, notes };
+};
+
+const parseAmountToken = (token) => {
+  const trimmed = token.trim();
+  if (!trimmed || trimmed === "-") {
+    return { amount: null, amountText: null };
+  }
+
+  if (FRACTION_MAP[trimmed] !== undefined) {
+    return { amount: FRACTION_MAP[trimmed], amountText: trimmed };
+  }
+
+  if (/^\d+\/\d+$/.test(trimmed)) {
+    const [a, b] = trimmed.split("/").map((part) => Number.parseFloat(part));
+    if (!Number.isFinite(a) || !Number.isFinite(b) || b === 0) {
+      return { amount: null, amountText: trimmed };
+    }
+    return { amount: a / b, amountText: trimmed };
+  }
+
+  if (/^\d+[.,]\d+$/.test(trimmed)) {
+    const parsed = Number.parseFloat(trimmed.replace(/,/g, "."));
+    return { amount: Number.isNaN(parsed) ? null : parsed, amountText: trimmed };
+  }
+
+  if (/^\d+$/.test(trimmed)) {
+    const parsed = Number.parseFloat(trimmed);
+    return { amount: Number.isNaN(parsed) ? null : parsed, amountText: trimmed };
+  }
+
+  return { amount: null, amountText: trimmed };
+};
+
+const isDecimalComma = (value, index) => {
+  const previous = value[index - 1];
+  const next = value[index + 1];
+  return Boolean(previous && next && /\d/.test(previous) && /\d/.test(next) && next !== " ");
+};
+
+const splitIngredientTuples = (value) => {
+  const segments = [];
+  const length = value.length;
+  let start = null;
+  let depth = 0;
+
+  const pushSegment = (rawStart, rawEnd) => {
+    let segmentStart = rawStart;
+    let segmentEnd = rawEnd;
+
+    while (segmentStart < segmentEnd && /\s/.test(value[segmentStart] ?? "")) {
+      segmentStart += 1;
+    }
+
+    while (segmentEnd > segmentStart && /\s/.test(value[segmentEnd - 1] ?? "")) {
+      segmentEnd -= 1;
+    }
+
+    if (segmentEnd <= segmentStart) return;
+    segments.push({ text: value.slice(segmentStart, segmentEnd) });
+  };
+
+  for (let index = 0; index <= length; index += 1) {
+    const char = value[index] ?? "\n";
+    const isLineBreak = char === "\n" || char === "\r" || index === length;
+    const isComma = char === ",";
+
+    if (char === "(") {
+      depth += 1;
+    } else if (char === ")" && depth > 0) {
+      depth -= 1;
+    }
+
+    if (start === null) {
+      if (!isLineBreak && (!isComma || isDecimalComma(value, index))) {
+        if (!/\s/.test(char)) {
+          start = index;
+        }
+      }
+      continue;
+    }
+
+    if (isLineBreak || (isComma && !isDecimalComma(value, index) && depth === 0)) {
+      pushSegment(start, index);
+      start = null;
+      depth = 0;
+      continue;
+    }
+  }
+
+  return segments;
+};
+
+const parseSegmentToStructured = (segment) => {
+  const raw = segment?.text?.trim() ?? "";
+  if (!raw) return null;
+  let rest = raw;
+
+  const amountMatch = rest.match(/^(?:-?|\d+[.,]?\d*|\d+\/\d+|[½¼¾])/);
+  let amount = null;
+  let amountText = null;
+  if (amountMatch) {
+    const parsedAmount = parseAmountToken(amountMatch[0]);
+    amount = parsedAmount.amount;
+    amountText = parsedAmount.amountText;
+    rest = rest.slice(amountMatch[0].length).trim();
+  }
+
+  const unitMatch = rest.match(/^([^\s,()]+(?:\s+[^\s,()]+)?)/);
+  let unit = null;
+  if (unitMatch) {
+    const resolved = resolveUnitAlias(unitMatch[1]);
+    if (resolved) {
+      unit = resolved;
+      rest = rest.slice(unitMatch[0].length).trim();
+    }
+  }
+
+  const { text: ingredientText, notes } = extractNotes(rest);
+  const ingredient = trimPlaceholder(ingredientText) || raw;
+
+  return {
+    raw,
+    amount,
+    amountText: trimPlaceholder(amountText),
+    unit: trimPlaceholder(unit),
+    ingredient,
+    notes: trimPlaceholder(notes) || null
+  };
+};
+
 const ensureDirectories = async () => {
   await fs.mkdir(path.dirname(publicCsvPath), { recursive: true });
   await fs.mkdir(imagesDir, { recursive: true });
   await fs.mkdir(path.dirname(metadataPath), { recursive: true });
   await fs.mkdir(path.dirname(structuredPath), { recursive: true });
+  await fs.mkdir(masterDataDir, { recursive: true });
 
   try {
     await fs.access(imageManifestPath);
@@ -65,6 +250,19 @@ const ensureDirectories = async () => {
   } catch {
     await fs.writeFile(structuredPath, JSON.stringify({}, null, 2), "utf8");
   }
+
+  const emptyCsv = "value\n";
+  const ensureCsv = async (target) => {
+    try {
+      await fs.access(target);
+    } catch {
+      await fs.writeFile(target, emptyCsv, "utf8");
+    }
+  };
+
+  await ensureCsv(ingredientListPath);
+  await ensureCsv(unitListPath);
+  await ensureCsv(amountListPath);
 };
 
 const sanitiseCocktailRow = (row = {}) => {
@@ -102,6 +300,27 @@ const parseCocktailCsvFile = async () => {
     Glas: row.Glas || "",
     Zubereitung: row.Zubereitung || ""
   }));
+};
+
+const dedupeCocktails = (cocktails) => {
+  const result = [];
+  const lookup = new Map();
+
+  cocktails.forEach((cocktail) => {
+    if (!cocktail || typeof cocktail !== "object") return;
+    const slug = slugify(cocktail.Cocktail ?? "");
+    if (!slug) return;
+
+    if (lookup.has(slug)) {
+      const index = lookup.get(slug);
+      result[index] = cocktail;
+    } else {
+      lookup.set(slug, result.length);
+      result.push(cocktail);
+    }
+  });
+
+  return result;
 };
 
 const serialiseCocktailsToCsv = (cocktails) => {
@@ -222,13 +441,84 @@ const collectChangedSlugs = (previous, next) => {
   return changed;
 };
 
+const sanitiseStructuredEntry = (entry) => {
+  if (!entry || typeof entry !== "object") return null;
+  const raw = trimPlaceholder(entry.raw) || "";
+  const amount = typeof entry.amount === "number" && Number.isFinite(entry.amount) ? entry.amount : null;
+  const amountText = trimPlaceholder(entry.amountText);
+  const unit = trimPlaceholder(entry.unit);
+  const ingredient = trimPlaceholder(entry.ingredient) || raw;
+  const notes = trimPlaceholder(entry.notes) || null;
+  if (!ingredient) return null;
+  return {
+    raw,
+    amount,
+    amountText: amountText || null,
+    unit: unit || null,
+    ingredient,
+    notes
+  };
+};
+
 const cleanStructured = (structured, allowedSlugs) => {
   if (!structured || typeof structured !== "object") return {};
   return Object.fromEntries(
     Object.entries(structured)
       .filter(([slug]) => allowedSlugs.has(slug))
-      .map(([slug, entries]) => [slug, Array.isArray(entries) ? entries : []])
+      .map(([slug, entries]) => {
+        if (!Array.isArray(entries)) return [slug, []];
+        const sanitised = entries
+          .map((entry) => sanitiseStructuredEntry(entry))
+          .filter((entry) => entry !== null);
+        return [slug, sanitised];
+      })
   );
+};
+
+const generateStructuredFromCocktails = (cocktails) => {
+  const map = {};
+  cocktails.forEach((cocktail) => {
+    const slug = slugify(cocktail.Cocktail);
+    const segments = splitIngredientTuples(cocktail.Rezeptur);
+    const entries = segments
+      .map((segment) => parseSegmentToStructured(segment))
+      .filter((entry) => entry !== null);
+    if (entries.length) {
+      map[slug] = entries;
+    }
+  });
+  return map;
+};
+
+const writeListCsv = async (targetPath, values) => {
+  const sorted = Array.from(values).sort((a, b) => a.localeCompare(b));
+  const data = sorted.length ? sorted.map((value) => ({ value })) : [{ value: "" }];
+  const csv = Papa.unparse(data, { columns: ["value"], delimiter: ";" });
+  await fs.writeFile(targetPath, csv, "utf8");
+};
+
+const writeMasterLists = async (structured) => {
+  const ingredients = new Set();
+  const units = new Set();
+  const amounts = new Set();
+
+  Object.values(structured).forEach((entries) => {
+    entries.forEach((entry) => {
+      if (entry.ingredient) {
+        ingredients.add(entry.ingredient);
+      }
+      if (entry.unit) {
+        units.add(entry.unit);
+      }
+      if (entry.amountText) {
+        amounts.add(entry.amountText);
+      }
+    });
+  });
+
+  await writeListCsv(ingredientListPath, ingredients);
+  await writeListCsv(unitListPath, units);
+  await writeListCsv(amountListPath, amounts);
 };
 
 app.get("/api/cocktails", async (_req, res) => {
@@ -244,8 +534,12 @@ app.get("/api/cocktails", async (_req, res) => {
       Object.entries(metadata).filter(([slug]) => allowedSlugs.has(slug))
     );
     await writeMetadata(cleanedMetadata);
-    const cleanedStructured = cleanStructured(structured, allowedSlugs);
+    let cleanedStructured = cleanStructured(structured, allowedSlugs);
+    if (Object.keys(cleanedStructured).length === 0) {
+      cleanedStructured = generateStructuredFromCocktails(cocktails);
+    }
     await writeStructured(cleanedStructured);
+    await writeMasterLists(cleanedStructured);
 
     res.json({
       cocktails,
@@ -279,19 +573,21 @@ app.post("/api/cocktails", async (req, res) => {
         Zubereitung: row.Zubereitung || ""
       }));
 
-    if (!sanitised.length) {
+    const deduped = dedupeCocktails(sanitised);
+
+    if (!deduped.length) {
       res.status(400).json({ error: "Mindestens ein Cocktail wird benötigt." });
       return;
     }
 
     const previous = await parseCocktailCsvFile();
-    await writeCsvFiles(sanitised);
+    await writeCsvFiles(deduped);
 
-    const changed = collectChangedSlugs(previous, sanitised);
+    const changed = collectChangedSlugs(previous, deduped);
     changedSlugs.forEach((slug) => changed.add(slugify(slug)));
 
     const manifest = await readManifest();
-    const allowedSlugs = new Set(sanitised.map((cocktail) => slugify(cocktail.Cocktail)));
+    const allowedSlugs = new Set(deduped.map((cocktail) => slugify(cocktail.Cocktail)));
     const cleanedManifest = await applyImageCleanup(manifest, allowedSlugs);
 
     const metadata = await readMetadata();
@@ -308,9 +604,10 @@ app.post("/api/cocktails", async (req, res) => {
 
     const structuredInput = cleanStructured(rawStructured, allowedSlugs);
     await writeStructured(structuredInput);
+    await writeMasterLists(structuredInput);
 
     res.json({
-      cocktails: sanitised,
+      cocktails: deduped,
       images: cleanedManifest,
       modified: updatedMetadata,
       structured: structuredInput

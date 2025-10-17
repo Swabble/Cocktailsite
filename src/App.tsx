@@ -27,7 +27,8 @@ const App = () => {
     setCocktailImage,
     removeCocktailImage,
     recentlyChangedSlugs,
-    favorites
+    favorites,
+    structuredIngredients
   } = useCocktailContext();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(search);
@@ -77,11 +78,16 @@ const App = () => {
     }
 
     const matches = cocktails.filter((cocktail) => {
+      const slug = slugify(cocktail.Cocktail);
+      const structuredEntries = structuredIngredients[slug];
+      const ingredientTokens = structuredEntries?.length
+        ? structuredEntries.map((entry) => entry.ingredient)
+        : ingredientsFromRezeptur(cocktail.Rezeptur);
       const searchable = [
         cocktail.Cocktail,
         cocktail.Gruppe ?? "",
         cocktail.Zubereitung ?? "",
-        ...ingredientsFromRezeptur(cocktail.Rezeptur)
+        ...ingredientTokens
       ]
         .map((value) => value?.toLowerCase() ?? "")
         .filter((value) => value.length > 0);
@@ -91,7 +97,7 @@ const App = () => {
     });
 
     return matches.slice(0, 5);
-  }, [cocktails, searchInput]);
+  }, [cocktails, searchInput, structuredIngredients]);
 
   const renderGroupButton = (label: string, value: string | null, extraClasses?: string) => {
     const isActive = (value === null && !activeGroup) || value === activeGroup;
@@ -101,7 +107,7 @@ const App = () => {
         type="button"
         onClick={() => setActiveGroup(value)}
         className={cn(
-          "group flex h-full w-full items-center justify-center rounded-2xl border border-transparent px-4 py-3 text-sm font-medium",
+          "group flex h-full w-full items-center justify-center rounded-2xl border border-transparent px-4 py-2.5 text-sm font-medium",
           "text-slate-600 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-soft",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
           isActive
@@ -117,7 +123,7 @@ const App = () => {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 px-4 pb-16 pt-10">
+    <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-8 px-4 pb-16 pt-10">
       <header className="flex flex-col gap-6">
         <div className="flex flex-col gap-5 rounded-2xl bg-white p-6 shadow-soft">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -174,10 +180,10 @@ const App = () => {
           className="rounded-2xl bg-white p-4 shadow-soft transition-all duration-300"
         >
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="h-20 sm:h-24">
+            <div className="h-16 sm:h-20">
               {renderGroupButton("Alle", null, "h-full w-full text-base")}
             </div>
-            <div className="h-20 sm:h-24">
+            <div className="h-16 sm:h-20">
               {renderGroupButton("Favoriten", "__favorites__", "h-full w-full text-base")}
             </div>
           </div>
@@ -192,6 +198,7 @@ const App = () => {
           onSelect={handleRowSelect}
           highlightedSlugs={recentlyChangedSlugs}
           favorites={favorites}
+          structured={structuredIngredients}
         />
       </main>
 

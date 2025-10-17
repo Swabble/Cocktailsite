@@ -15,6 +15,7 @@ import type {
   CocktailMetadataMap,
   CsvVersion,
   CsvVersionSource,
+  StructuredIngredient,
   StructuredIngredientMap
 } from "@/types";
 import type { ParsedIngredient } from "@/lib/ingredients/parser";
@@ -57,23 +58,27 @@ type UpsertOptions = {
 
 const cloneCocktails = (cocktails: Cocktail[]): Cocktail[] => cocktails.map((item) => ({ ...item }));
 
-const cloneParsedIngredients = (entries: ParsedIngredient[] | undefined): ParsedIngredient[] => {
+const convertParsedToStructured = (entries: ParsedIngredient[] | undefined): StructuredIngredient[] => {
   if (!entries?.length) return [];
   return entries.map((entry) => ({
-    ...entry,
-    statuses: { ...entry.statuses },
-    suggestions: {
-      units: [...entry.suggestions.units],
-      ingredients: [...entry.suggestions.ingredients]
-    },
-    tokens: entry.tokens.map((token) => ({ ...token }))
+    raw: entry.raw ?? "",
+    amount: entry.amount ?? null,
+    amountText: entry.amountText && entry.amountText !== "-" ? entry.amountText : null,
+    unit: entry.unit && entry.unit !== "-" ? entry.unit : null,
+    ingredient: entry.ingredient?.trim() || entry.ingredientRaw?.trim() || entry.raw?.trim() || "",
+    notes: entry.notes ?? null
   }));
+};
+
+const cloneStructuredIngredients = (entries: StructuredIngredient[] | undefined): StructuredIngredient[] => {
+  if (!entries?.length) return [];
+  return entries.map((entry) => ({ ...entry }));
 };
 
 const cloneStructured = (map: StructuredIngredientMap | undefined): StructuredIngredientMap => {
   if (!map) return {};
   return Object.fromEntries(
-    Object.entries(map).map(([slug, entries]) => [slug, cloneParsedIngredients(entries)])
+    Object.entries(map).map(([slug, entries]) => [slug, cloneStructuredIngredients(entries)])
   );
 };
 
@@ -127,7 +132,8 @@ const fetchCocktails = async (): Promise<CocktailDataset> => {
     return {
       cocktails: Array.isArray(payload.cocktails) ? payload.cocktails : [],
       images: payload.images ?? {},
-      modified: payload.modified ?? {}
+      modified: payload.modified ?? {},
+      structured: payload.structured ?? {}
     };
   } catch (apiError) {
     console.warn("API nicht erreichbar, lese CSV direkt", apiError);
@@ -499,7 +505,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
         label?: string;
         source?: CsvVersionSource;
         activeVersionId?: string | null;
-        structuredChanges?: Record<string, ParsedIngredient[] | null>;
+        structuredChanges?: Record<string, StructuredIngredient[] | null>;
       }
     ) => {
       const sluggedChanges = (options?.changedSlugs ?? []).map((slug) => slugify(slug));
@@ -527,7 +533,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
           if (entries === null) {
             delete structured[slug];
           } else {
-            structured[slug] = cloneParsedIngredients(entries);
+            structured[slug] = cloneStructuredIngredients(entries);
           }
         });
         current.structured = structured;
@@ -562,14 +568,14 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
           ? cocktails.map((item, index) => (index === existingIndex ? { ...cocktail } : item))
           : [...cocktails, { ...cocktail }];
 
-      const structuredChanges: Record<string, ParsedIngredient[] | null> = {};
+      const structuredChanges: Record<string, StructuredIngredient[] | null> = {};
       if (options?.structured) {
-        structuredChanges[slug] = options.structured;
+        structuredChanges[slug] = convertParsedToStructured(options.structured);
       }
 
       if (previousSlug && previousSlug !== slug) {
         if (!options?.structured && structuredIngredients[previousSlug]) {
-          structuredChanges[slug] = cloneParsedIngredients(structuredIngredients[previousSlug]);
+          structuredChanges[slug] = cloneStructuredIngredients(structuredIngredients[previousSlug]);
         }
         structuredChanges[previousSlug] = null;
       }
@@ -607,7 +613,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       setSearch("");
       const resetStructured = Object.fromEntries(
         Object.keys(structuredIngredients).map((slug) => [slug, null])
-      ) as Record<string, ParsedIngredient[] | null>;
+      ) as Record<string, StructuredIngredient[] | null>;
       applyCocktailList(cocktailList, {
         changedSlugs: [],
         recordHistory: options?.recordHistory,
