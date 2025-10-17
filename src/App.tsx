@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CocktailTable from "@/components/CocktailTable";
 import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Cocktail } from "@/types";
 import { cn } from "@/lib/cn";
-import { slugify } from "@/lib/utils";
+import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
 import CsvMenu from "@/components/CsvMenu";
 
 const App = () => {
@@ -72,25 +72,34 @@ const App = () => {
       return cocktails.slice(0, 5);
     }
 
+    const tokens = trimmed.split(/\s+/).filter(Boolean);
+    if (!tokens.length) {
+      return cocktails.slice(0, 5);
+    }
+
     const matches = cocktails.filter((cocktail) => {
-      const fields = [
+      const searchable = [
         cocktail.Cocktail,
-        cocktail.Rezeptur,
         cocktail.Gruppe ?? "",
-        cocktail.Zubereitung ?? ""
+        cocktail.Zubereitung ?? "",
+        ...ingredientsFromRezeptur(cocktail.Rezeptur)
       ]
-        .join(" \u2022 ")
-        .toLowerCase();
-      return fields.includes(trimmed);
+        .map((value) => value?.toLowerCase() ?? "")
+        .filter((value) => value.length > 0);
+
+      if (!searchable.length) return false;
+      return tokens.every((token) => searchable.some((value) => value.includes(token)));
     });
 
     return matches.slice(0, 5);
   }, [cocktails, searchInput]);
 
   const otherGroups = useMemo(() => groups.filter((group) => group !== ""), [groups]);
-  const half = Math.ceil(otherGroups.length / 2);
-  const topRow = otherGroups.slice(0, half);
-  const bottomRow = otherGroups.slice(half);
+  const topRowCount = Math.ceil(otherGroups.length / 2);
+  const bottomRowCount = otherGroups.length - topRowCount;
+  const columnCount = Math.max(topRowCount, bottomRowCount, 1);
+  const topRow = otherGroups.slice(0, topRowCount);
+  const bottomRow = otherGroups.slice(topRowCount);
 
   const renderGroupButton = (label: string, value: string | null, extraClasses?: string) => {
     const isActive = (value === null && !activeGroup) || value === activeGroup;
@@ -100,7 +109,7 @@ const App = () => {
         type="button"
         onClick={() => setActiveGroup(value)}
         className={cn(
-          "group flex items-center justify-center rounded-2xl border border-transparent px-4 py-3 text-sm font-medium",
+          "group flex h-full w-full items-center justify-center rounded-2xl border border-transparent px-4 py-3 text-sm font-medium",
           "text-slate-600 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-soft",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
           isActive
@@ -172,26 +181,38 @@ const App = () => {
           aria-label="Cocktail-Gruppen"
           className="grid gap-3 rounded-2xl bg-white p-4 shadow-soft transition-all duration-300"
         >
-          <div className="grid gap-3 lg:grid-cols-[minmax(140px,1fr)_1fr_minmax(140px,1fr)] lg:grid-rows-2">
-            <div className="lg:row-span-2">{renderGroupButton("Alle", null, "h-full text-base")}</div>
+          <div
+            className="hidden items-stretch gap-3 lg:grid"
+            style={{
+              gridTemplateColumns: `minmax(150px, 180px) minmax(0, 1fr) minmax(150px, 180px)`,
+              gridTemplateRows: "repeat(2, minmax(0, 1fr))"
+            }}
+          >
+            <div className="row-span-2">{renderGroupButton("Alle", null, "h-full text-base py-5")}</div>
 
-            <div className="hidden lg:grid lg:grid-rows-2 lg:gap-3">
+            <div className="grid grid-rows-2 gap-3">
               <div
                 className="grid gap-3"
-                style={{ gridTemplateColumns: `repeat(${Math.max(topRow.length, 1)}, minmax(0, 1fr))` }}
+                style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
               >
-                {topRow.map((group) => renderGroupButton(group, group))}
+                {topRow.map((group) => renderGroupButton(group, group, "h-full"))}
+                {Array.from({ length: Math.max(columnCount - topRow.length, 0) }).map((_, index) => (
+                  <div key={`placeholder-top-${index}`} aria-hidden="true" />
+                ))}
               </div>
               <div
                 className="grid gap-3"
-                style={{ gridTemplateColumns: `repeat(${Math.max(bottomRow.length, 1)}, minmax(0, 1fr))` }}
+                style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
               >
-                {bottomRow.map((group) => renderGroupButton(group, group))}
+                {bottomRow.map((group) => renderGroupButton(group, group, "h-full"))}
+                {Array.from({ length: Math.max(columnCount - bottomRow.length, 0) }).map((_, index) => (
+                  <div key={`placeholder-bottom-${index}`} aria-hidden="true" />
+                ))}
               </div>
             </div>
 
-            <div className="lg:row-span-2">
-              {renderGroupButton("Favoriten", "__favorites__", "h-full text-base")}
+            <div className="row-span-2">
+              {renderGroupButton("Favoriten", "__favorites__", "h-full text-base py-5")}
             </div>
           </div>
 
@@ -214,12 +235,11 @@ const App = () => {
       </main>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-h-[88vh] w-full max-w-4xl overflow-y-auto">
+        <DialogContent className="max-h-[88vh] w-full max-w-4xl">
           <DialogTitle>Neuer Cocktail</DialogTitle>
-          <DialogDescription>
-            Pflichtfelder sind mit * markiert. Zutaten bitte kommagetrennt eingeben.
-          </DialogDescription>
-          <CocktailForm onCancel={() => setIsFormOpen(false)} onSubmit={handleSubmitForm} />
+          <div className="mt-4 max-h-[calc(88vh-6rem)] overflow-y-auto pr-1 sm:pr-2">
+            <CocktailForm onCancel={() => setIsFormOpen(false)} onSubmit={handleSubmitForm} />
+          </div>
         </DialogContent>
       </Dialog>
     </div>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, ChevronUp, Filter, Star } from "lucide-react";
 import type { Cocktail } from "@/types";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
-import { slugify } from "@/lib/utils";
+import { ingredientsForFilter, slugify } from "@/lib/utils";
 
 type SortKey = "Cocktail" | "Gruppe" | "Rezeptur" | "Deko" | "Glas" | "Zubereitung";
 type ColumnKey = SortKey;
@@ -79,22 +79,33 @@ const CocktailTable = ({
 
     cocktails.forEach((cocktail) => {
       columns.forEach((column) => {
+        if (column.key === "Rezeptur") {
+          const ingredients = ingredientsForFilter(cocktail.Rezeptur);
+          if (!ingredients.length) {
+            optionMap.Rezeptur.add(EMPTY_TOKEN);
+          } else {
+            ingredients.forEach((ingredient) => optionMap.Rezeptur.add(ingredient));
+          }
+          return;
+        }
+
         const raw = (cocktail[column.key as keyof Cocktail] ?? "") as string;
         const normalised = raw && raw.trim().length > 0 ? raw.trim() : EMPTY_TOKEN;
         optionMap[column.key].add(normalised);
       });
     });
 
-    const sortedEntries: Record<ColumnKey, string[]> = {
-      Cocktail: Array.from(optionMap.Cocktail).sort((a, b) => a.localeCompare(b)),
-      Gruppe: Array.from(optionMap.Gruppe).sort((a, b) => a.localeCompare(b)),
-      Rezeptur: Array.from(optionMap.Rezeptur).sort((a, b) => a.localeCompare(b)),
-      Deko: Array.from(optionMap.Deko).sort((a, b) => a.localeCompare(b)),
-      Glas: Array.from(optionMap.Glas).sort((a, b) => a.localeCompare(b)),
-      Zubereitung: Array.from(optionMap.Zubereitung).sort((a, b) => a.localeCompare(b))
-    };
+    const sortValues = (values: Set<string>) =>
+      Array.from(values).sort((a, b) => a.localeCompare(b));
 
-    return sortedEntries;
+    return {
+      Cocktail: sortValues(optionMap.Cocktail),
+      Gruppe: sortValues(optionMap.Gruppe),
+      Rezeptur: sortValues(optionMap.Rezeptur),
+      Deko: sortValues(optionMap.Deko),
+      Glas: sortValues(optionMap.Glas),
+      Zubereitung: sortValues(optionMap.Zubereitung)
+    } satisfies Record<ColumnKey, string[]>;
   }, [cocktails]);
 
   const filteredByColumn = useMemo(() => {
@@ -102,6 +113,15 @@ const CocktailTable = ({
     return cocktails.filter((cocktail) =>
       activeFilters.every(([key, selected]) => {
         if (!selected.length) return true;
+
+        if (key === "Rezeptur") {
+          const ingredients = ingredientsForFilter(cocktail.Rezeptur);
+          if (!ingredients.length) {
+            return selected.includes(EMPTY_TOKEN);
+          }
+          return selected.some((ingredient) => ingredients.includes(ingredient));
+        }
+
         const raw = (cocktail[key as keyof Cocktail] ?? "") as string;
         const normalised = raw && raw.trim().length > 0 ? raw.trim() : EMPTY_TOKEN;
         return selected.includes(normalised);
@@ -182,18 +202,22 @@ const CocktailTable = ({
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {columns.map((column) => (
-            <FilterDropdown
-              key={`mobile-${column.key}`}
-              label={column.label}
-              values={columnOptions[column.key]}
-              selected={filters[column.key]}
-              onChange={(next) => handleFilterChange(column.key, next)}
-            />
+            <div key={`mobile-${column.key}`} className="space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                {column.label}
+              </p>
+              <FilterDropdown
+                label={column.label}
+                values={columnOptions[column.key]}
+                selected={filters[column.key]}
+                onChange={(next) => handleFilterChange(column.key, next)}
+              />
+            </div>
           ))}
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
+      <div className="overflow-hidden rounded-2xl bg-white shadow-soft" data-table-container>
         <div className="hidden lg:block">
           <Table>
             <TableHeader>
@@ -239,7 +263,7 @@ const CocktailTable = ({
                     onClick={() => onSelect(cocktail)}
                     className={cn(
                       "cursor-pointer border-l-4 border-transparent transition-all duration-300",
-                      index % 2 === 0 ? "bg-white" : "bg-slate-100/70",
+                      index % 2 === 0 ? "bg-white" : "bg-slate-200/70",
                       "hover:bg-slate-100/90",
                       isHighlighted &&
                         "border-amber-400 bg-amber-50/80 hover:bg-amber-100 focus-visible:bg-amber-100"
@@ -326,6 +350,8 @@ const FilterDropdown = ({
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [horizontalOffset, setHorizontalOffset] = useState(0);
 
   useEffect(() => {
     if (!open) return;
@@ -337,6 +363,32 @@ const FilterDropdown = ({
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
+
+  useLayoutEffect(() => {
+    if (!open) {
+      setHorizontalOffset(0);
+      return;
+    }
+
+    const dropdown = dropdownRef.current;
+    const container = containerRef.current?.closest("[data-table-container]") as
+      | HTMLElement
+      | null;
+    if (!dropdown || !container) return;
+
+    const dropdownRect = dropdown.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const padding = 12;
+
+    let offset = 0;
+    if (dropdownRect.left < containerRect.left + padding) {
+      offset = containerRect.left + padding - dropdownRect.left;
+    } else if (dropdownRect.right > containerRect.right - padding) {
+      offset = containerRect.right - padding - dropdownRect.right;
+    }
+
+    setHorizontalOffset(offset);
+  }, [open, selected, values]);
 
   const handleToggle = (value: string) => {
     onChange(
@@ -365,19 +417,21 @@ const FilterDropdown = ({
           selected.length
             ? "border-amber-300 bg-amber-50 text-amber-700"
             : "border-slate-200 bg-white text-slate-500",
-          compact ? "hidden lg:inline-flex" : "inline-flex"
+          compact ? "hidden lg:inline-flex" : "inline-flex w-full justify-between"
         )}
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={open}
       >
         <Filter className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline">Filtern</span>
-        {selected.length > 0 && <span className="font-semibold">{selected.length}</span>}
+        <span className={cn("truncate", compact ? "hidden" : "ml-1 text-xs font-medium")}>{label}</span>
+        {selected.length > 0 && <span className="ml-auto pl-2 font-semibold">{selected.length}</span>}
       </button>
       {open && (
         <div
+          ref={dropdownRef}
           className="absolute right-0 z-30 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-3 shadow-soft animate-in fade-in-0 slide-in-from-top-2"
+          style={{ transform: `translateX(${horizontalOffset}px)` }}
           role="listbox"
         >
           <div className="mb-2 flex items-center justify-between text-xs text-slate-500">

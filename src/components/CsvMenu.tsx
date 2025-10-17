@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Download, History, Upload, X, Menu } from "lucide-react";
+
 import { useCocktailContext } from "@/context/CocktailContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +12,23 @@ const dateFormatter = new Intl.DateTimeFormat("de-DE", {
   dateStyle: "short",
   timeStyle: "short"
 });
+
+const useMediaQuery = (query: string): boolean => {
+  const [matches, setMatches] = useState(() =>
+    typeof window === "undefined" ? false : window.matchMedia(query).matches
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia(query);
+    const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
+    mediaQuery.addEventListener("change", handler);
+    setMatches(mediaQuery.matches);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, [query]);
+
+  return matches;
+};
 
 const CsvMenu = () => {
   const {
@@ -28,6 +46,8 @@ const CsvMenu = () => {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const isLargeLayout = useMediaQuery("(min-width: 1024px)");
+  const showGroupShortcuts = !isLargeLayout;
 
   const versionOptions = useMemo(
     () =>
@@ -164,8 +184,8 @@ const CsvMenu = () => {
             />
             <aside
               className={cn(
-                "fixed inset-y-0 right-0 z-50 w-full max-w-md transform bg-white shadow-xl transition-transform duration-300 ease-out",
-                isVisible ? "translate-x-0" : "translate-x-full"
+                "fixed inset-y-0 left-0 z-50 w-full max-w-md transform bg-white shadow-xl transition-transform duration-300 ease-out",
+                isVisible ? "translate-x-0" : "-translate-x-full"
               )}
             >
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
@@ -186,6 +206,41 @@ const CsvMenu = () => {
                     <p className="text-sm text-emerald-600 whitespace-pre-line">{feedback}</p>
                   )}
                 </div>
+
+                {showGroupShortcuts && (
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-slate-700">Gruppen auswählen</h3>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      <Button
+                        type="button"
+                        variant={activeGroup === null ? "default" : "outline"}
+                        className="justify-start gap-2"
+                        onClick={() => handleSelectGroup(null)}
+                      >
+                        Alle
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={activeGroup === "__favorites__" ? "default" : "outline"}
+                        className="justify-start gap-2"
+                        onClick={() => handleSelectGroup("__favorites__")}
+                      >
+                        Favoriten
+                      </Button>
+                      {groups.map((group) => (
+                        <Button
+                          key={group}
+                          type="button"
+                          variant={activeGroup === group ? "default" : "outline"}
+                          className="justify-start capitalize"
+                          onClick={() => handleSelectGroup(group)}
+                        >
+                          {group}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-3">
                   <input
@@ -214,43 +269,13 @@ const CsvMenu = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="text-sm font-semibold text-slate-700">Gruppen auswählen</h3>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <Button
-                      type="button"
-                      variant={activeGroup === null ? "default" : "outline"}
-                      className="justify-start gap-2"
-                      onClick={() => handleSelectGroup(null)}
-                    >
-                      Alle
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={activeGroup === "__favorites__" ? "default" : "outline"}
-                      className="justify-start gap-2"
-                      onClick={() => handleSelectGroup("__favorites__")}
-                    >
-                      Favoriten
-                    </Button>
-                    {groups.map((group) => (
-                      <Button
-                        key={group}
-                        type="button"
-                        variant={activeGroup === group ? "default" : "outline"}
-                        className="justify-start capitalize"
-                        onClick={() => handleSelectGroup(group)}
-                      >
-                        {group}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-3">
                   <h3 className="text-sm font-semibold text-slate-700">Gespeicherte Versionen</h3>
                   <ul className="space-y-3">
                     {versionOptions.length === 0 && (
-                      <li className="text-sm text-slate-500">Noch keine Versionen gespeichert.</li>
+                      <li className="rounded-xl border border-slate-100 bg-slate-50/80 p-3 text-sm text-slate-600">
+                        Aktuelle Daten wurden noch nicht versioniert. Importieren oder exportieren Sie eine CSV, um eine neue
+                        Version zu erzeugen.
+                      </li>
                     )}
                     {versionOptions.map((version) => (
                       <li key={version.id} className="rounded-xl border border-slate-100 bg-slate-50/80 p-3">

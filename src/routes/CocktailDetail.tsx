@@ -5,7 +5,7 @@ import { useCocktailContext } from "@/context/CocktailContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import CocktailForm, { type CocktailFormResult } from "@/components/CocktailForm";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ingredientsFromRezeptur, slugify } from "@/lib/utils";
 import { cn } from "@/lib/cn";
 import type { Cocktail } from "@/types";
@@ -230,18 +230,17 @@ const CocktailDetail = () => {
       </section>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-h-[88vh] w-full max-w-4xl overflow-y-auto">
+        <DialogContent className="max-h-[88vh] w-full max-w-4xl">
           <DialogTitle>{cocktail.Cocktail} bearbeiten</DialogTitle>
-          <DialogDescription>
-            Aktualisieren Sie die Daten und speichern Sie, um den Datensatz zu überschreiben.
-          </DialogDescription>
-          <CocktailForm
-            initialValue={cocktail}
-            initialImage={imageSrc}
-            initialSlug={slug}
-            onSubmit={handleSubmit}
-            onCancel={() => setIsFormOpen(false)}
-          />
+          <div className="mt-4 max-h-[calc(88vh-6rem)] overflow-y-auto pr-1 sm:pr-2">
+            <CocktailForm
+              initialValue={cocktail}
+              initialImage={imageSrc}
+              initialSlug={slug}
+              onSubmit={handleSubmit}
+              onCancel={() => setIsFormOpen(false)}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>

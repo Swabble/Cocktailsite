@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCocktailContext } from "@/context/CocktailContext";
+import { cn } from "@/lib/cn";
 
 const createEmptyCocktail = (): Cocktail => ({
   Cocktail: "",
@@ -100,7 +101,11 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
 
   const handleChange = (field: keyof Cocktail) =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormValue((prev) => ({ ...prev, [field]: event.target.value }));
+      const value = event.target.value;
+      setFormValue((prev) => ({ ...prev, [field]: value }));
+      if (field === "Cocktail" || field === "Rezeptur") {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
     };
 
   const handleGroupSelect = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -195,21 +200,28 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
     }
   };
 
+  const inputClass = (hasError: boolean) =>
+    cn(
+      hasError
+        ? "border-red-400 focus-visible:border-red-400 focus-visible:ring-red-100"
+        : "border-slate-200 focus-visible:border-slate-400"
+    );
+
   return (
-    <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-6" onSubmit={handleSubmit}>
       <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-name">
-                Cocktail *
+                Cocktail
               </label>
               <Input
                 id="cocktail-name"
                 value={formValue.Cocktail}
                 onChange={handleChange("Cocktail")}
                 placeholder="z. B. Espresso Martini"
-                required
+                className={inputClass(Boolean(errors.Cocktail))}
                 aria-invalid={errors.Cocktail ? "true" : "false"}
                 aria-describedby={errors.Cocktail ? "error-cocktail" : undefined}
               />
@@ -227,7 +239,10 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                 id="cocktail-group"
                 value={groupSelection}
                 onChange={handleGroupSelect}
-                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                className={cn(
+                  "h-10 w-full rounded-2xl border bg-white px-3 text-sm text-slate-700 shadow-soft transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
+                  inputClass(false)
+                )}
               >
                 <option value="">Keine Gruppe</option>
                 {groups.map((group) => (
@@ -243,30 +258,47 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                   value={customGroup}
                   onChange={handleCustomGroupChange}
                   placeholder="Neue Gruppe eingeben"
-                  className="mt-2"
+                  className={cn("mt-2", inputClass(false))}
                 />
               )}
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-rezeptur">
-              Rezeptur *
-            </label>
-            <Textarea
-              id="cocktail-rezeptur"
-              value={formValue.Rezeptur}
-              onChange={handleChange("Rezeptur")}
-              placeholder="Zutaten, kommagetrennt"
-              required
-              aria-invalid={errors.Rezeptur ? "true" : "false"}
-              aria-describedby={errors.Rezeptur ? "error-rezeptur" : undefined}
-            />
-            {errors.Rezeptur && (
-              <p className="text-xs text-red-500" id="error-rezeptur">
-                {errors.Rezeptur}
-              </p>
-            )}
+          <div className="grid gap-4 md:grid-cols-[3fr,2fr]">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-rezeptur">
+                Rezeptur
+              </label>
+              <Textarea
+                id="cocktail-rezeptur"
+                value={formValue.Rezeptur}
+                onChange={handleChange("Rezeptur")}
+                placeholder="Zutaten, kommagetrennt"
+                className={cn(
+                  "min-h-[160px]",
+                  inputClass(Boolean(errors.Rezeptur))
+                )}
+                aria-invalid={errors.Rezeptur ? "true" : "false"}
+                aria-describedby={errors.Rezeptur ? "error-rezeptur" : undefined}
+              />
+              {errors.Rezeptur && (
+                <p className="text-xs text-red-500" id="error-rezeptur">
+                  {errors.Rezeptur}
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-zubereitung">
+                Zubereitung
+              </label>
+              <Textarea
+                id="cocktail-zubereitung"
+                value={formValue.Zubereitung ?? ""}
+                onChange={handleChange("Zubereitung")}
+                placeholder="z. B. kräftig shaken und doppelt abseihen"
+                className="min-h-[160px]"
+              />
+            </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -278,7 +310,10 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                 id="cocktail-deko"
                 value={decorationSelection}
                 onChange={handleDecorationSelect}
-                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                className={cn(
+                  "h-10 w-full rounded-2xl border bg-white px-3 text-sm text-slate-700 shadow-soft transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
+                  inputClass(false)
+                )}
               >
                 <option value="">Keine Deko</option>
                 {decorations.map((decoration) => (
@@ -294,7 +329,7 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                   value={customDecoration}
                   onChange={handleCustomDecorationChange}
                   placeholder="Neue Deko eingeben"
-                  className="mt-2"
+                  className={cn("mt-2", inputClass(false))}
                 />
               )}
             </div>
@@ -306,7 +341,10 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                 id="cocktail-glas"
                 value={glassSelection}
                 onChange={handleGlassSelect}
-                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 shadow-sm transition focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                className={cn(
+                  "h-10 w-full rounded-2xl border bg-white px-3 text-sm text-slate-700 shadow-soft transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-200",
+                  inputClass(false)
+                )}
               >
                 <option value="">Kein Glas angegeben</option>
                 {glasses.map((glass) => (
@@ -322,21 +360,9 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
                   value={customGlass}
                   onChange={handleCustomGlassChange}
                   placeholder="Neues Glas eingeben"
-                  className="mt-2"
+                  className={cn("mt-2", inputClass(false))}
                 />
               )}
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-zubereitung">
-                Zubereitung
-              </label>
-              <Textarea
-                id="cocktail-zubereitung"
-                value={formValue.Zubereitung ?? ""}
-                onChange={handleChange("Zubereitung")}
-                placeholder="z. B. kräftig shaken und doppelt abseihen"
-                rows={3}
-              />
             </div>
           </div>
         </div>
