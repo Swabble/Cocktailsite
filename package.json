@@ -9,8 +9,7 @@
     "prebuild": "node scripts/sync-csv.mjs",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "sync:csv": "node scripts/sync-csv.mjs",
-    "server": "node server/index.mjs"
+    "sync:csv": "node scripts/sync-csv.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -20,8 +19,6 @@
     "@tanstack/react-query-devtools": "^5.51.21",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
     "lucide-react": "^0.441.0",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
