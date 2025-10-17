@@ -3,6 +3,7 @@ import type { Cocktail } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import IngredientInput, { type ParsedIngredient } from "@/features/cocktails/IngredientInput";
 import { useCocktailContext } from "@/context/CocktailContext";
 import { cn } from "@/lib/cn";
 
@@ -20,6 +21,7 @@ export type CocktailFormResult = {
   imageData: string | null;
   imageChanged: boolean;
   previousSlug?: string;
+  parsedIngredients: ParsedIngredient[];
 };
 
 type Props = {
@@ -34,6 +36,8 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
   const { groups, decorations, glasses } = useCocktailContext();
   const [formValue, setFormValue] = useState<Cocktail>(initialValue ? { ...initialValue } : createEmptyCocktail());
   const [errors, setErrors] = useState<{ Cocktail?: string; Rezeptur?: string }>({});
+  const [parsedIngredients, setParsedIngredients] = useState<ParsedIngredient[]>([]);
+  const [parseNotice, setParseNotice] = useState<string | null>(null);
   const [groupSelection, setGroupSelection] = useState<string>("");
   const [customGroup, setCustomGroup] = useState<string>("");
   const [decorationSelection, setDecorationSelection] = useState<string>("");
@@ -51,6 +55,10 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
       setFormValue(createEmptyCocktail());
     }
   }, [initialValue]);
+
+  useEffect(() => {
+    setParseNotice(null);
+  }, [parsedIngredients]);
 
   useEffect(() => {
     setImagePreview(initialImage ?? null);
@@ -89,13 +97,38 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
 
   const validate = () => {
     const nextErrors: typeof errors = {};
+    let notice: string | null = null;
     if (!formValue.Cocktail.trim()) {
       nextErrors.Cocktail = "Bitte einen Namen eingeben";
     }
     if (!formValue.Rezeptur.trim()) {
       nextErrors.Rezeptur = "Bitte mindestens eine Zutat angeben";
     }
+
+    const hasBlocking = parsedIngredients.some(
+      (entry) =>
+        entry.statuses.unit === "missing" ||
+        entry.statuses.ingredient === "missing" ||
+        entry.statuses.amount === "invalid"
+    );
+
+    if (hasBlocking) {
+      nextErrors.Rezeptur = "Bitte ergänze Menge, Einheit oder Zutat.";
+    }
+
+    const hasWarnings = parsedIngredients.some(
+      (entry) =>
+        entry.statuses.amount === "ambiguous" ||
+        entry.statuses.unit === "fuzzy" ||
+        entry.statuses.ingredient === "fuzzy"
+    );
+
+    if (hasWarnings && !hasBlocking) {
+      notice = "Einige Angaben wirken unscharf – bitte prüfe sie vor dem Speichern.";
+    }
+
     setErrors(nextErrors);
+    setParseNotice(notice);
     return Object.keys(nextErrors).length === 0;
   };
 
@@ -166,7 +199,8 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
       cocktail: formValue,
       imageData: imagePreview,
       imageChanged,
-      previousSlug: initialSlug
+      previousSlug: initialSlug,
+      parsedIngredients
     });
   };
 
@@ -267,24 +301,21 @@ const CocktailForm = ({ initialValue, initialImage, initialSlug, onSubmit, onCan
           <div className="grid gap-4 md:grid-cols-[3fr,2fr]">
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700" htmlFor="cocktail-rezeptur">
-                Rezeptur
+                Zutaten
               </label>
-              <Textarea
+              <IngredientInput
                 id="cocktail-rezeptur"
                 value={formValue.Rezeptur}
-                onChange={handleChange("Rezeptur")}
-                placeholder="Zutaten, kommagetrennt"
-                className={cn(
-                  "min-h-[160px]",
-                  inputClass(Boolean(errors.Rezeptur))
-                )}
-                aria-invalid={errors.Rezeptur ? "true" : "false"}
-                aria-describedby={errors.Rezeptur ? "error-rezeptur" : undefined}
+                onChange={(next) => {
+                  setFormValue((prev) => ({ ...prev, Rezeptur: next }));
+                  setErrors((prev) => ({ ...prev, Rezeptur: undefined }));
+                }}
+                onParsedChange={setParsedIngredients}
+                placeholder="Eine Zutat pro Zeile, z. B. '2 cl Bacardi'"
+                error={errors.Rezeptur}
               />
-              {errors.Rezeptur && (
-                <p className="text-xs text-red-500" id="error-rezeptur">
-                  {errors.Rezeptur}
-                </p>
+              {parseNotice && !errors.Rezeptur && (
+                <p className="text-xs text-amber-600">{parseNotice}</p>
               )}
             </div>
             <div className="space-y-2">

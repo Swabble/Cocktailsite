@@ -1,3 +1,5 @@
+import type { ParsedIngredient } from "./lib/ingredients/parser";
+
 export type Cocktail = {
   Gruppe?: string | null;
   Cocktail: string;
@@ -6,6 +8,8 @@ export type Cocktail = {
   Glas?: string | null;
   Zubereitung?: string | null;
 };
+
+export type StructuredIngredientMap = Record<string, ParsedIngredient[]>;
 
 export type CsvVersionSource = "initial" | "upload" | "manual" | "restore";
 
@@ -25,4 +29,5 @@ export type CocktailDataset = {
   cocktails: Cocktail[];
   images: CocktailImageMap;
   modified: CocktailMetadataMap;
+  structured?: StructuredIngredientMap;
 };

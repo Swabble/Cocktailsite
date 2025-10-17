@@ -52,8 +52,8 @@ const App = () => {
     setIsFormOpen(true);
   };
 
-  const handleSubmitForm = ({ cocktail, imageData, imageChanged }: CocktailFormResult) => {
-    upsertCocktail(cocktail);
+  const handleSubmitForm = ({ cocktail, imageData, imageChanged, parsedIngredients, previousSlug }: CocktailFormResult) => {
+    upsertCocktail(cocktail, { structured: parsedIngredients, previousSlug: previousSlug ?? null });
     if (imageChanged) {
       const slug = slugify(cocktail.Cocktail);
       if (imageData) {

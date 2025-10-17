@@ -87,6 +87,12 @@ Eine moderne Single-Page-Web-App zur Verwaltung der `Cocktail_Liste.csv`. Erstel
 | `npm run sync:csv`| CSV aus dem Projektwurzelverzeichnis nach `public/` kopieren |
 | `npm run lint`    | (Falls hinzugefügt) Linting ausführen                |
 
+## Zutaten-Parser & Stammdaten
+
+- Der Editor analysiert das Zutatenfeld live und markiert erkannte Bestandteile farblich.
+- Strukturierte Parser-Ergebnisse werden zusammen mit dem Cocktail gespeichert.
+- Details zu Regeln, Stammdaten und Tests findest du in [`docs/ingredients.md`](docs/ingredients.md).
+
 ## CSV-Workflow
 
 - **Quelle aktualisieren**: Bearbeite `Cocktail_Liste.csv` im Projektwurzelverzeichnis und synchronisiere per `npm run sync:csv` (oder automatisch über `npm run dev`/`npm run build`).

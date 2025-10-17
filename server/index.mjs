@@ -16,6 +16,7 @@ const publicCsvPath = path.join(rootDir, "public", "Cocktail_Liste.csv");
 const imagesDir = path.join(rootDir, "public", "cocktail-images");
 const imageManifestPath = path.join(rootDir, "public", "cocktail-images.json");
 const metadataPath = path.join(rootDir, "server", "storage", "modifications.json");
+const structuredPath = path.join(rootDir, "server", "storage", "ingredients.json");
 
 const CSV_COLUMNS = ["Gruppe", "Cocktail", "Rezeptur", "Deko", "Glas", "Zubereitung"];
 
@@ -45,6 +46,7 @@ const ensureDirectories = async () => {
   await fs.mkdir(path.dirname(publicCsvPath), { recursive: true });
   await fs.mkdir(imagesDir, { recursive: true });
   await fs.mkdir(path.dirname(metadataPath), { recursive: true });
+  await fs.mkdir(path.dirname(structuredPath), { recursive: true });
 
   try {
     await fs.access(imageManifestPath);
@@ -56,6 +58,12 @@ const ensureDirectories = async () => {
     await fs.access(metadataPath);
   } catch {
     await fs.writeFile(metadataPath, JSON.stringify({}, null, 2), "utf8");
+  }
+
+  try {
+    await fs.access(structuredPath);
+  } catch {
+    await fs.writeFile(structuredPath, JSON.stringify({}, null, 2), "utf8");
   }
 };
 
@@ -148,6 +156,21 @@ const writeMetadata = async (metadata) => {
   await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2), "utf8");
 };
 
+const readStructured = async () => {
+  try {
+    const raw = await fs.readFile(structuredPath, "utf8");
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return {};
+    return parsed;
+  } catch {
+    return {};
+  }
+};
+
+const writeStructured = async (structured) => {
+  await fs.writeFile(structuredPath, JSON.stringify(structured, null, 2), "utf8");
+};
+
 const fileNameFromManifestEntry = (entry) => entry?.split("?")[0] ?? null;
 
 const removeImageFile = async (entry) => {
@@ -199,11 +222,21 @@ const collectChangedSlugs = (previous, next) => {
   return changed;
 };
 
+const cleanStructured = (structured, allowedSlugs) => {
+  if (!structured || typeof structured !== "object") return {};
+  return Object.fromEntries(
+    Object.entries(structured)
+      .filter(([slug]) => allowedSlugs.has(slug))
+      .map(([slug, entries]) => [slug, Array.isArray(entries) ? entries : []])
+  );
+};
+
 app.get("/api/cocktails", async (_req, res) => {
   try {
     const cocktails = await parseCocktailCsvFile();
     const manifest = await readManifest();
     const metadata = await readMetadata();
+    const structured = await readStructured();
     const allowedSlugs = new Set(cocktails.map((cocktail) => slugify(cocktail.Cocktail)));
 
     const cleanedManifest = await applyImageCleanup(manifest, allowedSlugs);
@@ -211,11 +244,14 @@ app.get("/api/cocktails", async (_req, res) => {
       Object.entries(metadata).filter(([slug]) => allowedSlugs.has(slug))
     );
     await writeMetadata(cleanedMetadata);
+    const cleanedStructured = cleanStructured(structured, allowedSlugs);
+    await writeStructured(cleanedStructured);
 
     res.json({
       cocktails,
       images: cleanedManifest,
-      modified: cleanedMetadata
+      modified: cleanedMetadata,
+      structured: cleanedStructured
     });
   } catch (error) {
     console.error("Fehler beim Laden der Cocktails:", error);
@@ -224,7 +260,7 @@ app.get("/api/cocktails", async (_req, res) => {
 });
 
 app.post("/api/cocktails", async (req, res) => {
-  const { cocktails: rawCocktails, changedSlugs = [] } = req.body ?? {};
+  const { cocktails: rawCocktails, changedSlugs = [], structured: rawStructured } = req.body ?? {};
 
   if (!Array.isArray(rawCocktails)) {
     res.status(400).json({ error: "Feld 'cocktails' ist erforderlich." });
@@ -270,10 +306,14 @@ app.post("/api/cocktails", async (req, res) => {
     });
     await writeMetadata(updatedMetadata);
 
+    const structuredInput = cleanStructured(rawStructured, allowedSlugs);
+    await writeStructured(structuredInput);
+
     res.json({
       cocktails: sanitised,
       images: cleanedManifest,
-      modified: updatedMetadata
+      modified: updatedMetadata,
+      structured: structuredInput
     });
   } catch (error) {
     console.error("Fehler beim Speichern der Cocktails:", error);

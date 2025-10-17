@@ -56,9 +56,15 @@ const CocktailDetail = () => {
     navigate("/");
   };
 
-  const handleSubmit = ({ cocktail: entry, imageData, imageChanged }: CocktailFormResult) => {
+  const handleSubmit = ({
+    cocktail: entry,
+    imageData,
+    imageChanged,
+    parsedIngredients,
+    previousSlug: submittedPrevious
+  }: CocktailFormResult) => {
     const previousSlug = slugify(cocktail.Cocktail);
-    upsertCocktail(entry);
+    upsertCocktail(entry, { structured: parsedIngredients, previousSlug: submittedPrevious ?? previousSlug });
     const nextSlug = slugify(entry.Cocktail);
 
     if (imageChanged) {

@@ -15,7 +15,7 @@ export const slugify = (value: string): string =>
 
 export const ingredientsFromRezeptur = (rezeptur: string): string[] =>
   rezeptur
-    .split(",")
+    .split(/\r?\n|,/)
     .map((ingredient) => ingredient.trim())
     .filter((ingredient) => ingredient.length > 0);
 

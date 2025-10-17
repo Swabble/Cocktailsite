@@ -1,78 +1,13 @@
-# =========================================================
-# Node & npm
-# =========================================================
-node_modules/
-package-lock.json
+node_modules
+/dist
+.vite
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# =========================================================
-# Build & Output directories
-# =========================================================
-dist/
-build/
-out/
-.tmp/
-.temp/
-.cache/
-coverage/
-.vite/
-.next/
-.nuxt/
-.svelte-kit/
-.storybook-static/
-
-# =========================================================
-# Environment files
-# =========================================================
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# =========================================================
-# TypeScript
-# =========================================================
+pnpm-debug.log*
+.DS_Store
 *.tsbuildinfo
 
-# =========================================================
-# Logs
-# =========================================================
-*.log
-
-# =========================================================
-# OS-generated files
-# =========================================================
-.DS_Store
-Thumbs.db
-
-# =========================================================
-# Editor & IDE
-# =========================================================
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# =========================================================
-# Test / Lint / Tooling
-# =========================================================
-jest-html-reporters-*
-coverage-final.json
-.eslintcache
-.prettiercache
-
-# =========================================================
-# Lockfiles (optional – je nach Teamstrategie)
-# =========================================================
-# yarn.lock
-# pnpm-lock.yaml
-
-# =========================================================
-# Dateien, die BLEIBEN SOLLEN
-# =========================================================
-# Behalte package.json, weil sie dein Projekt beschreibt!
-!package.json
+# Editor directories and files
+.idea
+.vscode

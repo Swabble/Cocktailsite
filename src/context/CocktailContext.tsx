@@ -14,8 +14,10 @@ import type {
   CocktailImageMap,
   CocktailMetadataMap,
   CsvVersion,
-  CsvVersionSource
+  CsvVersionSource,
+  StructuredIngredientMap
 } from "@/types";
+import type { ParsedIngredient } from "@/lib/ingredients/parser";
 import { parseCocktailCsv } from "@/lib/csv";
 import {
   getUniqueDecorations,
@@ -37,7 +39,8 @@ const buildApiUrl = (path: string): string => `${API_BASE}${path}`;
 const EMPTY_DATASET: CocktailDataset = {
   cocktails: [],
   images: {},
-  modified: {}
+  modified: {},
+  structured: {}
 };
 
 type ReplaceOptions = {
@@ -47,7 +50,32 @@ type ReplaceOptions = {
   activeVersionId?: string | null;
 };
 
+type UpsertOptions = {
+  structured?: ParsedIngredient[];
+  previousSlug?: string | null;
+};
+
 const cloneCocktails = (cocktails: Cocktail[]): Cocktail[] => cocktails.map((item) => ({ ...item }));
+
+const cloneParsedIngredients = (entries: ParsedIngredient[] | undefined): ParsedIngredient[] => {
+  if (!entries?.length) return [];
+  return entries.map((entry) => ({
+    ...entry,
+    statuses: { ...entry.statuses },
+    suggestions: {
+      units: [...entry.suggestions.units],
+      ingredients: [...entry.suggestions.ingredients]
+    },
+    tokens: entry.tokens.map((token) => ({ ...token }))
+  }));
+};
+
+const cloneStructured = (map: StructuredIngredientMap | undefined): StructuredIngredientMap => {
+  if (!map) return {};
+  return Object.fromEntries(
+    Object.entries(map).map(([slug, entries]) => [slug, cloneParsedIngredients(entries)])
+  );
+};
 
 const loadStoredHistory = (): CsvVersion[] => {
   if (typeof window === "undefined") return [];
@@ -117,7 +145,8 @@ const fetchCocktails = async (): Promise<CocktailDataset> => {
     return {
       cocktails,
       images: {},
-      modified: {}
+      modified: {},
+      structured: {}
     };
   }
 };
@@ -125,7 +154,8 @@ const fetchCocktails = async (): Promise<CocktailDataset> => {
 const cloneDataset = (source: CocktailDataset): CocktailDataset => ({
   cocktails: source.cocktails.map((cocktail) => ({ ...cocktail })),
   images: { ...source.images },
-  modified: { ...source.modified }
+  modified: { ...source.modified },
+  structured: cloneStructured(source.structured)
 });
 
 type CocktailContextValue = {
@@ -135,6 +165,7 @@ type CocktailContextValue = {
   decorations: string[];
   glasses: string[];
   cocktailImages: CocktailImageMap;
+  structuredIngredients: StructuredIngredientMap;
   recentlyChangedSlugs: string[];
   activeGroup: string | null;
   search: string;
@@ -145,7 +176,7 @@ type CocktailContextValue = {
   favorites: string[];
   setActiveGroup: (group: string | null) => void;
   setSearch: (value: string) => void;
-  upsertCocktail: (cocktail: Cocktail) => void;
+  upsertCocktail: (cocktail: Cocktail, options?: UpsertOptions) => void;
   deleteCocktail: (cocktail: Cocktail) => void;
   replaceAll: (cocktails: Cocktail[], options?: ReplaceOptions) => void;
   restoreVersion: (versionId: string) => void;
@@ -221,6 +252,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const cocktails = dataset.cocktails;
   const cocktailImages = dataset.images;
   const modificationMap: CocktailMetadataMap = dataset.modified;
+  const structuredIngredients = dataset.structured ?? {};
 
   useEffect(() => {
     setFavorites((previous) => {
@@ -415,6 +447,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   const persistCocktailList = useCallback(
     async (
       nextCocktails: Cocktail[],
+      nextStructured: StructuredIngredientMap,
       changedSlugs: string[],
       options?: {
         recordHistory?: boolean;
@@ -427,7 +460,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
         const response = await fetch(buildApiUrl("/api/cocktails"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ cocktails: nextCocktails, changedSlugs })
+          body: JSON.stringify({ cocktails: nextCocktails, structured: nextStructured, changedSlugs })
         });
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
@@ -466,11 +499,14 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
         label?: string;
         source?: CsvVersionSource;
         activeVersionId?: string | null;
+        structuredChanges?: Record<string, ParsedIngredient[] | null>;
       }
     ) => {
       const sluggedChanges = (options?.changedSlugs ?? []).map((slug) => slugify(slug));
       const allowedSlugs = new Set(nextCocktails.map((item) => slugify(item.Cocktail)));
       const timestamp = Date.now();
+
+      let latestStructured: StructuredIngredientMap = {};
 
       syncDataset((current) => {
         current.cocktails = nextCocktails.map((item) => ({ ...item }));
@@ -486,12 +522,24 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
           }
         });
         current.modified = filteredModified;
+        const structured = cloneStructured(current.structured);
+        Object.entries(options?.structuredChanges ?? {}).forEach(([slug, entries]) => {
+          if (entries === null) {
+            delete structured[slug];
+          } else {
+            structured[slug] = cloneParsedIngredients(entries);
+          }
+        });
+        current.structured = structured;
+        latestStructured = structured;
         return current;
       });
 
       setFavorites((previous) => previous.filter((slug) => allowedSlugs.has(slug)));
 
-      void persistCocktailList(nextCocktails, sluggedChanges, {
+      const nextStructured = cloneStructured(latestStructured);
+
+      void persistCocktailList(nextCocktails, nextStructured, sluggedChanges, {
         recordHistory: options?.recordHistory,
         label: options?.label,
         source: options?.source,
@@ -502,23 +550,39 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const upsertCocktail = useCallback(
-    (cocktail: Cocktail) => {
+    (cocktail: Cocktail, options?: UpsertOptions) => {
       const slug = slugify(cocktail.Cocktail);
+      const previousSlug = options?.previousSlug ? slugify(options.previousSlug) : null;
+      const lookupSlug = previousSlug ?? slug;
       const existingIndex = cocktails.findIndex(
-        (item) => slugify(item.Cocktail) === slug
+        (item) => slugify(item.Cocktail) === lookupSlug
       );
       const nextList =
         existingIndex >= 0
           ? cocktails.map((item, index) => (index === existingIndex ? { ...cocktail } : item))
           : [...cocktails, { ...cocktail }];
+
+      const structuredChanges: Record<string, ParsedIngredient[] | null> = {};
+      if (options?.structured) {
+        structuredChanges[slug] = options.structured;
+      }
+
+      if (previousSlug && previousSlug !== slug) {
+        if (!options?.structured && structuredIngredients[previousSlug]) {
+          structuredChanges[slug] = cloneParsedIngredients(structuredIngredients[previousSlug]);
+        }
+        structuredChanges[previousSlug] = null;
+      }
+
       applyCocktailList(nextList, {
-        changedSlugs: [slug],
+        changedSlugs: previousSlug && previousSlug !== slug ? [slug, previousSlug] : [slug],
         source: "manual",
-        activeVersionId: null
+        activeVersionId: null,
+        structuredChanges: Object.keys(structuredChanges).length ? structuredChanges : undefined
       });
       setActiveVersionId(null);
     },
-    [applyCocktailList, cocktails]
+    [applyCocktailList, cocktails, structuredIngredients]
   );
 
   const deleteCocktail = useCallback(
@@ -528,7 +592,8 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
       applyCocktailList(nextList, {
         changedSlugs: [slug],
         source: "manual",
-        activeVersionId: null
+        activeVersionId: null,
+        structuredChanges: { [slug]: null }
       });
       setActiveVersionId(null);
       removeCocktailImage(slug);
@@ -540,18 +605,22 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     (cocktailList: Cocktail[], options?: ReplaceOptions) => {
       setActiveGroup(null);
       setSearch("");
+      const resetStructured = Object.fromEntries(
+        Object.keys(structuredIngredients).map((slug) => [slug, null])
+      ) as Record<string, ParsedIngredient[] | null>;
       applyCocktailList(cocktailList, {
         changedSlugs: [],
         recordHistory: options?.recordHistory,
         label: options?.label,
         source: options?.source ?? "manual",
-        activeVersionId: options?.activeVersionId ?? null
+        activeVersionId: options?.activeVersionId ?? null,
+        structuredChanges: resetStructured
       });
       if (!options?.recordHistory && options?.activeVersionId === undefined) {
         setActiveVersionId(null);
       }
     },
-    [applyCocktailList, setActiveGroup, setSearch]
+    [applyCocktailList, setActiveGroup, setSearch, structuredIngredients]
   );
 
   const restoreVersion = useCallback(
@@ -593,6 +662,7 @@ export const CocktailProvider = ({ children }: { children: ReactNode }) => {
     decorations,
     glasses,
     cocktailImages,
+    structuredIngredients,
     recentlyChangedSlugs,
     activeGroup,
     search,
